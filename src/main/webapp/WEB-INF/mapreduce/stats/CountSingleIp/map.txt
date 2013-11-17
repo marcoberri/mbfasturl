@@ -1,0 +1,12 @@
+function(){ 
+    var k = this.ip;
+
+    if( k == null || k == '')
+        k =  'NN';
+
+    if(k.indexOf(",") > 1)
+        k = k.substring(0,k.indexOf(','));
+
+    emit(k.trim(), 1);
+
+};

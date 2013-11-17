@@ -1,0 +1,8 @@
+function(){
+    if(!this.created)
+        return;
+    var time_short = this.created.getFullYear();
+    var k = {'time':time_short,'url':this.url,'fast':this.fast};
+    emit(k,1);
+};
+

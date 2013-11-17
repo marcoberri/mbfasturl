@@ -1,0 +1,74 @@
+{
+    "cron": [{
+            "name": "downloadGeoIp2",
+            "class": "it.marcoberri.mbfasturl.cron.action.QuartzDownloadGeoIp2",
+            "enable": true,
+            "cron": "0 0 15 LW * ?",
+            "params": {
+                "path": "/home/marco/mbfasturl/geoip2/",
+                "url": "http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz",
+                "filename": "GeoLite2-City.mmdb"
+
+            }
+        },
+        {
+            "name": "geoipcalculation",
+            "class": "it.marcoberri.mbfasturl.cron.action.QuartzGeoIpCalculation",
+            "enable": true,
+            "cron": "0 0/30 * * * ?"
+        },
+        {
+            "name": "userAgentCalculation",
+            "class": "it.marcoberri.mbfasturl.cron.action.QuartzUACalculation",
+            "enable": true,
+            "cron": "0 0/10 * * * ?"
+        },
+        {
+            "name": "deleteAppCache",
+            "class": "it.marcoberri.mbfasturl.cron.action.system.QuartzDeleteAppCache",
+            "enable": true,
+            "cron": "0 0 0/12 * * ?"
+        },
+        {
+            "name": "deleteQrcodeCache",
+            "class": "it.marcoberri.mbfasturl.cron.action.system.QuartzDeleteQrcodeCache",
+            "enable": true,
+            "cron": "0 0 15 LW * ?"
+        },
+        {
+            "name": "deleteAppEvent",
+            "class": "it.marcoberri.mbfasturl.cron.action.system.QuartzDeleteAppEvent",
+            "enable": true,
+            "cron": "0 0 0/12 * * ?"
+        },
+        {
+            "name": "fixLogUrlFast",
+            "class": "it.marcoberri.mbfasturl.cron.action.fix.QuartzFixLogUrlFast",
+            "enable": true,
+            "cron": "0 0/50 * * * ?"
+        },
+        {
+            "name": "fixLogIp",
+            "class": "it.marcoberri.mbfasturl.cron.action.fix.QuartzFixLogIp",
+            "enable": true,
+            "cron": "0 0/55 * * * ?"
+        },
+        
+        {
+            "name": "fixLogHeadersKeys",
+            "class": "it.marcoberri.mbfasturl.cron.action.fix.QuartzFixLogHeadersKeys",
+            "enable": false,
+            "cron": "0 0 0/12 * * ?"
+        },
+        
+        
+        {
+            "name": "mapReduce",
+            "class": "it.marcoberri.mbfasturl.cron.action.QuartzMapReduce",
+            "enable": true,
+            "cron": "0 0 0/2 * * ?"
+        }
+
+    ]
+
+}

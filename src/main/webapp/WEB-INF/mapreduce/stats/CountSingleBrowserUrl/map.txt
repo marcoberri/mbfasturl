@@ -1,0 +1,16 @@
+function(){
+
+    var u = 'unknown';
+ 
+   if(this.agent && this.agent.name){
+         u = this.agent.name;
+   }
+  
+    if(  u == '' || u == 'unknow'  ){
+        u = 'unknown';
+    }
+  
+    var k = {'url':this.url,'fast':this.fast, 'browser' : u};
+    emit(k,1);
+};
+

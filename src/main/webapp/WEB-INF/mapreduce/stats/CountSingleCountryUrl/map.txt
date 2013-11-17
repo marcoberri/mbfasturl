@@ -1,0 +1,16 @@
+function(){
+    if(!this.created || !this.fast)
+        return;
+
+    var countryIso = 'NN';
+    var country = 'NN';
+
+    if(this.ipSpecify && this.ipSpecify.country && this.ipSpecify.countryIso){
+        countryIso = this.ipSpecify.countryIso;
+        country = this.ipSpecify.country;
+    };
+
+    var k = {'url':this.url,'fast':this.fast, 'country' : country, 'countryIso' : countryIso};
+    emit(k,1);
+};
+

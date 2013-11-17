@@ -1,0 +1,17 @@
+function(){ 
+     
+    if(!this.agent  ||  !this.agent.name){
+        emit('unknown', 1);
+        return;
+   }
+  
+   var u = this.agent.name;
+
+    if(  u == '' || u == 'unknow'  ){
+        u = 'unknown';
+    }
+  
+  emit(u, 1);
+
+};
+

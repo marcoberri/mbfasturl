@@ -1,11 +1,12 @@
 MBFastUrl
 =========
 
-Java Webapp per creare gestire short url v.2
+Java Webapp per creare / gestire short url v.2
 
 Evoluzione di https://code.google.com/p/mbfasturl
 
-Sviluppo con:
+develop	
+-------------
 
 Java
 MongoDB (Morphia)
@@ -13,16 +14,18 @@ NodeJS (admin)
 
 This product includes GeoLite2 data created by MaxMind http://www.maxmind.com
 
-=========
+deploy 
+-------
 
-deploy on <a href="http://mbfu.it">http://mbfu.it</a>
+<a href="http://mbfu.it">http://mbfu.it</a>
 
+
+system 
+-------
 - Ubuntu 10.4
-- Tomcat
+- Tomcat (test on jetty Web Server)
 - MongoDB
-
-on Linode.com platform
-=========
+- on Linode.com platform
 
 
 

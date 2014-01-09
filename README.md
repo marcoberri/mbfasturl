@@ -1,6 +1,8 @@
 MBFastUrl
 =========
 
+<img src="https://www.codeship.io/projects/8cff5a30-5b61-0131-8528-3672df6788f6/status"/>
+
 Java Webapp per creare / gestire short url v.2
 
 Evoluzione di https://code.google.com/p/mbfasturl

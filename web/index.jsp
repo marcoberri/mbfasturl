@@ -43,10 +43,10 @@
             body{
                 font-family:Verdana,Arial,Helvetica,sans;
                 font-size:12px;
-                background-image: url("${pageContext.request.contextPath}/img/pattern.gif");
+                background-image: url("/img/pattern.gif");
             }
 
-            ul{list-style-image:url("${pageContext.request.contextPath}/img/liststyleimage.png");}
+            ul{list-style-image:url("/img/liststyleimage.png");}
             .wrapper{
                 margin:40px 80px;
             }
@@ -70,7 +70,7 @@
 
         </style>
 
-        <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-2.0.3.min.js"></script>
+        <script type="text/javascript" src="/js/jquery-2.0.3.min.js"></script>
 
         <script type="text/javascript" language="JavaScript">
 
@@ -94,7 +94,7 @@
                 $('#loadingmessage').show();
 
                 $.ajax({
-                    url: "${pageContext.request.contextPath}/s",
+                    url: "/s",
                     data: {url: d},
                     dataType: "json",
                     type: 'POST'
@@ -121,14 +121,14 @@
                 <h1>MBFastUrl v.2.0</h1>
             </div>
 
-            <img src="${pageContext.request.contextPath}/q/0p"/>
+            <img src="/q/0p"/>
 
             <br />
 
             <div class="welcome">
                 <h2>Benvenuti sul sito di MbFastUrl V.2</h2>
                 <br/>
-                il progetto è disponibile in forma sorgente a <a href="${pageContext.request.contextPath}//r/9i">questo</a> indirizzo con relativa <a href="${pageContext.request.contextPath}//r/e7">documentazione</a> e <a href="${pageContext.request.contextPath}//r/8w">sorgenti</a><br/><br/>
+                il progetto è disponibile in forma sorgente a <a href="/r/9i">questo</a> indirizzo con relativa <a href="/r/e7">documentazione</a> e <a href="/r/8w">sorgenti</a><br/><br/>
 
             </div>
 
@@ -145,7 +145,7 @@
                         <b>Url:</b><br />
                         <input id="url" style="width: 450px;"  type="text" name="url" value="http://"/><input type="button" onclick="submit_this()" value="Genera Url Breve"/>
                         <div id='loadingmessage' style='display:none'>
-                            <img src='${pageContext.request.contextPath}/img/loading.gif' width="40px" height="40px"/>
+                            <img src='/img/loading.gif' width="40px" height="40px"/>
                         </div>                        
                     </div>
 
@@ -168,7 +168,7 @@
 
                 <br/><br/>
 
-                <a href="${pageContext.request.contextPath}//r/49">M.Berri</a>
+                <a href="/r/49">M.Berri</a>
 
             </div>
 

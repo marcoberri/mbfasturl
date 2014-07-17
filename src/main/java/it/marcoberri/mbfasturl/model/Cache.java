@@ -30,113 +30,117 @@ import org.bson.types.ObjectId;
 @Entity(value = "Cache", noClassnameStored = true)
 public class Cache {
 
-    @Id
-    private ObjectId id;
-    @Indexed(value = IndexDirection.ASC)
-    private String cacheKey;
-    @Indexed(value = IndexDirection.ASC)
-    private String servletName;
-    private Date create;
-    private Date lastRead;
-    private String gridId;
+	@Id
+	private ObjectId id;
+	@Indexed(value = IndexDirection.ASC)
+	private String cacheKey;
+	@Indexed(value = IndexDirection.ASC)
+	private String servletName;
+	private Date create;
+	private Date lastRead;
+	private String gridId;
 
-    /**
-     *
-     * @return
-     */
-    public String toJson() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
-    }
+	/**
+	 * @return the key
+	 */
+	public String getCacheKey() {
+		return cacheKey;
+	}
 
-    /**
-     * @return the id
-     */
-    public ObjectId getId() {
-        return id;
-    }
+	/**
+	 * @return the create
+	 */
+	public Date getCreate() {
+		return create;
+	}
 
-    /**
-     * @param id the id to set
-     */
-    public void setId(ObjectId id) {
-        this.id = id;
-    }
+	/**
+	 * @return the gridId
+	 */
+	public String getGridId() {
+		return gridId;
+	}
 
-    /**
-     * @return the key
-     */
-    public String getCacheKey() {
-        return cacheKey;
-    }
+	/**
+	 * @return the id
+	 */
+	public ObjectId getId() {
+		return id;
+	}
 
-    /**
-     *
-     * @return
-     */
-    public String getServletName() {
-        return servletName;
-    }
+	/**
+	 * @return the lastRead
+	 */
+	public Date getLastRead() {
+		return lastRead;
+	}
 
-    /**
-     * @param cacheKey 
-     */
-    public void setCacheKey(String cacheKey) {
-        this.cacheKey = cacheKey;
-    }
+	/**
+	 *
+	 * @return
+	 */
+	public String getServletName() {
+		return servletName;
+	}
 
-    /**
-     *
-     * @param servletName
-     */
-    public void setServletName(String servletName) {
-        this.servletName = servletName;
-    }
+	@PrePersist
+	void prePersist() {
+		setLastRead(new Date());
+	}
 
-    /**
-     * @return the create
-     */
-    public Date getCreate() {
-        return create;
-    }
+	/**
+	 * @param cacheKey
+	 */
+	public void setCacheKey(String cacheKey) {
+		this.cacheKey = cacheKey;
+	}
 
-    /**
-     * @param create the create to set
-     */
-    public void setCreate(Date create) {
-        this.create = create;
-    }
+	/**
+	 * @param create
+	 *            the create to set
+	 */
+	public void setCreate(Date create) {
+		this.create = create;
+	}
 
-    /**
-     * @return the lastRead
-     */
-    public Date getLastRead() {
-        return lastRead;
-    }
+	/**
+	 * @param gridId
+	 *            the gridId to set
+	 */
+	public void setGridId(String gridId) {
+		this.gridId = gridId;
+	}
 
-    /**
-     * @param lastRead the lastRead to set
-     */
-    public void setLastRead(Date lastRead) {
-        this.lastRead = lastRead;
-    }
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(ObjectId id) {
+		this.id = id;
+	}
 
-    @PrePersist
-    void prePersist() {
-        setLastRead(new Date());
-    }
+	/**
+	 * @param lastRead
+	 *            the lastRead to set
+	 */
+	public void setLastRead(Date lastRead) {
+		this.lastRead = lastRead;
+	}
 
-    /**
-     * @return the gridId
-     */
-    public String getGridId() {
-        return gridId;
-    }
+	/**
+	 *
+	 * @param servletName
+	 */
+	public void setServletName(String servletName) {
+		this.servletName = servletName;
+	}
 
-    /**
-     * @param gridId the gridId to set
-     */
-    public void setGridId(String gridId) {
-        this.gridId = gridId;
-    }
+	/**
+	 *
+	 * @return
+	 */
+	public String toJson() {
+		Gson gson = new Gson();
+		return gson.toJson(this);
+	}
 }

@@ -51,7 +51,7 @@
             "name": "fixLogIp",
             "class": "it.marcoberri.mbfasturl.cron.action.fix.QuartzFixLogIp",
             "enable": true,
-            "cron": "0 0/55 * * * ?"
+            "cron": "0 0/5 * * * ?"
         },
         
         {

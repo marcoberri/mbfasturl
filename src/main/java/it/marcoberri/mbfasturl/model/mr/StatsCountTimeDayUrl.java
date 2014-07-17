@@ -25,12 +25,10 @@ import com.google.gson.Gson;
 @Entity(value = "Stats.CountTimeDayUrl", noClassnameStored = true)
 public class StatsCountTimeDayUrl extends StatsBaseTime {
 
-    
-        @Override
-    public String toJson() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
-    }
-    
-    
+	@Override
+	public String toJson() {
+		Gson gson = new Gson();
+		return gson.toJson(this);
+	}
+
 }

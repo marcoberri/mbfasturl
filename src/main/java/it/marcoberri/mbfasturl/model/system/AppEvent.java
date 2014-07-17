@@ -27,126 +27,133 @@ import org.bson.types.ObjectId;
 @Entity(value = "App.event", noClassnameStored = true)
 public class AppEvent {
 
-    @Id
-    private ObjectId id;
-    private Date date = new Date();
-    private String action;
-    private boolean result = true;
-    private String note;
-    private String category;
-    private Long time;
+	@Id
+	private ObjectId id;
+	private Date date = new Date();
+	private String action;
+	private boolean result = true;
+	private String note;
+	private String category;
+	private Long time;
 
-    /**
-     * @return the id
-     */
-    public ObjectId getId() {
-        return id;
-    }
+	/**
+	 * @return the action
+	 */
+	public String getAction() {
+		return action;
+	}
 
-    /**
-     * @param id the id to set
-     */
-    public void setId(ObjectId id) {
-        this.id = id;
-    }
+	/**
+	 * @return the category
+	 */
+	public String getCategory() {
+		return category;
+	}
 
-    /**
-     * @return the date
-     */
-    public Date getDate() {
-        return date;
-    }
+	/**
+	 * @return the date
+	 */
+	public Date getDate() {
+		return date;
+	}
 
-    /**
-     * @param date the date to set
-     */
-    public void setDate(Date date) {
-        this.date = date;
-    }
+	/**
+	 * @return the id
+	 */
+	public ObjectId getId() {
+		return id;
+	}
 
-    /**
-     * @return the action
-     */
-    public String getAction() {
-        return action;
-    }
+	/**
+	 * @return the note
+	 */
+	public String getNote() {
+		return note;
+	}
 
-    /**
-     * @param action the action to set
-     */
-    public void setAction(String action) {
-        this.action = action;
-    }
+	/**
+	 * @return the result
+	 */
+	public boolean getResult() {
+		return isResult();
+	}
 
-    /**
-     * @return the result
-     */
-    public boolean getResult() {
-        return isResult();
-    }
+	/**
+	 * @return the time
+	 */
+	public Long getTime() {
+		return time;
+	}
 
-    /**
-     * @param result the result to set
-     */
-    public void setResult(boolean result) {
-        this.result = result;
-    }
+	/**
+	 * @return the result
+	 */
+	public boolean isResult() {
+		return result;
+	}
 
-    /**
-     *
-     * @return
-     */
-    public String toJson() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
-    }
+	/**
+	 * @param action
+	 *            the action to set
+	 */
+	public void setAction(String action) {
+		this.action = action;
+	}
 
-    /**
-     * @return the result
-     */
-    public boolean isResult() {
-        return result;
-    }
+	/**
+	 * @param category
+	 *            the category to set
+	 */
+	public void setCategory(String category) {
+		this.category = category;
+	}
 
-    /**
-     * @return the note
-     */
-    public String getNote() {
-        return note;
-    }
+	/**
+	 * @param date
+	 *            the date to set
+	 */
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
-    /**
-     * @param note the note to set
-     */
-    public void setNote(String note) {
-        this.note = note;
-    }
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(ObjectId id) {
+		this.id = id;
+	}
 
-    /**
-     * @return the category
-     */
-    public String getCategory() {
-        return category;
-    }
+	/**
+	 * @param note
+	 *            the note to set
+	 */
+	public void setNote(String note) {
+		this.note = note;
+	}
 
-    /**
-     * @param category the category to set
-     */
-    public void setCategory(String category) {
-        this.category = category;
-    }
+	/**
+	 * @param result
+	 *            the result to set
+	 */
+	public void setResult(boolean result) {
+		this.result = result;
+	}
 
-    /**
-     * @return the time
-     */
-    public Long getTime() {
-        return time;
-    }
+	/**
+	 * @param time
+	 *            the time to set
+	 */
+	public void setTime(Long time) {
+		this.time = time;
+	}
 
-    /**
-     * @param time the time to set
-     */
-    public void setTime(Long time) {
-        this.time = time;
-    }
+	/**
+	 *
+	 * @return
+	 */
+	public String toJson() {
+		Gson gson = new Gson();
+		return gson.toJson(this);
+	}
 }

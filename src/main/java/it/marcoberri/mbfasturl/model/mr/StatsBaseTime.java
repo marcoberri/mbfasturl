@@ -27,109 +27,107 @@ import com.google.gson.Gson;
 
 public class StatsBaseTime {
 
-    @Id
-    @Embedded
-    @Indexed(value = IndexDirection.ASC, unique = true, dropDups = true)
-    private IdObject id;
-    private String value;
-
-    /**
-     *
-     * @return
-     */
-    public String toJson() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getValue() {
-        return this.value;
-    }
-
-    /**
-     *
-     * @param value
-     */
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    /**
-     * @return the id
-     */
-    public IdObject getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(IdObject id) {
-        this.id = id;
-    }
-
-
-   
-
-    /**
+	/**
      *
      */
-    public static class IdObject {
+	public static class IdObject {
 
-        private String time;
-        private String url;
-        private String fast;
+		private String time;
+		private String url;
+		private String fast;
 
-        /**
-         *
-         * @param time
-         */
-        public void setTime(String time) {
-            this.time = time;
-        }
+		/**
+		 *
+		 * @return
+		 */
+		public String getFast() {
+			return this.fast;
+		}
 
-        /**
-         *
-         * @param url
-         */
-        public void setUrl(String url) {
-            this.url = url;
-        }
+		/**
+		 *
+		 * @return
+		 */
+		public String getTime() {
+			return this.time;
+		}
 
-        /**
-         *
-         * @param fast
-         */
-        public void setFast(String fast) {
-            this.fast = fast;
-        }
+		/**
+		 *
+		 * @return
+		 */
+		public String getUrl() {
+			return this.url;
+		}
 
-        /**
-         *
-         * @return
-         */
-        public String getFast() {
-            return this.fast;
-        }
+		/**
+		 *
+		 * @param fast
+		 */
+		public void setFast(String fast) {
+			this.fast = fast;
+		}
 
-        /**
-         *
-         * @return
-         */
-        public String getUrl() {
-            return this.url;
-        }
+		/**
+		 *
+		 * @param time
+		 */
+		public void setTime(String time) {
+			this.time = time;
+		}
 
-        /**
-         *
-         * @return
-         */
-        public String getTime() {
-            return this.time;
-        }
-    }
+		/**
+		 *
+		 * @param url
+		 */
+		public void setUrl(String url) {
+			this.url = url;
+		}
+	}
+	@Id
+	@Embedded
+	@Indexed(value = IndexDirection.ASC, unique = true, dropDups = true)
+	private IdObject id;
+
+	private String value;
+
+	/**
+	 * @return the id
+	 */
+	public IdObject getId() {
+		return id;
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	public String getValue() {
+		return this.value;
+	}
+
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(IdObject id) {
+		this.id = id;
+	}
+
+	/**
+	 *
+	 * @param value
+	 */
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	public String toJson() {
+		Gson gson = new Gson();
+		return gson.toJson(this);
+	}
 }

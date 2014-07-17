@@ -21,15 +21,15 @@ import com.google.gson.Gson;
  * @author Marco Berri <marcoberri@gmail.com>
  */
 
-public class LogQrcode extends Log{
+public class LogQrcode extends Log {
 
-    /**
-     *
-     * @return
-     */
-    @Override
-    public String toJson() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
-    }
+	/**
+	 *
+	 * @return
+	 */
+	@Override
+	public String toJson() {
+		Gson gson = new Gson();
+		return gson.toJson(this);
+	}
 }

@@ -26,10 +26,10 @@ import java.util.Date;
 @Entity(value = "Stats.CountTimeMonthUrl", noClassnameStored = true)
 public class StatsCountTimeMonthUrl extends StatsBaseTime {
 
-    @Override
-    public String toJson() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
-    }
+	@Override
+	public String toJson() {
+		Gson gson = new Gson();
+		return gson.toJson(this);
+	}
 
 }

@@ -25,14 +25,14 @@ import com.google.gson.Gson;
 @Entity(value = "Stats.CountSingleSite", noClassnameStored = true)
 public class StatsCountSingleSite extends StatsBaseSingle {
 
-    /**
-     *
-     * @return
-     */
-    @Override
-    public String toJson() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
-    }
-  
+	/**
+	 *
+	 * @return
+	 */
+	@Override
+	public String toJson() {
+		Gson gson = new Gson();
+		return gson.toJson(this);
+	}
+
 }

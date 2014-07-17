@@ -28,59 +28,62 @@ import com.google.gson.Gson;
 @Entity(value = "Stats.CountTimeMonthCountryUrl", noClassnameStored = true)
 public class StatsCountTimeMonthCountryUrl extends StatsBaseTime {
 
-    @Id
-    @Embedded
-    @Indexed(value = IndexDirection.ASC, unique = true, dropDups = true)
-    private IdObjectCountry id;
-
-    @Override
-    public String toJson() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(IdObjectCountry id) {
-        this.id = id;
-    }
-
-    /**
+	/**
      *
      */
-    public static class IdObjectCountry extends StatsBaseTime.IdObject {
+	public static class IdObjectCountry extends StatsBaseTime.IdObject {
 
-        private String countryIso;
-        private String country;
+		private String countryIso;
+		private String country;
 
-        /**
-         * @return the countryIso
-         */
-        public String getCountryIso() {
-            return countryIso;
-        }
+		/**
+		 * @return the country
+		 */
+		public String getCountry() {
+			return country;
+		}
 
-        /**
-         * @param countryIso the countryIso to set
-         */
-        public void setCountryIso(String countryIso) {
-            this.countryIso = countryIso;
-        }
+		/**
+		 * @return the countryIso
+		 */
+		public String getCountryIso() {
+			return countryIso;
+		}
 
-        /**
-         * @return the country
-         */
-        public String getCountry() {
-            return country;
-        }
+		/**
+		 * @param country
+		 *            the country to set
+		 */
+		public void setCountry(String country) {
+			this.country = country;
+		}
 
-        /**
-         * @param country the country to set
-         */
-        public void setCountry(String country) {
-            this.country = country;
-        }
+		/**
+		 * @param countryIso
+		 *            the countryIso to set
+		 */
+		public void setCountryIso(String countryIso) {
+			this.countryIso = countryIso;
+		}
 
-    }
+	}
+
+	@Id
+	@Embedded
+	@Indexed(value = IndexDirection.ASC, unique = true, dropDups = true)
+	private IdObjectCountry id;
+
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(IdObjectCountry id) {
+		this.id = id;
+	}
+
+	@Override
+	public String toJson() {
+		Gson gson = new Gson();
+		return gson.toJson(this);
+	}
 }

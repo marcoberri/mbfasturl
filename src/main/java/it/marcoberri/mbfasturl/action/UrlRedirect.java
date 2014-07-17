@@ -31,146 +31,157 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Marco Berri <marcoberri@gmail.com>
  */
-@WebServlet(name = "UrlRedirect", urlPatterns = {"/r/*"})
+@WebServlet(name = "UrlRedirect", urlPatterns = { "/r/*" })
 public class UrlRedirect extends HttpServlet {
 
-    /**
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8355549689203812326L;
+	/**
      *
      */
-    protected String charset = ConfigurationHelper.getProp().getProperty("app.charset", "UTF8");
-    /**
+	protected String charset = ConfigurationHelper.getProp().getProperty("app.charset", "UTF8");
+	/**
      *
      */
-    protected String proxyUrl = ConfigurationHelper.getProp().getProperty("url.proxy.url", null);
-    /**
+	protected String proxyUrl = ConfigurationHelper.getProp().getProperty("url.proxy.url", null);
+	/**
      *
      */
-    protected String proxyGetTo = ConfigurationHelper.getProp().getProperty("url.proxy.getto", "/");
-    /**
+	protected String proxyGetTo = ConfigurationHelper.getProp().getProperty("url.proxy.getto", "/");
+	/**
      *
      */
-    protected String proxyDomain = ConfigurationHelper.getProp().getProperty("url.proxy.domain", null);
-    /**
+	protected String proxyDomain = ConfigurationHelper.getProp().getProperty("url.proxy.domain", null);
+	/**
      *
      */
-    protected final Datastore ds = MongoConnectionHelper.ds;
+	protected final Datastore ds = MongoConnectionHelper.ds;
 
-    /**
-     * Processes requests for both HTTP
-     * <code>GET</code> and
-     * <code>POST</code> methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	// <editor-fold defaultstate="collapsed"
+	// desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+	/**
+	 * Handles the HTTP <code>GET</code> method.
+	 *
+	 * @param request
+	 *            servlet request
+	 * @param response
+	 *            servlet response
+	 * @throws ServletException
+	 *             if a servlet-specific error occurs
+	 * @throws IOException
+	 *             if an I/O error occurs
+	 */
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		processRequest(request, response);
+	}
 
-        final String fast = request.getPathInfo().replace("/", "");
+	/**
+	 * Handles the HTTP <code>POST</code> method.
+	 *
+	 * @param request
+	 *            servlet request
+	 * @param response
+	 *            servlet response
+	 * @throws ServletException
+	 *             if a servlet-specific error occurs
+	 * @throws IOException
+	 *             if an I/O error occurs
+	 */
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		processRequest(request, response);
+	}
 
-        try {
-            
-            final Url u = ds.find(Url.class, "fast", fast).get();
-            if (u == null) {
-                Commons.log.fatal("Url " + request.getPathInfo() + " not found");
-                response.sendError(HttpServletResponse.SC_NOT_FOUND);
-                return;
-            }
-            
-            final LogView logView = getHeader(request);
-            logView.setUrlId(u.getId());
-            logView.setUrl(u.getUrl());
-            logView.setFast(fast);
+	/**
+	 *
+	 * @param request
+	 * @return
+	 */
+	protected LogView getHeader(HttpServletRequest request) {
 
-            ds.save(logView);
-            response.sendRedirect(u.getRedirectComplete());
+		final LogView logView = new LogView();
 
+		Enumeration headerNames = request.getHeaderNames();
 
-        } catch (IOException e) {
-            Commons.log.fatal(e);
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
-        }
+		while (headerNames.hasMoreElements()) {
+			final String headerName = (String) headerNames.nextElement();
 
-    }
+			logView.addHeader(headerName.toLowerCase(), request.getHeader(headerName));
 
-    /**
-     *
-     * @param request
-     * @return
-     */
-    protected LogView getHeader(HttpServletRequest request) {
+		}
 
-        final LogView logView = new LogView();
+		logView.addHeader("request_remote_addr", request.getRemoteAddr());
+		logView.addHeader("request_remote_host", request.getRemoteHost());
+		logView.addHeader("request_remote_user", request.getRemoteUser());
+		logView.addHeader("request_remote_remote_port", "" + request.getRemotePort());
+		logView.addHeader("request_remote_url", "" + request.getRemotePort());
 
-        Enumeration headerNames = request.getHeaderNames();
+		// questo è da capire se ha senso
+		String ip = request.getRemoteAddr();
 
-        while (headerNames.hasMoreElements()) {
-            final String headerName = (String) headerNames.nextElement();
+		if (ip.equals("127.0.0.1") && logView.getHeaders().containsKey("x-forwarded-for")) {
 
-            logView.addHeader(headerName.toLowerCase(), request.getHeader(headerName));
+			logView.addHeader("MBURL_request_getRemoteAddr", ip);
+			ip = logView.getHeaders().get("x-forwarded-for");
+		}
 
-        }
+		logView.setIp(ip);
+		return logView;
 
-        logView.addHeader("request_remote_addr", request.getRemoteAddr());
-        logView.addHeader("request_remote_host", request.getRemoteHost());
-        logView.addHeader("request_remote_user", request.getRemoteUser());
-        logView.addHeader("request_remote_remote_port", "" + request.getRemotePort());
-        logView.addHeader("request_remote_url", "" + request.getRemotePort());
+	}
 
-        //questo è da capire se ha senso
-        String ip = request.getRemoteAddr();
+	/**
+	 * Returns a short description of the servlet.
+	 *
+	 * @return a String containing servlet description
+	 */
+	@Override
+	public String getServletInfo() {
+		return "Redirect functionality";
+	}// </editor-fold>
 
-        if (ip.equals("127.0.0.1") && logView.getHeaders().containsKey("x-forwarded-for")) {
+	/**
+	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+	 * methods.
+	 *
+	 * @param request
+	 *            servlet request
+	 * @param response
+	 *            servlet response
+	 * @throws ServletException
+	 *             if a servlet-specific error occurs
+	 * @throws IOException
+	 *             if an I/O error occurs
+	 */
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-            logView.addHeader("MBURL_request_getRemoteAddr", ip);
-            ip = logView.getHeaders().get("x-forwarded-for");
-        }
-        
-        logView.setIp(ip);
-        return logView;
+		final String fast = request.getPathInfo().replace("/", "");
 
-    }
+		try {
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP
-     * <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
+			final Url u = ds.find(Url.class, "fast", fast).get();
+			if (u == null) {
+				Commons.log.fatal("Url " + request.getPathInfo() + " not found");
+				response.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
 
-    /**
-     * Handles the HTTP
-     * <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
+			final LogView logView = getHeader(request);
+			logView.setUrlId(u.getId());
+			logView.setUrl(u.getUrl());
+			logView.setFast(fast);
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Redirect functionality";
-    }// </editor-fold>
+			ds.save(logView);
+			response.sendRedirect(u.getRedirectComplete());
+
+		} catch (IOException e) {
+			Commons.log.fatal(e);
+			response.sendError(HttpServletResponse.SC_NOT_FOUND);
+		}
+
+	}
 
 }

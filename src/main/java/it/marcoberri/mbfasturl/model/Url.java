@@ -31,202 +31,211 @@ import org.bson.types.ObjectId;
 @Entity(value = "Url.url", noClassnameStored = true)
 public class Url {
 
-    @Id
-    private ObjectId id;
-    @Indexed(value = IndexDirection.ASC, name = "fast", unique = true, dropDups = true)
-    private String fast;
-    @Indexed(value = IndexDirection.ASC, name = "url", unique = true, dropDups = true)
-    private String url;
-    private Date created;
-    private Date ending;
-    private String protocol = "http";
-    private int port = 80;
-    private ObjectId qrcodeSmall;
-    private ObjectId qrcodeMedium;
-    private ObjectId qrcodeBig;
-    @Transient
-    private String urlComplete;
+	@Id
+	private ObjectId id;
+	@Indexed(value = IndexDirection.ASC, name = "fast", unique = true, dropDups = true)
+	private String fast;
+	@Indexed(value = IndexDirection.ASC, name = "url", unique = true, dropDups = true)
+	private String url;
+	private Date created;
+	private Date ending;
+	private String protocol = "http";
+	private int port = 80;
+	private ObjectId qrcodeSmall;
+	private ObjectId qrcodeMedium;
+	private ObjectId qrcodeBig;
+	@Transient
+	private String urlComplete;
 
-    /**
-     * @return the id
-     */
-    public ObjectId getId() {
-        return id;
-    }
+	/**
+	 * @return the created
+	 */
+	public Date getCreated() {
+		return created;
+	}
 
-    /**
-     * @param id the id to set
-     */
-    public void setId(ObjectId id) {
-        this.id = id;
-    }
+	/**
+	 * @return the ending
+	 */
+	public Date getEnding() {
+		return ending;
+	}
 
-    @PrePersist
-    void prePersist() {
-        if (getCreated() == null) {
-            setCreated(new Date());
-        }
-        if (getProtocol() == null) {
-            setProtocol("http");
-        }
-  }
+	/**
+	 * @return the fast
+	 */
+	public String getFast() {
+		return fast;
+	}
 
-    /**
-     *
-     * @return
-     */
-    public String toJson() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
-    }
+	/**
+	 * @return the id
+	 */
+	public ObjectId getId() {
+		return id;
+	}
 
-    /**
-     * @return the fast
-     */
-    public String getFast() {
-        return fast;
-    }
+	/**
+	 * @return the port
+	 */
+	public int getPort() {
+		return port;
+	}
 
-    /**
-     * @param fast the fast to set
-     */
-    public void setFast(String fast) {
-        this.fast = fast;
-    }
+	/**
+	 * @return the protocol
+	 */
+	public String getProtocol() {
+		return protocol;
+	}
 
-    /**
-     * @return the url
-     */
-    public String getUrl() {
-        return url;
-    }
+	/**
+	 * @return the qrcodeBig
+	 */
+	public ObjectId getQrcodeBig() {
+		return qrcodeBig;
+	}
 
-    /**
-     * @param url the url to set
-     */
-    public void setUrl(String url) {
-        this.url = url;
-    }
+	/**
+	 * @return the qrcodeMedium
+	 */
+	public ObjectId getQrcodeMedium() {
+		return qrcodeMedium;
+	}
 
-    /**
-     * @return the created
-     */
-    public Date getCreated() {
-        return created;
-    }
+	/**
+	 * @return the qrcodeSmall
+	 */
+	public ObjectId getQrcodeSmall() {
+		return qrcodeSmall;
+	}
 
-    /**
-     * @param created the created to set
-     */
-    public void setCreated(Date created) {
-        this.created = created;
-    }
+	/**
+	 *
+	 * @return
+	 */
+	public String getRedirectComplete() {
+		return this.protocol + "://" + (this.url).replaceAll("//", "/");
+	}
 
-    /**
-     * @return the ending
-     */
-    public Date getEnding() {
-        return ending;
-    }
+	/**
+	 * @return the url
+	 */
+	public String getUrl() {
+		return url;
+	}
 
-    /**
-     * @param ending the ending to set
-     */
-    public void setEnding(Date ending) {
-        this.ending = ending;
-    }
+	/**
+	 * @return the urlComplete
+	 */
+	public String getUrlComplete() {
+		return urlComplete;
+	}
 
+	@PrePersist
+	void prePersist() {
+		if (getCreated() == null) {
+			setCreated(new Date());
+		}
+		if (getProtocol() == null) {
+			setProtocol("http");
+		}
+	}
 
-    /**
-     * @return the protocol
-     */
-    public String getProtocol() {
-        return protocol;
-    }
+	/**
+	 * @param created
+	 *            the created to set
+	 */
+	public void setCreated(Date created) {
+		this.created = created;
+	}
 
-    /**
-     * @param protocol the protocol to set
-     */
-    public void setProtocol(String protocol) {
-        this.protocol = protocol;
-    }
+	/**
+	 * @param ending
+	 *            the ending to set
+	 */
+	public void setEnding(Date ending) {
+		this.ending = ending;
+	}
 
-    /**
-     * @return the urlComplete
-     */
-    public String getUrlComplete() {
-        return urlComplete;
-    }
+	/**
+	 * @param fast
+	 *            the fast to set
+	 */
+	public void setFast(String fast) {
+		this.fast = fast;
+	}
 
-    /**
-     *
-     * @return
-     */
-    public String getRedirectComplete() {
-        return this.protocol + "://" + (this.url).replaceAll("//","/");
-    }
-        
-    /**
-     * @param urlComplete the urlComplete to set
-     */
-    public void setUrlComplete(String urlComplete) {
-        this.urlComplete = urlComplete + "/" + fast;
-    }
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(ObjectId id) {
+		this.id = id;
+	}
 
-    /**
-     * @return the port
-     */
-    public int getPort() {
-        return port;
-    }
+	/**
+	 * @param port
+	 *            the port to set
+	 */
+	public void setPort(int port) {
+		this.port = port;
+	}
 
-    /**
-     * @param port the port to set
-     */
-    public void setPort(int port) {
-        this.port = port;
-    }
+	/**
+	 * @param protocol
+	 *            the protocol to set
+	 */
+	public void setProtocol(String protocol) {
+		this.protocol = protocol;
+	}
 
- 
-    /**
-     * @return the qrcodeSmall
-     */
-    public ObjectId getQrcodeSmall() {
-        return qrcodeSmall;
-    }
+	/**
+	 * @param qrcodeBig
+	 *            the qrcodeBig to set
+	 */
+	public void setQrcodeBig(ObjectId qrcodeBig) {
+		this.qrcodeBig = qrcodeBig;
+	}
 
-    /**
-     * @param qrcodeSmall the qrcodeSmall to set
-     */
-    public void setQrcodeSmall(ObjectId qrcodeSmall) {
-        this.qrcodeSmall = qrcodeSmall;
-    }
+	/**
+	 * @param qrcodeMedium
+	 *            the qrcodeMedium to set
+	 */
+	public void setQrcodeMedium(ObjectId qrcodeMedium) {
+		this.qrcodeMedium = qrcodeMedium;
+	}
 
-    /**
-     * @return the qrcodeMedium
-     */
-    public ObjectId getQrcodeMedium() {
-        return qrcodeMedium;
-    }
+	/**
+	 * @param qrcodeSmall
+	 *            the qrcodeSmall to set
+	 */
+	public void setQrcodeSmall(ObjectId qrcodeSmall) {
+		this.qrcodeSmall = qrcodeSmall;
+	}
 
-    /**
-     * @param qrcodeMedium the qrcodeMedium to set
-     */
-    public void setQrcodeMedium(ObjectId qrcodeMedium) {
-        this.qrcodeMedium = qrcodeMedium;
-    }
+	/**
+	 * @param url
+	 *            the url to set
+	 */
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
-    /**
-     * @return the qrcodeBig
-     */
-    public ObjectId getQrcodeBig() {
-        return qrcodeBig;
-    }
+	/**
+	 * @param urlComplete
+	 *            the urlComplete to set
+	 */
+	public void setUrlComplete(String urlComplete) {
+		this.urlComplete = urlComplete + "/" + fast;
+	}
 
-    /**
-     * @param qrcodeBig the qrcodeBig to set
-     */
-    public void setQrcodeBig(ObjectId qrcodeBig) {
-        this.qrcodeBig = qrcodeBig;
-    }
+	/**
+	 *
+	 * @return
+	 */
+	public String toJson() {
+		Gson gson = new Gson();
+		return gson.toJson(this);
+	}
 }

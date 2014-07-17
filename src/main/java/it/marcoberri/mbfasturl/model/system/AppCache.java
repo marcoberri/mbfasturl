@@ -14,7 +14,6 @@
  */
 package it.marcoberri.mbfasturl.model.system;
 
-
 import com.google.gson.Gson;
 
 import java.util.Date;
@@ -30,82 +29,78 @@ import org.mongodb.morphia.annotations.Id;
 @Entity(value = "App.cache", noClassnameStored = true)
 public class AppCache {
 
-    @Id
-    private ObjectId id;
-    private Date time;
-    private String key;
-    private String data;
-    
+	@Id
+	private ObjectId id;
+	private Date time;
+	private String key;
+	private String data;
 
-    /**
-     * @return the id
-     */
-    public ObjectId getId() {
-        return id;
-    }
+	/**
+	 * @return the data
+	 */
+	public String getData() {
+		return data;
+	}
 
-    /**
-     * @param id the id to set
-     */
-    public void setId(ObjectId id) {
-        this.id = id;
-    }
+	/**
+	 * @return the id
+	 */
+	public ObjectId getId() {
+		return id;
+	}
 
-    /**
-     * @return the date
-     */
-    public Date getTime() {
-        return time;
-    }
+	/**
+	 * @return the key
+	 */
+	public String getKey() {
+		return key;
+	}
 
-    /**
-     * @param time
-     */
-    public void setTime(Date time) {
-        this.time = time;
-    }
+	/**
+	 * @return the date
+	 */
+	public Date getTime() {
+		return time;
+	}
 
+	/**
+	 * @param data
+	 *            the data to set
+	 */
+	public void setData(String data) {
+		this.data = data;
+	}
 
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(ObjectId id) {
+		this.id = id;
+	}
 
-    /**
-     *
-     * @return
-     */
-    public String toJson() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
-    }
+	/**
+	 * @param key
+	 *            the key to set
+	 */
+	public void setKey(String key) {
+		this.key = key;
+	}
 
-    /**
-     * @return the key
-     */
-    public String getKey() {
-        return key;
-    }
+	/**
+	 * @param time
+	 */
+	public void setTime(Date time) {
+		this.time = time;
+	}
 
-    /**
-     * @param key the key to set
-     */
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    /**
-     * @return the data
-     */
-    public String getData() {
-        return data;
-    }
-
-    /**
-     * @param data the data to set
-     */
-    public void setData(String data) {
-        this.data = data;
-    }
-
-
-
-
+	/**
+	 *
+	 * @return
+	 */
+	public String toJson() {
+		Gson gson = new Gson();
+		return gson.toJson(this);
+	}
 
 }

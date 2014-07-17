@@ -32,78 +32,79 @@ import org.json.simple.parser.ParseException;
  */
 public final class ConfigurationHelper {
 
-    private static final ConfigurationHelper INSTANCE = new ConfigurationHelper();
-    /**
+	/**
+	 * @return the cron
+	 */
+	public static JSONArray getCron() {
+		return cron;
+	}
+	/**
+	 * @return the prop
+	 */
+	public static Properties getProp() {
+		return prop;
+	}
+	/**
+	 *
+	 * @return
+	 */
+	public static ConfigurationHelper instance() {
+		return INSTANCE;
+	}
+
+	/**
+	 * @param aCron
+	 *            the cron to set
+	 */
+	public static void setCron(JSONArray aCron) {
+		cron = aCron;
+	}
+
+	/**
+	 * @param aProp
+	 *            the prop to set
+	 */
+	public static void setProp(Properties aProp) {
+		prop = aProp;
+	}
+
+	private static final ConfigurationHelper INSTANCE = new ConfigurationHelper();
+
+	/**
      *
      */
-    private static Properties prop;
-    private static JSONArray cron;
+	private static Properties prop;
 
-    /**
-     * @return the prop
-     */
-    public static Properties getProp() {
-        return prop;
-    }
+	private static JSONArray cron;
 
-    /**
-     * @param aProp the prop to set
-     */
-    public static void setProp(Properties aProp) {
-        prop = aProp;
-    }
+	private ConfigurationHelper() {
+		try {
+			final URL main = getClass().getProtectionDomain().getCodeSource().getLocation();
+			final String path = URLDecoder.decode(main.getPath(), "utf-8");
+			final String webInfFolderPosition = new File(path).getPath();
+			final String webInfFolder = webInfFolderPosition.substring(0, webInfFolderPosition.indexOf("classes"));
+			prop = new Properties();
+			prop.load(FileUtils.openInputStream(new File(webInfFolder + File.separator + "config.properties")));
 
-    /**
-     * @return the cron
-     */
-    public static JSONArray getCron() {
-        return cron;
-    }
+			final JSONParser parser = new JSONParser();
 
-    /**
-     * @param aCron the cron to set
-     */
-    public static void setCron(JSONArray aCron) {
-        cron = aCron;
-    }
+			final Object obj = parser.parse(new FileReader(webInfFolder + File.separator + "cron.json"));
+			final JSONObject jsonObject = (JSONObject) obj;
+			ConfigurationHelper.cron = (JSONArray) jsonObject.get("cron");
 
-    private ConfigurationHelper() {
-        try {
-            final URL main = getClass().getProtectionDomain().getCodeSource().getLocation();
-            final String path = URLDecoder.decode(main.getPath(), "utf-8");
-            final String webInfFolderPosition = new File(path).getPath();
-            final String webInfFolder = webInfFolderPosition.substring(0, webInfFolderPosition.indexOf("classes"));
-            prop = new Properties();
-            prop.load(FileUtils.openInputStream(new File(webInfFolder + File.separator + "config.properties")));
+		} catch (IOException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		} catch (ParseException ex) {
+			throw new RuntimeException(ex.getMessage(), ex);
+		}
+	}
 
-
-            final JSONParser parser = new JSONParser();
-
-            final Object obj = parser.parse(new FileReader(webInfFolder + File.separator + "cron.json"));
-            final JSONObject jsonObject = (JSONObject) obj;
-            ConfigurationHelper.cron = (JSONArray) jsonObject.get("cron");
-
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        } catch (ParseException ex) {
-            throw new RuntimeException(ex.getMessage(), ex);
-        }
-    }
-
-    /**
-     *
-     * @return
-     */
-    public static ConfigurationHelper instance() {
-        return INSTANCE;
-    }
-
-    /**
-     *
-     * @param key
-     * @return
-     */
-    public String getProperty(String key) {
-        return ConfigurationHelper.getProp().getProperty(key);
-    }
+	/**
+	 *
+	 * @param key
+	 * @return
+	 */
+	public String getProperty(String key) {
+		return ConfigurationHelper.getProp().getProperty(key);
+	}
 }

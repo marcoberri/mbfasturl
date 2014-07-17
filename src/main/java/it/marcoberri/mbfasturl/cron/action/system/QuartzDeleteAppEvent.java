@@ -32,26 +32,26 @@ import org.quartz.JobExecutionException;
  */
 public class QuartzDeleteAppEvent implements Job {
 
-    /**
+	/**
      *
      */
-    protected static final org.apache.log4j.Logger log = Log4j.getLogger(QuartzDeleteAppEvent.class.getSimpleName(), ConfigurationHelper.getProp().getProperty("log.path"), Log4j.ROTATE_DAILY);
-    private static final long LAST_DAY_IN_MS = 1000 * 60 * 60 * 24;
+	protected static final org.apache.log4j.Logger log = Log4j.getLogger(QuartzDeleteAppEvent.class.getSimpleName(), ConfigurationHelper.getProp().getProperty("log.path"), Log4j.ROTATE_DAILY);
+	private static final long LAST_DAY_IN_MS = 1000 * 60 * 60 * 24;
 
-    /**
-     *
-     * @param jec
-     * @throws JobExecutionException
-     */
-    @Override
-    public void execute(JobExecutionContext jec) throws JobExecutionException {
-        final long ts = System.currentTimeMillis();
-        final Datastore ds = MongoConnectionHelper.ds;
-        final Date d = new Date(System.currentTimeMillis() - (LAST_DAY_IN_MS * 10));
-        final Query q = ds.createQuery(AppEvent.class).field("date").lessThan(d);
-        long count = q.countAll();
-        ds.delete(q);
-        writeEventLog("deleteAppCache", true, "tot elements deleted:  " + count, "System", (System.currentTimeMillis() - ts));
+	/**
+	 *
+	 * @param jec
+	 * @throws JobExecutionException
+	 */
+	@Override
+	public void execute(JobExecutionContext jec) throws JobExecutionException {
+		final long ts = System.currentTimeMillis();
+		final Datastore ds = MongoConnectionHelper.ds;
+		final Date d = new Date(System.currentTimeMillis() - (LAST_DAY_IN_MS * 10));
+		final Query q = ds.createQuery(AppEvent.class).field("date").lessThan(d);
+		long count = q.countAll();
+		ds.delete(q);
+		writeEventLog("deleteAppCache", true, "tot elements deleted:  " + count, "System", (System.currentTimeMillis() - ts));
 
-    }
+	}
 }

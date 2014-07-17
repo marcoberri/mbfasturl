@@ -30,211 +30,216 @@ import org.bson.types.ObjectId;
 @Entity("Log.ip")
 public class IpSpecify {
 
-    @Id
-    private ObjectId id;
-    @Indexed
-    private String ip;
-    private String city;
-    private String postalIso;
-    private String continent;
-    private String continentIso;
-    private String country;
-    private String countryIso;
-    private String division;
-    private String divisionIso;
-    @Indexed(IndexDirection.GEO2D)
-    private double[] loc;    
-    private Date created = new Date();
-    
-    
-    
-    
+	@Id
+	private ObjectId id;
+	@Indexed
+	private String ip;
+	private String city;
+	private String postalIso;
+	private String continent;
+	private String continentIso;
+	private String country;
+	private String countryIso;
+	private String division;
+	private String divisionIso;
+	@Indexed(IndexDirection.GEO2D)
+	private double[] loc;
+	private Date created = new Date();
 
-    @PrePersist
-    void prePersist() {
-        if (getCreated() == null) {
-            setCreated(new Date());
-        }
-    }
+	/**
+	 * @return the city
+	 */
+	public String getCity() {
+		return city;
+	}
 
-    /**
-     * @return the id
-     */
-    public ObjectId getId() {
-        return id;
-    }
+	/**
+	 * @return the continent
+	 */
+	public String getContinent() {
+		return continent;
+	}
 
-    /**
-     * @param id the id to set
-     */
-    public void setId(ObjectId id) {
-        this.id = id;
-    }
+	/**
+	 * @return the continentIso
+	 */
+	public String getContinentIso() {
+		return continentIso;
+	}
 
-    /**
-     *
-     * @return
-     */
-    public String toJson() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
-    }
+	/**
+	 * @return the country
+	 */
+	public String getCountry() {
+		return country;
+	}
 
-    /**
-     * @return the created
-     */
-    public Date getCreated() {
-        return created;
-    }
+	/**
+	 * @return the countryIso
+	 */
+	public String getCountryIso() {
+		return countryIso;
+	}
 
-    /**
-     * @param created the created to set
-     */
-    public void setCreated(Date created) {
-        this.created = created;
-    }
+	/**
+	 * @return the created
+	 */
+	public Date getCreated() {
+		return created;
+	}
 
+	/**
+	 * @return the division
+	 */
+	public String getDivision() {
+		return division;
+	}
 
+	/**
+	 * @return the divisionIso
+	 */
+	public String getDivisionIso() {
+		return divisionIso;
+	}
 
-    /**
-     * @return the ip
-     */
-    public String getIp() {
-        return ip;
-    }
+	/**
+	 * @return the id
+	 */
+	public ObjectId getId() {
+		return id;
+	}
 
-    /**
-     * @param ip the ip to set
-     */
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
+	/**
+	 * @return the ip
+	 */
+	public String getIp() {
+		return ip;
+	}
 
-    /**
-     * @return the city
-     */
-    public String getCity() {
-        return city;
-    }
+	/**
+	 * @return the loc
+	 */
+	public double[] getLoc() {
+		return loc;
+	}
 
-    /**
-     * @param city the city to set
-     */
-    public void setCity(String city) {
-        this.city = city;
-    }
+	/**
+	 * @return the postalIso
+	 */
+	public String getPostalIso() {
+		return postalIso;
+	}
 
-    /**
-     * @return the postalIso
-     */
-    public String getPostalIso() {
-        return postalIso;
-    }
+	@PrePersist
+	void prePersist() {
+		if (getCreated() == null) {
+			setCreated(new Date());
+		}
+	}
 
-    /**
-     * @param postalIso the postalIso to set
-     */
-    public void setPostalIso(String postalIso) {
-        this.postalIso = postalIso;
-    }
+	/**
+	 * @param city
+	 *            the city to set
+	 */
+	public void setCity(String city) {
+		this.city = city;
+	}
 
-    /**
-     * @return the continent
-     */
-    public String getContinent() {
-        return continent;
-    }
+	/**
+	 * @param continent
+	 *            the continent to set
+	 */
+	public void setContinent(String continent) {
+		this.continent = continent;
+	}
 
-    /**
-     * @param continent the continent to set
-     */
-    public void setContinent(String continent) {
-        this.continent = continent;
-    }
+	/**
+	 * @param continentIso
+	 *            the continentIso to set
+	 */
+	public void setContinentIso(String continentIso) {
+		this.continentIso = continentIso;
+	}
 
-    /**
-     * @return the continentIso
-     */
-    public String getContinentIso() {
-        return continentIso;
-    }
+	/**
+	 * @param country
+	 *            the country to set
+	 */
+	public void setCountry(String country) {
+		this.country = country;
+	}
 
-    /**
-     * @param continentIso the continentIso to set
-     */
-    public void setContinentIso(String continentIso) {
-        this.continentIso = continentIso;
-    }
+	/**
+	 * @param countryIso
+	 *            the countryIso to set
+	 */
+	public void setCountryIso(String countryIso) {
+		this.countryIso = countryIso;
+	}
 
-    /**
-     * @return the country
-     */
-    public String getCountry() {
-        return country;
-    }
+	/**
+	 * @param created
+	 *            the created to set
+	 */
+	public void setCreated(Date created) {
+		this.created = created;
+	}
 
-    /**
-     * @param country the country to set
-     */
-    public void setCountry(String country) {
-        this.country = country;
-    }
+	/**
+	 * @param division
+	 *            the division to set
+	 */
+	public void setDivision(String division) {
+		this.division = division;
+	}
 
-    /**
-     * @return the countryIso
-     */
-    public String getCountryIso() {
-        return countryIso;
-    }
+	/**
+	 * @param divisionIso
+	 *            the divisionIso to set
+	 */
+	public void setDivisionIso(String divisionIso) {
+		this.divisionIso = divisionIso;
+	}
 
-    /**
-     * @param countryIso the countryIso to set
-     */
-    public void setCountryIso(String countryIso) {
-        this.countryIso = countryIso;
-    }
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(ObjectId id) {
+		this.id = id;
+	}
 
-    /**
-     * @return the division
-     */
-    public String getDivision() {
-        return division;
-    }
+	/**
+	 * @param ip
+	 *            the ip to set
+	 */
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
 
-    /**
-     * @param division the division to set
-     */
-    public void setDivision(String division) {
-        this.division = division;
-    }
+	/**
+	 * @param loc
+	 *            the loc to set
+	 */
+	public void setLoc(double[] loc) {
+		this.loc = loc;
+	}
 
-    /**
-     * @return the divisionIso
-     */
-    public String getDivisionIso() {
-        return divisionIso;
-    }
+	/**
+	 * @param postalIso
+	 *            the postalIso to set
+	 */
+	public void setPostalIso(String postalIso) {
+		this.postalIso = postalIso;
+	}
 
-    /**
-     * @param divisionIso the divisionIso to set
-     */
-    public void setDivisionIso(String divisionIso) {
-        this.divisionIso = divisionIso;
-    }
-
-    /**
-     * @return the loc
-     */
-    public double[] getLoc() {
-        return loc;
-    }
-
-    /**
-     * @param loc the loc to set
-     */
-    public void setLoc(double[] loc) {
-        this.loc = loc;
-    }
-
+	/**
+	 *
+	 * @return
+	 */
+	public String toJson() {
+		Gson gson = new Gson();
+		return gson.toJson(this);
+	}
 
 }

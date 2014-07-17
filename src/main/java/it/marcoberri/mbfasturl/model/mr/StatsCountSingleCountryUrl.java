@@ -25,14 +25,14 @@ import com.google.gson.Gson;
 @Entity(value = "Stats.CountSingleCountryUrl", noClassnameStored = true)
 public class StatsCountSingleCountryUrl extends StatsBaseSingle {
 
-    /**
-     *
-     * @return
-     */
-    @Override
-    public String toJson() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
-    }
-  
+	/**
+	 *
+	 * @return
+	 */
+	@Override
+	public String toJson() {
+		Gson gson = new Gson();
+		return gson.toJson(this);
+	}
+
 }

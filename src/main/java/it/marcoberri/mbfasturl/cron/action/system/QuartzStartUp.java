@@ -26,20 +26,19 @@ import org.quartz.JobExecutionException;
  */
 public class QuartzStartUp implements Job {
 
-    /**
+	/**
      *
      */
-    protected static final org.apache.log4j.Logger log = Log4j.getLogger(QuartzStartUp.class.getSimpleName(), ConfigurationHelper.getProp().getProperty("log.path"), Log4j.ROTATE_DAILY);
+	protected static final org.apache.log4j.Logger log = Log4j.getLogger(QuartzStartUp.class.getSimpleName(), ConfigurationHelper.getProp().getProperty("log.path"), Log4j.ROTATE_DAILY);
 
-    /**
-     *
-     * @param jec
-     * @throws JobExecutionException
-     */
-    @Override
-    public void execute(JobExecutionContext jec) throws JobExecutionException {
-  
+	/**
+	 *
+	 * @param jec
+	 * @throws JobExecutionException
+	 */
+	@Override
+	public void execute(JobExecutionContext jec) throws JobExecutionException {
 
-    }
+	}
 
 }

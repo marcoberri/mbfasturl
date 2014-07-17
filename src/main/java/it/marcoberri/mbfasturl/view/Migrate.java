@@ -29,59 +29,44 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Marco Berri <marcoberri@gmail.com>
  */
-@WebServlet(name = "Migrate", urlPatterns = {"/Migrate"})
+@WebServlet(name = "Migrate", urlPatterns = { "/Migrate" })
 public class Migrate extends HttpServlet {
-/*
-    protected final static org.apache.log4j.Logger log = Log4j.getLogger("migrate", ConfigurationHelper.getProp().getProperty("log.path"), Log4j.ROTATE_DAILY);
-
-  protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
-
-        final MigradeThread m = new MigradeThread();
-        new Thread(m).start();
-
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Migration tools</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Migration tools start now </h1>");
-            out.println("</body>");
-            out.println("</html>");
-        } finally {
-            out.close();
-        }
-    }
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-}
-
-class MigradeThread implements Runnable {
-
-    @Override
-    public void run() {
-        final MigrateTools migrate = new MigrateTools();
-        migrate.dropDB();
-        migrate.exportJson();
-        migrate.importJson();
-    }
-    */
+	/*
+	 * protected final static org.apache.log4j.Logger log =
+	 * Log4j.getLogger("migrate",
+	 * ConfigurationHelper.getProp().getProperty("log.path"),
+	 * Log4j.ROTATE_DAILY);
+	 * 
+	 * protected void processRequest(HttpServletRequest request,
+	 * HttpServletResponse response) throws ServletException, IOException {
+	 * 
+	 * 
+	 * 
+	 * final MigradeThread m = new MigradeThread(); new Thread(m).start();
+	 * 
+	 * response.setContentType("text/html;charset=UTF-8"); PrintWriter out =
+	 * response.getWriter(); try { out.println("<html>"); out.println("<head>");
+	 * out.println("<title>Migration tools</title>"); out.println("</head>");
+	 * out.println("<body>");
+	 * out.println("<h1>Migration tools start now </h1>");
+	 * out.println("</body>"); out.println("</html>"); } finally { out.close();
+	 * } }
+	 * 
+	 * @Override protected void doGet(HttpServletRequest request,
+	 * HttpServletResponse response) throws ServletException, IOException {
+	 * processRequest(request, response); }
+	 * 
+	 * @Override protected void doPost(HttpServletRequest request,
+	 * HttpServletResponse response) throws ServletException, IOException {
+	 * processRequest(request, response); }
+	 * 
+	 * @Override public String getServletInfo() { return "Short description";
+	 * }// </editor-fold> }
+	 * 
+	 * class MigradeThread implements Runnable {
+	 * 
+	 * @Override public void run() { final MigrateTools migrate = new
+	 * MigrateTools(); migrate.dropDB(); migrate.exportJson();
+	 * migrate.importJson(); }
+	 */
 }

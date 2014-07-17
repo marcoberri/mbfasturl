@@ -25,59 +25,62 @@ import org.bson.types.ObjectId;
 
 public class User {
 
-    @Id
-    private ObjectId id;
-    private String username;
-    private String password;
+	@Id
+	private ObjectId id;
+	private String username;
+	private String password;
 
-    /**
-     * @return the id
-     */
-    public ObjectId getId() {
-        return id;
-    }
+	/**
+	 * @return the id
+	 */
+	public ObjectId getId() {
+		return id;
+	}
 
-    /**
-     * @param id the id to set
-     */
-    public void setId(ObjectId id) {
-        this.id = id;
-    }
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
 
-    /**
-     * @return the username
-     */
-    public String getUsername() {
-        return username;
-    }
+	/**
+	 * @return the username
+	 */
+	public String getUsername() {
+		return username;
+	}
 
-    /**
-     * @param username the username to set
-     */
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(ObjectId id) {
+		this.id = id;
+	}
 
-    /**
-     * @return the password
-     */
-    public String getPassword() {
-        return password;
-    }
+	/**
+	 * @param password
+	 *            the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    /**
-     * @param password the password to set
-     */
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    
-    /**
-     *
-     * @param password
-     */
-    public void setPasswordPlain(String password) {
-        this.password = DigestUtils.sha256Hex(password);
-    }
+	/**
+	 *
+	 * @param password
+	 */
+	public void setPasswordPlain(String password) {
+		this.password = DigestUtils.sha256Hex(password);
+	}
+
+	/**
+	 * @param username
+	 *            the username to set
+	 */
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
 }

@@ -26,49 +26,49 @@ import com.google.gson.Gson;
 
 public class StatsBaseSingle {
 
-    @Id
-    @Indexed(value = IndexDirection.ASC,dropDups = true)
-    private String id;
-    private String value;
+	@Id
+	@Indexed(value = IndexDirection.ASC, dropDups = true)
+	private String id;
+	private String value;
 
-    /**
-     *
-     * @return
-     */
-    public String toJson() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
-    }
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+		return id;
+	}
 
-    /**
-     *
-     * @return
-     */
-    public String getValue() {
-        return this.value;
-    }
+	/**
+	 *
+	 * @return
+	 */
+	public String getValue() {
+		return this.value;
+	}
 
-    /**
-     *
-     * @param value
-     */
-    public void setValue(String value) {
-        this.value = value;
-    }
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    /**
-     * @return the id
-     */
-    public String getId() {
-        return id;
-    }
+	/**
+	 *
+	 * @param value
+	 */
+	public void setValue(String value) {
+		this.value = value;
+	}
 
-    /**
-     * @param id the id to set
-     */
-    public void setId(String id) {
-        this.id = id;
-    }
+	/**
+	 *
+	 * @return
+	 */
+	public String toJson() {
+		Gson gson = new Gson();
+		return gson.toJson(this);
+	}
 
-  
 }

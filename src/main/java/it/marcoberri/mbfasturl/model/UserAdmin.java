@@ -21,7 +21,6 @@ import org.mongodb.morphia.annotations.Entity;
  * @author Marco Berri <marcoberri@gmail.com>
  */
 @Entity(value = "App.User")
-public class UserAdmin  extends User {
+public class UserAdmin extends User {
 
- 
 }

@@ -23,13 +23,13 @@ import com.google.gson.Gson;
 
 public class LogSave extends Log {
 
-    /**
-     *
-     * @return
-     */
-    @Override
-        public String toJson() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
-    }
+	/**
+	 *
+	 * @return
+	 */
+	@Override
+	public String toJson() {
+		Gson gson = new Gson();
+		return gson.toJson(this);
+	}
 }

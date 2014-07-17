@@ -23,320 +23,340 @@ import java.util.List;
  */
 public class UAgent {
 
-    private String family;
-    private String icon;
-    private String name;
-    private OS operatingSystem = new OS();
-    private String producer;
-    private String producerUrl;
-    private String url;
-    private String typeName;
+	// "versionNumber\" : { \"extension\" : \"_13\" , \"groups\" : [ \"1\" , \"6\" , \"0\"]}} , \"producer\" : \"Sun Microsystems, Inc.\" , \"producerUrl\" : \"http://www.sun.com/\" , \"type\" : \"LIBRARY\" , \"typeName\" : \"Library\" , \"url\" : \"http://www.sun.com/java/\" , \"versionNumber\" : { \"extension\" : \"_13\" , \"groups\" : [ \"1\" , \"6\" , \"0\"]}}"
+	public static class OS {
 
-    /**
-     * @return the family
-     */
-    public String getFamily() {
-        return family;
-    }
+		private String family;
+		private String familyName;
+		private String icon;
+		private String name;
+		private String producer;
+		private String producerUrl;
+		private String url;
+		private VN versionNumber;
 
-    /**
-     * @param family the family to set
-     */
-    public void setFamily(String family) {
-        this.family = family;
-    }
+		/**
+		 * @return the family
+		 */
+		public String getFamily() {
+			return family;
+		}
 
-    /**
-     * @return the icon
-     */
-    public String getIcon() {
-        return icon;
-    }
+		/**
+		 * @return the familyName
+		 */
+		public String getFamilyName() {
+			return familyName;
+		}
 
-    /**
-     * @param icon the icon to set
-     */
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
+		/**
+		 * @return the icon
+		 */
+		public String getIcon() {
+			return icon;
+		}
 
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
+		/**
+		 * @return the name
+		 */
+		public String getName() {
+			return name;
+		}
 
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
+		/**
+		 * @return the producer
+		 */
+		public String getProducer() {
+			return producer;
+		}
 
-    /**
-     * @return the operatingSystem
-     */
-    public OS getOperatingSystem() {
-        if(operatingSystem == null)
-            operatingSystem = new OS();
-        return operatingSystem;
-    }
+		/**
+		 * @return the producerUrl
+		 */
+		public String getProducerUrl() {
+			return producerUrl;
+		}
 
-    /**
-     * @param operatingSystem the operatingSystem to set
-     */
-    public void setOperatingSystem(OS operatingSystem) {
-        this.operatingSystem = operatingSystem;
-    }
+		/**
+		 * @return the url
+		 */
+		public String getUrl() {
+			return url;
+		}
 
-    /**
-     * @return the producer
-     */
-    public String getProducer() {
-        return producer;
-    }
+		/**
+		 * @return the versionNumber
+		 */
+		public VN getVersionNumber() {
+			if (versionNumber == null)
+				versionNumber = new VN();
+			return versionNumber;
+		}
 
-    /**
-     * @param producer the producer to set
-     */
-    public void setProducer(String producer) {
-        this.producer = producer;
-    }
+		/**
+		 * @param family
+		 *            the family to set
+		 */
+		public void setFamily(String family) {
+			this.family = family;
+		}
 
-    /**
-     * @return the producerUrl
-     */
-    public String getProducerUrl() {
-        return producerUrl;
-    }
+		/**
+		 * @param familyName
+		 *            the familyName to set
+		 */
+		public void setFamilyName(String familyName) {
+			this.familyName = familyName;
+		}
 
-    /**
-     * @param producerUrl the producerUrl to set
-     */
-    public void setProducerUrl(String producerUrl) {
-        this.producerUrl = producerUrl;
-    }
+		/**
+		 * @param icon
+		 *            the icon to set
+		 */
+		public void setIcon(String icon) {
+			this.icon = icon;
+		}
 
-    /**
-     * @return the url
-     */
-    public String getUrl() {
-        return url;
-    }
+		/**
+		 * @param name
+		 *            the name to set
+		 */
+		public void setName(String name) {
+			this.name = name;
+		}
 
-    /**
-     * @param url the url to set
-     */
-    public void setUrl(String url) {
-        this.url = url;
-    }
+		/**
+		 * @param producer
+		 *            the producer to set
+		 */
+		public void setProducer(String producer) {
+			this.producer = producer;
+		}
 
-    /**
-     * @return the typeName
-     */
-    public String getTypeName() {
-        return typeName;
-    }
+		/**
+		 * @param producerUrl
+		 *            the producerUrl to set
+		 */
+		public void setProducerUrl(String producerUrl) {
+			this.producerUrl = producerUrl;
+		}
 
-    /**
-     * @param typeName the typeName to set
-     */
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
-    }
+		/**
+		 * @param url
+		 *            the url to set
+		 */
+		public void setUrl(String url) {
+			this.url = url;
+		}
 
-//"versionNumber\" : { \"extension\" : \"_13\" , \"groups\" : [ \"1\" , \"6\" , \"0\"]}} , \"producer\" : \"Sun Microsystems, Inc.\" , \"producerUrl\" : \"http://www.sun.com/\" , \"type\" : \"LIBRARY\" , \"typeName\" : \"Library\" , \"url\" : \"http://www.sun.com/java/\" , \"versionNumber\" : { \"extension\" : \"_13\" , \"groups\" : [ \"1\" , \"6\" , \"0\"]}}"
-    public static class OS {
+		/**
+		 * @param versionNumber
+		 *            the versionNumber to set
+		 */
+		public void setVersionNumber(VN versionNumber) {
+			this.versionNumber = versionNumber;
+		}
+	}
+	public static class VN {
 
-        private String family;
-        private String familyName;
-        private String icon;
-        private String name;
-        private String producer;
-        private String producerUrl;
-        private String url;
-        private VN versionNumber;
+		private String extension;
+		private List<String> groups;
+		private String minor;
+		private String major;
 
-        /**
-         * @return the family
-         */
-        public String getFamily() {
-            return family;
-        }
+		/**
+		 * @return the extension
+		 */
+		public String getExtension() {
+			return extension;
+		}
 
-        /**
-         * @param family the family to set
-         */
-        public void setFamily(String family) {
-            this.family = family;
-        }
+		/**
+		 * @return the groups
+		 */
+		public List<String> getGroups() {
+			if (this.groups == null)
+				groups = new ArrayList();
+			return groups;
+		}
 
-        /**
-         * @return the familyName
-         */
-        public String getFamilyName() {
-            return familyName;
-        }
+		/**
+		 * @return the major
+		 */
+		public String getMajor() {
+			return major;
+		}
 
-        /**
-         * @param familyName the familyName to set
-         */
-        public void setFamilyName(String familyName) {
-            this.familyName = familyName;
-        }
+		/**
+		 * @return the minor
+		 */
+		public String getMinor() {
+			return minor;
+		}
 
-        /**
-         * @return the icon
-         */
-        public String getIcon() {
-            return icon;
-        }
+		/**
+		 * @param extension
+		 *            the extension to set
+		 */
+		public void setExtension(String extension) {
+			this.extension = extension;
+		}
 
-        /**
-         * @param icon the icon to set
-         */
-        public void setIcon(String icon) {
-            this.icon = icon;
-        }
+		/**
+		 * @param groups
+		 *            the groups to set
+		 */
+		public void setGroups(List<String> groups) {
+			this.groups = groups;
+		}
 
-        /**
-         * @return the name
-         */
-        public String getName() {
-            return name;
-        }
+		/**
+		 * @param major
+		 *            the major to set
+		 */
+		public void setMajor(String major) {
+			this.major = major;
+		}
 
-        /**
-         * @param name the name to set
-         */
-        public void setName(String name) {
-            this.name = name;
-        }
+		/**
+		 * @param minor
+		 *            the minor to set
+		 */
+		public void setMinor(String minor) {
+			this.minor = minor;
+		}
 
-        /**
-         * @return the producer
-         */
-        public String getProducer() {
-            return producer;
-        }
+	}
+	private String family;
+	private String icon;
+	private String name;
+	private OS operatingSystem = new OS();
+	private String producer;
+	private String producerUrl;
 
-        /**
-         * @param producer the producer to set
-         */
-        public void setProducer(String producer) {
-            this.producer = producer;
-        }
+	private String url;
 
-        /**
-         * @return the producerUrl
-         */
-        public String getProducerUrl() {
-            return producerUrl;
-        }
+	private String typeName;
 
-        /**
-         * @param producerUrl the producerUrl to set
-         */
-        public void setProducerUrl(String producerUrl) {
-            this.producerUrl = producerUrl;
-        }
+	/**
+	 * @return the family
+	 */
+	public String getFamily() {
+		return family;
+	}
 
-        /**
-         * @return the url
-         */
-        public String getUrl() {
-            return url;
-        }
+	/**
+	 * @return the icon
+	 */
+	public String getIcon() {
+		return icon;
+	}
 
-        /**
-         * @param url the url to set
-         */
-        public void setUrl(String url) {
-            this.url = url;
-        }
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
 
-        /**
-         * @return the versionNumber
-         */
-        public VN getVersionNumber() {
-            if(versionNumber == null)
-                versionNumber = new VN();
-            return versionNumber;
-        }
+	/**
+	 * @return the operatingSystem
+	 */
+	public OS getOperatingSystem() {
+		if (operatingSystem == null)
+			operatingSystem = new OS();
+		return operatingSystem;
+	}
 
-        /**
-         * @param versionNumber the versionNumber to set
-         */
-        public void setVersionNumber(VN versionNumber) {
-            this.versionNumber = versionNumber;
-        }
-    }
+	/**
+	 * @return the producer
+	 */
+	public String getProducer() {
+		return producer;
+	}
 
-    public static class VN {
+	/**
+	 * @return the producerUrl
+	 */
+	public String getProducerUrl() {
+		return producerUrl;
+	}
 
-        private String extension;
-        private List<String> groups;
-        private String minor;
-        private String major;
+	/**
+	 * @return the typeName
+	 */
+	public String getTypeName() {
+		return typeName;
+	}
 
-        /**
-         * @return the extension
-         */
-        public String getExtension() {
-            return extension;
-        }
+	/**
+	 * @return the url
+	 */
+	public String getUrl() {
+		return url;
+	}
 
-        /**
-         * @param extension the extension to set
-         */
-        public void setExtension(String extension) {
-            this.extension = extension;
-        }
+	/**
+	 * @param family
+	 *            the family to set
+	 */
+	public void setFamily(String family) {
+		this.family = family;
+	}
 
-        /**
-         * @return the groups
-         */
-        public List<String> getGroups() {
-            if(this.groups == null)
-                groups = new ArrayList();
-            return groups;
-        }
+	/**
+	 * @param icon
+	 *            the icon to set
+	 */
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
 
-        /**
-         * @param groups the groups to set
-         */
-        public void setGroups(List<String> groups) {
-            this.groups = groups;
-        }
+	/**
+	 * @param name
+	 *            the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 
-        /**
-         * @return the minor
-         */
-        public String getMinor() {
-            return minor;
-        }
+	/**
+	 * @param operatingSystem
+	 *            the operatingSystem to set
+	 */
+	public void setOperatingSystem(OS operatingSystem) {
+		this.operatingSystem = operatingSystem;
+	}
 
-        /**
-         * @param minor the minor to set
-         */
-        public void setMinor(String minor) {
-            this.minor = minor;
-        }
+	/**
+	 * @param producer
+	 *            the producer to set
+	 */
+	public void setProducer(String producer) {
+		this.producer = producer;
+	}
 
-        /**
-         * @return the major
-         */
-        public String getMajor() {
-            return major;
-        }
+	/**
+	 * @param producerUrl
+	 *            the producerUrl to set
+	 */
+	public void setProducerUrl(String producerUrl) {
+		this.producerUrl = producerUrl;
+	}
 
-        /**
-         * @param major the major to set
-         */
-        public void setMajor(String major) {
-            this.major = major;
-        }
+	/**
+	 * @param typeName
+	 *            the typeName to set
+	 */
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
 
-    }
+	/**
+	 * @param url
+	 *            the url to set
+	 */
+	public void setUrl(String url) {
+		this.url = url;
+	}
 }

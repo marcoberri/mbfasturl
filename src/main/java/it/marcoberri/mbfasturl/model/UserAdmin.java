@@ -14,7 +14,7 @@
  */
 package it.marcoberri.mbfasturl.model;
 
-import com.github.jmkgreen.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Entity;
 
 /**
  *

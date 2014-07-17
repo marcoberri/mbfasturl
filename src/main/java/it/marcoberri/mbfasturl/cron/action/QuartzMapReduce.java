@@ -14,9 +14,9 @@
  */
 package it.marcoberri.mbfasturl.cron.action;
 
-import com.github.jmkgreen.morphia.Datastore;
-import com.github.jmkgreen.morphia.MapreduceResults;
-import com.github.jmkgreen.morphia.MapreduceType;
+import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.MapreduceResults;
+import org.mongodb.morphia.MapreduceType;
 import it.marcoberri.mbfasturl.action.Commons;
 import it.marcoberri.mbfasturl.helper.ConfigurationHelper;
 import it.marcoberri.mbfasturl.helper.MongoConnectionHelper;

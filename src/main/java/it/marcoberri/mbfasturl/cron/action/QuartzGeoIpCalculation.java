@@ -53,7 +53,7 @@ public class QuartzGeoIpCalculation implements Job {
             Commons.downloadGeoIp2(log, path, url);
         }
 
-        Commons.ipCalc(log, mmdb);
+    //    Commons.ipCalc(log, mmdb);
 
         Commons.ipToLog(log);
 

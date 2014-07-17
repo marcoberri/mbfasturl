@@ -14,13 +14,17 @@
  */
 package it.marcoberri.mbfasturl.helper;
 
-import com.github.jmkgreen.morphia.Datastore;
-import com.github.jmkgreen.morphia.Morphia;
 import com.mongodb.DBCollection;
 import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
 import com.mongodb.gridfs.GridFS;
+
 import it.marcoberri.mbfasturl.action.Commons;
+
 import java.net.UnknownHostException;
+
+import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.Morphia;
 
 /**
  *
@@ -47,7 +51,7 @@ public final class MongoConnectionHelper {
                     .mapPackage("it.marcoberri.mbfasturl.model.mr", true)
                     .mapPackage("it.marcoberri.mbfasturl.model.system", true);
             
-            ds = morphia.createDatastore(mongo, ConfigurationHelper.getProp().getProperty("mongo.dbname"));
+            ds = morphia.createDatastore((MongoClient) mongo, ConfigurationHelper.getProp().getProperty("mongo.dbname"));
         } catch (UnknownHostException e) {
             Commons.log.fatal(e);
             throw new RuntimeException(e.getMessage(), e);

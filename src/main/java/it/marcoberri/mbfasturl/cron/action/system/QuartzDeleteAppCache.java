@@ -14,7 +14,7 @@
  */
 package it.marcoberri.mbfasturl.cron.action.system;
 
-import com.github.jmkgreen.morphia.Datastore;
+import org.mongodb.morphia.Datastore;
 import static it.marcoberri.mbfasturl.action.Commons.writeEventLog;
 import it.marcoberri.mbfasturl.helper.ConfigurationHelper;
 import it.marcoberri.mbfasturl.helper.MongoConnectionHelper;

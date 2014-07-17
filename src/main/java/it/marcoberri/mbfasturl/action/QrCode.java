@@ -14,7 +14,7 @@
  */
 package it.marcoberri.mbfasturl.action;
 
-import com.github.jmkgreen.morphia.Datastore;
+import org.mongodb.morphia.Datastore;
 import com.google.zxing.WriterException;
 import com.mongodb.gridfs.GridFS;
 import com.mongodb.gridfs.GridFSDBFile;

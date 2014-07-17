@@ -14,7 +14,7 @@
  */
 package it.marcoberri.mbfasturl.model;
 
-import com.github.jmkgreen.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Id;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.bson.types.ObjectId;
 

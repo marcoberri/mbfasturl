@@ -14,8 +14,8 @@
  */
 package it.marcoberri.mbfasturl.cron.action.system;
 
-import com.github.jmkgreen.morphia.Datastore;
-import com.github.jmkgreen.morphia.query.Query;
+import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.query.Query;
 import com.mongodb.DBObject;
 import com.mongodb.gridfs.GridFS;
 import static it.marcoberri.mbfasturl.action.Commons.writeEventLog;

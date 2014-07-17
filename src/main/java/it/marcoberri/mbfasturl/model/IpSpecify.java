@@ -14,11 +14,11 @@
  */
 package it.marcoberri.mbfasturl.model;
 
-import com.github.jmkgreen.morphia.annotations.Entity;
-import com.github.jmkgreen.morphia.annotations.Id;
-import com.github.jmkgreen.morphia.annotations.Indexed;
-import com.github.jmkgreen.morphia.annotations.PrePersist;
-import com.github.jmkgreen.morphia.utils.IndexDirection;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Indexed;
+import org.mongodb.morphia.annotations.PrePersist;
+import org.mongodb.morphia.utils.IndexDirection;
 import com.google.gson.Gson;
 import java.util.Date;
 import org.bson.types.ObjectId;

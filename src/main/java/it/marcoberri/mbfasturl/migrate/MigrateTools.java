@@ -14,9 +14,8 @@
  */
 package it.marcoberri.mbfasturl.migrate;
 
-import com.github.jmkgreen.morphia.Datastore;
+import org.mongodb.morphia.Datastore;
 import com.google.gson.Gson;
-import com.google.gson.internal.StringMap;
 import com.google.zxing.WriterException;
 import com.mongodb.WriteConcern;
 import it.marcoberri.mbfasturl.action.Commons;
@@ -91,10 +90,7 @@ public class MigrateTools {
     public void dropDB() {
         ds.getDB().dropDatabase();
     }
-
-    /**
-     *
-     */
+/*
     public void exportJson() {
 
         try {
@@ -218,9 +214,6 @@ public class MigrateTools {
 
     }
 
-    /**
-     *
-     */
     public void importJson() {
 
         try {
@@ -362,17 +355,6 @@ public class MigrateTools {
 
     }
 
-    /**
-     *
-     */
-    /* public void startMakeAdminUser() {
-     UserAdmin useradmin = new UserAdmin();
-     useradmin.setUsername("admin");
-     useradmin.setPasswordPlain("admin123!");
-     ds.save(useradmin);
-
-     }*/
-    /**
-     *
-     */
+*/
+    
 }

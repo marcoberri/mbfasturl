@@ -14,7 +14,7 @@
  */
 package it.marcoberri.mbfasturl.action;
 
-import com.github.jmkgreen.morphia.Datastore;
+import org.mongodb.morphia.Datastore;
 import it.marcoberri.mbfasturl.helper.ConfigurationHelper;
 import it.marcoberri.mbfasturl.helper.MongoConnectionHelper;
 import it.marcoberri.mbfasturl.model.LogView;

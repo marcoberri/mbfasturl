@@ -24,7 +24,7 @@ deploy
 
 system 
 -------
-- Ubuntu 10.4
+- Ubuntu 14.4
 - Tomcat (test on jetty Web Server)
 - MongoDB
 - on Linode.com platform

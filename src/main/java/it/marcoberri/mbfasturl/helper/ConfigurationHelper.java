@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.Properties;
+
 import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -38,12 +39,14 @@ public final class ConfigurationHelper {
 	public static JSONArray getCron() {
 		return cron;
 	}
+
 	/**
 	 * @return the prop
 	 */
 	public static Properties getProp() {
 		return prop;
 	}
+
 	/**
 	 *
 	 * @return

@@ -14,9 +14,9 @@
  */
 package it.marcoberri.mbfasturl.model;
 
-import org.mongodb.morphia.annotations.Id;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.bson.types.ObjectId;
+import org.mongodb.morphia.annotations.Id;
 
 /**
  *
@@ -81,6 +81,11 @@ public class User {
 	 */
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + "]";
 	}
 
 }

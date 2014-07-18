@@ -14,9 +14,6 @@
  */
 package it.marcoberri.mbfasturl.action;
 
-import org.mongodb.morphia.Datastore;
-import com.google.gson.Gson;
-import com.google.zxing.WriterException;
 import it.marcoberri.mbfasturl.helper.ConfigurationHelper;
 import it.marcoberri.mbfasturl.helper.MongoConnectionHelper;
 import it.marcoberri.mbfasturl.model.LogSave;
@@ -24,17 +21,24 @@ import it.marcoberri.mbfasturl.model.Url;
 import it.marcoberri.mbfasturl.utils.DateTimeUtil;
 import it.marcoberri.mbfasturl.utils.Default;
 import it.marcoberri.mbfasturl.utils.StringUtil;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Random;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.mongodb.morphia.Datastore;
+
+import com.google.gson.Gson;
+import com.google.zxing.WriterException;
 
 /**
  *
@@ -104,6 +108,7 @@ public class UrlSave extends HttpServlet {
 			return gson.toJson(this);
 		}
 	}
+
 	/**
 	 *
 	 * @param length
@@ -120,6 +125,7 @@ public class UrlSave extends HttpServlet {
 
 		return new String(arr);
 	}
+
 	/**
      *
      */
@@ -202,12 +208,18 @@ public class UrlSave extends HttpServlet {
 		// questo è da capire se ha senso
 		String ip = request.getRemoteAddr();
 
-		if (ip.equals("127.0.0.1") && logSave.getHeaders().containsKey("x-forwarded-for")) {
+		if ((ip.equals("127.0.0.1") || ip.equals("0:0:0:0:0:0:0:1")) && logSave.getHeaders().containsKey("x-forwarded-for")) {
 
 			logSave.addHeader("MBURL_request_getRemoteAddr", ip);
 			ip = logSave.getHeaders().get("x-forwarded-for");
 		}
 
+		// fix per "ip" : "192.168.132.114, 79.174.225.43"
+		if (ip.indexOf(",") != -1) {
+			ip = ip.split(",")[1];
+		}
+
+		ip = ip.trim();
 		logSave.setIp(ip);
 		return logSave;
 

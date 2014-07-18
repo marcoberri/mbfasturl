@@ -32,4 +32,5 @@ public class LogQrcode extends Log {
 		Gson gson = new Gson();
 		return gson.toJson(this);
 	}
+
 }

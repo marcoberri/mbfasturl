@@ -12,9 +12,14 @@
  **/
 package it.marcoberri.mbfasturl.utils;
 
-import java.io.*;
-import java.util.*;
-import java.util.regex.*;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.StringTokenizer;
+import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Utility Class for manage String informations

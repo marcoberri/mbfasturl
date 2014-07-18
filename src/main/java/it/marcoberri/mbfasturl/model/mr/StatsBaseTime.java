@@ -18,6 +18,7 @@ import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Indexed;
 import org.mongodb.morphia.utils.IndexDirection;
+
 import com.google.gson.Gson;
 
 /**
@@ -84,6 +85,7 @@ public class StatsBaseTime {
 			this.url = url;
 		}
 	}
+
 	@Id
 	@Embedded
 	@Indexed(value = IndexDirection.ASC, unique = true, dropDups = true)

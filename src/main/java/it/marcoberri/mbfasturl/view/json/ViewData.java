@@ -14,8 +14,6 @@
  */
 package it.marcoberri.mbfasturl.view.json;
 
-import com.google.gson.Gson;
-
 import it.marcoberri.mbfasturl.action.Commons;
 import it.marcoberri.mbfasturl.helper.ConfigurationHelper;
 import it.marcoberri.mbfasturl.helper.MongoConnectionHelper;
@@ -34,6 +32,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.mongodb.morphia.Datastore;
+
+import com.google.gson.Gson;
 
 /**
  *

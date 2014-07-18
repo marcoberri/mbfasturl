@@ -12,8 +12,12 @@
  **/
 package it.marcoberri.mbfasturl.utils;
 
-import org.apache.log4j.*;
-import org.apache.log4j.spi.*;
+import org.apache.log4j.DailyRollingFileAppender;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PatternLayout;
+import org.apache.log4j.RollingFileAppender;
+import org.apache.log4j.spi.LoggerFactory;
 
 /**
  * @author Marco Berri marcoberri@gmail.com
@@ -37,6 +41,7 @@ public class Log4j extends Logger {
 		}// makeNewLoggerInstance()
 
 	}// AccessLoggerFactory
+
 	/**
 	 *
 	 * @param name
@@ -45,6 +50,7 @@ public class Log4j extends Logger {
 	public static Logger getLogger(String name) {
 		return Log4j.getLogger(name, "/var/log/log/", ROTATE_DAILY);
 	}
+
 	/**
 	 *
 	 * @param name

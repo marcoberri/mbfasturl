@@ -157,6 +157,7 @@ public class UAgent {
 			this.versionNumber = versionNumber;
 		}
 	}
+
 	public static class VN {
 
 		private String extension;
@@ -227,6 +228,7 @@ public class UAgent {
 		}
 
 	}
+
 	private String family;
 	private String icon;
 	private String name;

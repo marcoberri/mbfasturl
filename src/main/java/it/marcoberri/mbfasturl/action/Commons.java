@@ -14,8 +14,26 @@
  */
 package it.marcoberri.mbfasturl.action;
 
+import it.marcoberri.mbfasturl.helper.ConfigurationHelper;
+import it.marcoberri.mbfasturl.helper.MongoConnectionHelper;
+import it.marcoberri.mbfasturl.model.IpSpecify;
+import it.marcoberri.mbfasturl.model.Url;
+import it.marcoberri.mbfasturl.model.system.AppEvent;
+import it.marcoberri.mbfasturl.utils.Default;
+import it.marcoberri.mbfasturl.utils.HttpUtil;
+import it.marcoberri.mbfasturl.utils.Log4j;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Date;
+import java.util.List;
+import java.util.zip.GZIPInputStream;
+
+import org.apache.log4j.Logger;
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Key;
 import org.mongodb.morphia.query.Query;
 
 import com.google.zxing.BarcodeFormat;
@@ -23,36 +41,9 @@ import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
-import com.maxmind.geoip2.DatabaseReader;
-import com.maxmind.geoip2.exception.AddressNotFoundException;
-import com.maxmind.geoip2.exception.GeoIp2Exception;
-import com.maxmind.geoip2.model.CityResponse;
 import com.mongodb.BasicDBObject;
 import com.mongodb.gridfs.GridFS;
 import com.mongodb.gridfs.GridFSInputFile;
-
-import it.marcoberri.mbfasturl.helper.ConfigurationHelper;
-import it.marcoberri.mbfasturl.helper.MongoConnectionHelper;
-import it.marcoberri.mbfasturl.model.IpSpecify;
-import it.marcoberri.mbfasturl.model.Log;
-import it.marcoberri.mbfasturl.model.Url;
-import it.marcoberri.mbfasturl.model.system.AppEvent;
-import it.marcoberri.mbfasturl.utils.Default;
-import it.marcoberri.mbfasturl.utils.HttpUtil;
-import it.marcoberri.mbfasturl.utils.Log4j;
-import it.marcoberri.mbfasturl.utils.StringUtil;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.InetAddress;
-import java.util.Date;
-import java.util.List;
-import java.util.zip.GZIPInputStream;
-
-import org.apache.log4j.Logger;
-import org.bson.types.ObjectId;
 
 /**
  *

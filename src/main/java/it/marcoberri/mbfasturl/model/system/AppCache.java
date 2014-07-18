@@ -14,13 +14,13 @@
  */
 package it.marcoberri.mbfasturl.model.system;
 
-import com.google.gson.Gson;
-
 import java.util.Date;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+
+import com.google.gson.Gson;
 
 /**
  *

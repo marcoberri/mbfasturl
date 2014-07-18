@@ -14,22 +14,26 @@
  */
 package it.marcoberri.mbfasturl.action;
 
-import org.mongodb.morphia.Datastore;
-import com.google.zxing.WriterException;
-import com.mongodb.gridfs.GridFS;
-import com.mongodb.gridfs.GridFSDBFile;
 import it.marcoberri.mbfasturl.helper.ConfigurationHelper;
 import it.marcoberri.mbfasturl.helper.MongoConnectionHelper;
 import it.marcoberri.mbfasturl.model.LogQrcode;
 import it.marcoberri.mbfasturl.model.Url;
+
 import java.io.IOException;
 import java.util.Enumeration;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.bson.types.ObjectId;
+import org.mongodb.morphia.Datastore;
+
+import com.google.zxing.WriterException;
+import com.mongodb.gridfs.GridFS;
+import com.mongodb.gridfs.GridFSDBFile;
 
 /**
  *
@@ -67,8 +71,6 @@ public class QrCode extends HttpServlet {
      */
 	protected String proxy = ConfigurationHelper.getProp().getProperty("url.proxy.domain", "http://mbfu.it/");
 
-	// <editor-fold defaultstate="collapsed"
-	// desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 	/**
 	 * Handles the HTTP <code>GET</code> method.
 	 *
@@ -130,11 +132,17 @@ public class QrCode extends HttpServlet {
 		// questo è da capire se ha senso
 		String ip = request.getRemoteAddr();
 
-		if (ip.equals("127.0.0.1") && logQrcode.getHeaders().containsKey("x-forwarded-for")) {
+		if ((ip.equals("127.0.0.1") || ip.equals("0:0:0:0:0:0:0:1")) && logQrcode.getHeaders().containsKey("x-forwarded-for")) {
 
 			logQrcode.addHeader("MBURL_request_getRemoteAddr", ip);
 			ip = logQrcode.getHeaders().get("x-forwarded-for");
 		}
+		// fix per "ip" : "192.168.132.114, 79.174.225.43"
+		if (ip.indexOf(",") != -1) {
+			ip = ip.split(",")[1];
+		}
+
+		ip = ip.trim();
 
 		logQrcode.setIp(ip);
 		return logQrcode;

@@ -14,16 +14,8 @@
  */
 package it.marcoberri.mbfasturl.view;
 
-import it.marcoberri.mbfasturl.helper.ConfigurationHelper;
-import it.marcoberri.mbfasturl.migrate.MigrateTools;
-import it.marcoberri.mbfasturl.utils.Log4j;
-import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  *

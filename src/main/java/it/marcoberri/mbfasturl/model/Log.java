@@ -14,16 +14,18 @@
  */
 package it.marcoberri.mbfasturl.model;
 
+import java.util.Date;
+import java.util.HashMap;
+
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Indexed;
 import org.mongodb.morphia.annotations.PrePersist;
 import org.mongodb.morphia.annotations.Property;
+
 import com.google.gson.Gson;
-import java.util.Date;
-import java.util.HashMap;
-import org.bson.types.ObjectId;
 
 /**
  *
@@ -212,6 +214,11 @@ public class Log {
 	public String toJson() {
 		Gson gson = new Gson();
 		return gson.toJson(this);
+	}
+
+	@Override
+	public String toString() {
+		return "Log [id=" + id + ", headers=" + headers + ", created=" + created + ", ip=" + ip + ", urlId=" + urlId + ", fast=" + fast + ", url=" + url + ", ipSpecify=" + ipSpecify + ", agent=" + agent + "]";
 	}
 
 }

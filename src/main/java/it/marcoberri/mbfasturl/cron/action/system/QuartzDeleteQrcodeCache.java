@@ -14,19 +14,19 @@
  */
 package it.marcoberri.mbfasturl.cron.action.system;
 
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.query.Query;
-import com.mongodb.DBObject;
-import com.mongodb.gridfs.GridFS;
 import static it.marcoberri.mbfasturl.action.Commons.writeEventLog;
 import it.marcoberri.mbfasturl.helper.ConfigurationHelper;
 import it.marcoberri.mbfasturl.helper.MongoConnectionHelper;
-import it.marcoberri.mbfasturl.model.system.AppEvent;
 import it.marcoberri.mbfasturl.utils.Log4j;
+
 import java.util.Date;
+
+import org.mongodb.morphia.Datastore;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+
+import com.mongodb.gridfs.GridFS;
 
 /**
  *

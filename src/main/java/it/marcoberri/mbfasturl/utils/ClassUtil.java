@@ -12,8 +12,10 @@
  **/
 package it.marcoberri.mbfasturl.utils;
 
-import java.lang.reflect.*;
-import org.apache.log4j.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+
+import org.apache.log4j.Logger;
 
 /**
  * Utilities to work with reflection.

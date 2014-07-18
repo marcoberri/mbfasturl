@@ -14,7 +14,6 @@
  */
 package it.marcoberri.mbfasturl.cron.action;
 
-import org.mongodb.morphia.Datastore;
 import static it.marcoberri.mbfasturl.action.Commons.writeEventLog;
 import it.marcoberri.mbfasturl.helper.ConfigurationHelper;
 import it.marcoberri.mbfasturl.helper.MongoConnectionHelper;
@@ -22,11 +21,14 @@ import it.marcoberri.mbfasturl.model.Log;
 import it.marcoberri.mbfasturl.model.UAgent;
 import it.marcoberri.mbfasturl.utils.Default;
 import it.marcoberri.mbfasturl.utils.Log4j;
-import it.marcoberri.mbfasturl.utils.StringUtil;
+
 import java.util.HashMap;
+
 import net.sf.uadetector.ReadableUserAgent;
 import net.sf.uadetector.UserAgentStringParser;
 import net.sf.uadetector.service.UADetectorServiceFactory;
+
+import org.mongodb.morphia.Datastore;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;

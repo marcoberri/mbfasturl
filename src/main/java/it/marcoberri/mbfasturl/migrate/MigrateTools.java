@@ -14,32 +14,14 @@
  */
 package it.marcoberri.mbfasturl.migrate;
 
-import org.mongodb.morphia.Datastore;
-import com.google.gson.Gson;
-import com.google.zxing.WriterException;
-import com.mongodb.WriteConcern;
-import it.marcoberri.mbfasturl.action.Commons;
 import it.marcoberri.mbfasturl.helper.ConfigurationHelper;
 import it.marcoberri.mbfasturl.helper.MongoConnectionHelper;
-import it.marcoberri.mbfasturl.model.Log;
-import it.marcoberri.mbfasturl.model.LogSave;
-import it.marcoberri.mbfasturl.model.LogView;
-import it.marcoberri.mbfasturl.model.Url;
-import it.marcoberri.mbfasturl.utils.DateTimeUtil;
-import it.marcoberri.mbfasturl.utils.Default;
 import it.marcoberri.mbfasturl.utils.Log4j;
-import it.marcoberri.mbfasturl.utils.StringUtil;
+
 import java.io.File;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import org.mongodb.morphia.Datastore;
 
 /**
  *

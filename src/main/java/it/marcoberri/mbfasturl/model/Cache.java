@@ -14,14 +14,16 @@
  */
 package it.marcoberri.mbfasturl.model;
 
+import java.util.Date;
+
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Indexed;
 import org.mongodb.morphia.annotations.PrePersist;
 import org.mongodb.morphia.utils.IndexDirection;
+
 import com.google.gson.Gson;
-import java.util.Date;
-import org.bson.types.ObjectId;
 
 /**
  *
@@ -143,4 +145,10 @@ public class Cache {
 		Gson gson = new Gson();
 		return gson.toJson(this);
 	}
+
+	@Override
+	public String toString() {
+		return "Cache [id=" + id + ", cacheKey=" + cacheKey + ", servletName=" + servletName + ", create=" + create + ", lastRead=" + lastRead + ", gridId=" + gridId + "]";
+	}
+
 }

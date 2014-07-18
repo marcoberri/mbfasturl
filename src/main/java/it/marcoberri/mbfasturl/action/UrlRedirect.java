@@ -14,18 +14,21 @@
  */
 package it.marcoberri.mbfasturl.action;
 
-import org.mongodb.morphia.Datastore;
 import it.marcoberri.mbfasturl.helper.ConfigurationHelper;
 import it.marcoberri.mbfasturl.helper.MongoConnectionHelper;
 import it.marcoberri.mbfasturl.model.LogView;
 import it.marcoberri.mbfasturl.model.Url;
+
 import java.io.IOException;
 import java.util.Enumeration;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.mongodb.morphia.Datastore;
 
 /**
  *
@@ -104,13 +107,11 @@ public class UrlRedirect extends HttpServlet {
 
 		final LogView logView = new LogView();
 
-		Enumeration headerNames = request.getHeaderNames();
+		final Enumeration<String> headerNames = request.getHeaderNames();
 
 		while (headerNames.hasMoreElements()) {
-			final String headerName = (String) headerNames.nextElement();
-
+			final String headerName = headerNames.nextElement();
 			logView.addHeader(headerName.toLowerCase(), request.getHeader(headerName));
-
 		}
 
 		logView.addHeader("request_remote_addr", request.getRemoteAddr());
@@ -122,11 +123,18 @@ public class UrlRedirect extends HttpServlet {
 		// questo è da capire se ha senso
 		String ip = request.getRemoteAddr();
 
-		if (ip.equals("127.0.0.1") && logView.getHeaders().containsKey("x-forwarded-for")) {
+		if ((ip.equals("127.0.0.1") || ip.equals("0:0:0:0:0:0:0:1")) && logView.getHeaders().containsKey("x-forwarded-for")) {
 
 			logView.addHeader("MBURL_request_getRemoteAddr", ip);
 			ip = logView.getHeaders().get("x-forwarded-for");
 		}
+
+		// fix per "ip" : "192.168.132.114, 79.174.225.43"
+		if (ip.indexOf(",") != -1) {
+			ip = ip.split(",")[1];
+		}
+
+		ip = ip.trim();
 
 		logView.setIp(ip);
 		return logView;

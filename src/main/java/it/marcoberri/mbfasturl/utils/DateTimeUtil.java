@@ -12,9 +12,12 @@
  **/
 package it.marcoberri.mbfasturl.utils;
 
-import java.sql.*;
-import java.util.*;
-import java.text.*;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  *

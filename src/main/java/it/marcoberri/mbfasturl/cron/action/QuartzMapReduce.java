@@ -14,9 +14,6 @@
  */
 package it.marcoberri.mbfasturl.cron.action;
 
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.MapreduceResults;
-import org.mongodb.morphia.MapreduceType;
 import it.marcoberri.mbfasturl.action.Commons;
 import it.marcoberri.mbfasturl.helper.ConfigurationHelper;
 import it.marcoberri.mbfasturl.helper.MongoConnectionHelper;
@@ -32,12 +29,17 @@ import it.marcoberri.mbfasturl.model.mr.StatsCountTimeMonthCountryUrl;
 import it.marcoberri.mbfasturl.model.mr.StatsCountTimeMonthUrl;
 import it.marcoberri.mbfasturl.model.mr.StatsCountTimeYearUrl;
 import it.marcoberri.mbfasturl.utils.Log4j;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLDecoder;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.MapreduceResults;
+import org.mongodb.morphia.MapreduceType;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;

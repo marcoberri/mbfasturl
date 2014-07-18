@@ -12,8 +12,19 @@
  **/
 package it.marcoberri.mbfasturl.utils;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FilenameFilter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Properties;
+import java.util.Stack;
 import java.util.zip.GZIPInputStream;
 
 /**

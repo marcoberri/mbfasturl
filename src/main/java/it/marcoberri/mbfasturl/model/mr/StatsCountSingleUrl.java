@@ -15,6 +15,7 @@
 package it.marcoberri.mbfasturl.model.mr;
 
 import org.mongodb.morphia.annotations.Entity;
+
 import com.google.gson.Gson;
 
 /**

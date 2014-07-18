@@ -16,6 +16,7 @@ package it.marcoberri.mbfasturl.cron.action.system;
 
 import it.marcoberri.mbfasturl.helper.ConfigurationHelper;
 import it.marcoberri.mbfasturl.utils.Log4j;
+
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;

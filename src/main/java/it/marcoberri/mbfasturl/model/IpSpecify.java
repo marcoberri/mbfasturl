@@ -14,14 +14,17 @@
  */
 package it.marcoberri.mbfasturl.model;
 
+import java.util.Arrays;
+import java.util.Date;
+
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Indexed;
 import org.mongodb.morphia.annotations.PrePersist;
 import org.mongodb.morphia.utils.IndexDirection;
+
 import com.google.gson.Gson;
-import java.util.Date;
-import org.bson.types.ObjectId;
 
 /**
  *
@@ -240,6 +243,11 @@ public class IpSpecify {
 	public String toJson() {
 		Gson gson = new Gson();
 		return gson.toJson(this);
+	}
+
+	@Override
+	public String toString() {
+		return "IpSpecify [id=" + id + ", ip=" + ip + ", city=" + city + ", postalIso=" + postalIso + ", continent=" + continent + ", continentIso=" + continentIso + ", country=" + country + ", countryIso=" + countryIso + ", division=" + division + ", divisionIso=" + divisionIso + ", loc=" + Arrays.toString(loc) + ", created=" + created + "]";
 	}
 
 }

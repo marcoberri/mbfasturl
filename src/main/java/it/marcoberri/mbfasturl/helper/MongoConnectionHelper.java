@@ -14,17 +14,16 @@
  */
 package it.marcoberri.mbfasturl.helper;
 
-import com.mongodb.DBCollection;
-import com.mongodb.Mongo;
-import com.mongodb.MongoClient;
-import com.mongodb.gridfs.GridFS;
-
 import it.marcoberri.mbfasturl.action.Commons;
 
 import java.net.UnknownHostException;
 
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
+
+import com.mongodb.DBCollection;
+import com.mongodb.MongoClient;
+import com.mongodb.gridfs.GridFS;
 
 /**
  *
@@ -39,6 +38,7 @@ public final class MongoConnectionHelper {
 	public static DBCollection getGridCol() {
 		return ds.getDB().getCollection(GRIDCOLLECTIONNAME);
 	}
+
 	/**
 	 *
 	 * @return
@@ -49,6 +49,7 @@ public final class MongoConnectionHelper {
 		}
 		return gridFS;
 	}
+
 	/**
 	 *
 	 * @return
@@ -56,6 +57,7 @@ public final class MongoConnectionHelper {
 	public static MongoConnectionHelper instance() {
 		return INSTANCE;
 	}
+
 	private static final MongoConnectionHelper INSTANCE = new MongoConnectionHelper();
 
 	/**

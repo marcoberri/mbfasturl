@@ -24,6 +24,7 @@ import it.marcoberri.mbfasturl.model.mr.StatsCountSingleCountryUrl;
 import it.marcoberri.mbfasturl.model.mr.StatsCountSingleIp;
 import it.marcoberri.mbfasturl.model.mr.StatsCountSingleSite;
 import it.marcoberri.mbfasturl.model.mr.StatsCountSingleUrl;
+import it.marcoberri.mbfasturl.model.mr.StatsCountTimeDayClick;
 import it.marcoberri.mbfasturl.model.mr.StatsCountTimeDayUrl;
 import it.marcoberri.mbfasturl.model.mr.StatsCountTimeMonthCountryUrl;
 import it.marcoberri.mbfasturl.model.mr.StatsCountTimeMonthUrl;
@@ -95,6 +96,11 @@ public class QuartzMapReduce implements Job {
 
 		log.debug("Start mapReduceCountSingleBrowserUrl");
 		mapReduceCountSingleBrowserUrl(log);
+
+		log.debug("Start mapReduceCountAllDayClick");
+		mapReduceCountAllDayClick(log);
+
+		
 		log.debug("End " + QuartzMapReduce.class.getSimpleName());
 
 	}
@@ -269,6 +275,16 @@ public class QuartzMapReduce implements Job {
 		writeLogMR(l, mrRes, (System.currentTimeMillis() - ts));
 	}
 
+	private void mapReduceCountAllDayClick(Logger log) {
+		final long ts = System.currentTimeMillis();
+		final String l = "CountTimeDayClick";
+		final Datastore ds = MongoConnectionHelper.ds;
+		final String map = getJsFromFile("/mapreduce/stats/" + l + "/map.txt", log);
+		final String reduce = getJsFromFile("/mapreduce/stats/" + l + "/reduce.txt", log);
+		final MapreduceResults<StatsCountTimeDayClick> mrRes = ds.mapReduce(MapreduceType.MERGE, ds.createQuery(Log.class), map, reduce, null, null, StatsCountTimeDayClick.class);
+		writeLogMR(l, mrRes, (System.currentTimeMillis() - ts));
+	}
+	
 	private void writeLogMR(String action, MapreduceResults mr, long ts) {
 		Commons.writeEventLog(action, true, "tot: " + mr.createQuery().countAll(), "MapReduce", ts);
 	}

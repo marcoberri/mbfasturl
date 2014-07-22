@@ -1,0 +1,15 @@
+function(){
+    if(!this.created)
+        return;
+    var month = this.created.getMonth();
+    month++;
+    if(month<10)
+        month ='0'+ month;
+    var day = this.created.getDay();
+    day++;
+    if(day<10)
+        day ='0'+ day;
+    var time_short = this.created.getFullYear()+'-'+ month+'-'+day;
+    var k = {'time':time_short};
+    emit(k,1);
+};

@@ -31,4 +31,10 @@ system
 
 
 
+changelog
+-------
+
+- 21/07/2014 - add map reduce for count all day url click
+
+
 

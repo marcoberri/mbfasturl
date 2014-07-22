@@ -22,6 +22,7 @@ import it.marcoberri.mbfasturl.model.system.AppEvent;
 import it.marcoberri.mbfasturl.utils.Default;
 import it.marcoberri.mbfasturl.utils.HttpUtil;
 import it.marcoberri.mbfasturl.utils.Log4j;
+import it.marcoberri.mbfasturl.utils.StringUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -233,11 +234,29 @@ public class Commons {
 		final Query q = ds2.createQuery(it.marcoberri.mbfasturl.model.Log.class).field("ipSpecify").doesNotExist();
 
 		for (it.marcoberri.mbfasturl.model.Log logEl : (List<it.marcoberri.mbfasturl.model.Log>) q.asList()) {
-			final String ip = logEl.getIp();
+			String ip = logEl.getIp();
+			
+			if(StringUtil.isNullOrEmpty(ip)){
+				continue;
+			}
+			
+			if (ip.indexOf(",") != -1) {
+				final String[] split = ip.split(",");
+				ip = split[split.length];
+			}
+
+			if(StringUtil.isNullOrEmpty(ip)){
+				continue;
+			}
+			
+			ip = ip.trim();
+			
 			final IpSpecify ipspecify = ds.createQuery(IpSpecify.class).field("ip").equal(ip).get();
+
 			if (ipspecify == null) {
 				continue;
 			}
+			
 			logEl.setIpSpecify(ipspecify);
 			ds3.save(logEl);
 			count++;

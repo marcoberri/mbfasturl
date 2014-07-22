@@ -73,15 +73,14 @@ public class QuartzFixLogIp implements Job {
 				if (!l.getHeaders().containsKey("x-forwarded-for")) {
 					continue;
 				}
-				
+
 				String ip_header = l.getHeaders().get("x-forwarded-for");
-				
+
 				if (ip_header.indexOf(",") != -1) {
-					final String[] split = ip_header.split(","); 
+					final String[] split = ip_header.split(",");
 					ip_header = split[split.length];
 				}
 
-				
 				ip_header = ip_header.trim();
 				l.setIp(ip_header);
 				dsSave.save(l);

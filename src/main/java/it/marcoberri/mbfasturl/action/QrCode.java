@@ -139,10 +139,9 @@ public class QrCode extends HttpServlet {
 		}
 		// fix per "ip" : "192.168.132.114, 79.174.225.43"
 		if (ip.indexOf(",") != -1) {
-			final String[] split =ip.split(","); 
+			final String[] split = ip.split(",");
 			ip = split[split.length];
 		}
-
 
 		ip = ip.trim();
 

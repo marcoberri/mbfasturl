@@ -100,7 +100,6 @@ public class QuartzMapReduce implements Job {
 		log.debug("Start mapReduceCountAllDayClick");
 		mapReduceCountAllDayClick(log);
 
-		
 		log.debug("End " + QuartzMapReduce.class.getSimpleName());
 
 	}
@@ -124,6 +123,16 @@ public class QuartzMapReduce implements Job {
 			log.error(ex);
 		}
 		return null;
+	}
+
+	private void mapReduceCountAllDayClick(Logger log) {
+		final long ts = System.currentTimeMillis();
+		final String l = "CountTimeDayClick";
+		final Datastore ds = MongoConnectionHelper.ds;
+		final String map = getJsFromFile("/mapreduce/stats/" + l + "/map.txt", log);
+		final String reduce = getJsFromFile("/mapreduce/stats/" + l + "/reduce.txt", log);
+		final MapreduceResults<StatsCountTimeDayClick> mrRes = ds.mapReduce(MapreduceType.MERGE, ds.createQuery(Log.class), map, reduce, null, null, StatsCountTimeDayClick.class);
+		writeLogMR(l, mrRes, (System.currentTimeMillis() - ts));
 	}
 
 	/**
@@ -275,16 +284,6 @@ public class QuartzMapReduce implements Job {
 		writeLogMR(l, mrRes, (System.currentTimeMillis() - ts));
 	}
 
-	private void mapReduceCountAllDayClick(Logger log) {
-		final long ts = System.currentTimeMillis();
-		final String l = "CountTimeDayClick";
-		final Datastore ds = MongoConnectionHelper.ds;
-		final String map = getJsFromFile("/mapreduce/stats/" + l + "/map.txt", log);
-		final String reduce = getJsFromFile("/mapreduce/stats/" + l + "/reduce.txt", log);
-		final MapreduceResults<StatsCountTimeDayClick> mrRes = ds.mapReduce(MapreduceType.MERGE, ds.createQuery(Log.class), map, reduce, null, null, StatsCountTimeDayClick.class);
-		writeLogMR(l, mrRes, (System.currentTimeMillis() - ts));
-	}
-	
 	private void writeLogMR(String action, MapreduceResults mr, long ts) {
 		Commons.writeEventLog(action, true, "tot: " + mr.createQuery().countAll(), "MapReduce", ts);
 	}

@@ -47,11 +47,6 @@ import com.google.zxing.WriterException;
 @WebServlet("/s")
 public class UrlSave extends HttpServlet {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -843612060253887364L;
-
 	class objResult {
 
 		private String url;
@@ -125,6 +120,11 @@ public class UrlSave extends HttpServlet {
 
 		return new String(arr);
 	}
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -843612060253887364L;
 
 	/**
      *
@@ -216,7 +216,7 @@ public class UrlSave extends HttpServlet {
 
 		// fix per "ip" : "192.168.132.114, 79.174.225.43"
 		if (ip.indexOf(",") != -1) {
-			final String[] split =ip.split(","); 
+			final String[] split = ip.split(",");
 			ip = split[split.length];
 		}
 

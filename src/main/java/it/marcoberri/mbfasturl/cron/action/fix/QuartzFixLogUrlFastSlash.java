@@ -30,55 +30,55 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 /**
- *
+ * 
  * @author Marco Berri <marcoberri@gmail.com>
  */
 public class QuartzFixLogUrlFastSlash implements Job {
 
-	/**
+    /**
      *
      */
-	protected static final org.apache.log4j.Logger log = Log4j.getLogger(QuartzFixLogUrlFastSlash.class.getSimpleName(), ConfigurationHelper.getProp().getProperty("log.path"), Log4j.ROTATE_DAILY);
+    protected static final org.apache.log4j.Logger log = Log4j.getLogger(QuartzFixLogUrlFastSlash.class.getSimpleName(), ConfigurationHelper.getProp().getProperty("log.path"), Log4j.ROTATE_DAILY);
 
-	/**
-	 *
-	 * @param jec
-	 * @throws JobExecutionException
-	 */
-	@Override
-	public void execute(JobExecutionContext jec) throws JobExecutionException {
-		final long ts = System.currentTimeMillis();
-		final Datastore ds = MongoConnectionHelper.ds;
-		final Datastore dsSave = MongoConnectionHelper.ds;
-		final Datastore dsUrl = MongoConnectionHelper.ds;
+    /**
+     * 
+     * @param jec
+     * @throws JobExecutionException
+     */
+    @Override
+    public void execute(JobExecutionContext jec) throws JobExecutionException {
+	final long ts = System.currentTimeMillis();
+	final Datastore ds = MongoConnectionHelper.ds;
+	final Datastore dsSave = MongoConnectionHelper.ds;
+	final Datastore dsUrl = MongoConnectionHelper.ds;
 
-		try {
-			int c = 0;
+	try {
+	    int c = 0;
 
-			final Query q = ds.createQuery(Log.class).field("fast").doesNotExist().field("url").doesNotExist();
+	    final Query q = ds.createQuery(Log.class).field("fast").doesNotExist().field("url").doesNotExist();
 
-			final List<Log> entities = q.asList();
+	    final List<Log> entities = q.asList();
 
-			for (Log l : entities) {
+	    for (Log l : entities) {
 
-				if (l.getFast() != null && l.getUrl() != null) {
-					continue;
-				}
-				final Url u = dsUrl.find(Url.class, "_id", l.getUrlId()).get();
-				if (u == null) {
-					continue;
-				}
-				l.setFast(u.getFast());
-				l.setUrl(u.getUrl());
-				dsSave.save(l);
-				c++;
-			}
-
-			writeEventLog("FixLogUrlFast", true, "tot elements fast/url: " + entities.size() + " | tot fixed: " + c, "Fix", (System.currentTimeMillis() - ts));
-		} catch (final Exception e) {
-			log.fatal(e);
-			writeEventLog("FixLogUrlFast", false, e.getMessage(), "Fix", (System.currentTimeMillis() - ts));
+		if (l.getFast() != null && l.getUrl() != null) {
+		    continue;
 		}
+		final Url u = dsUrl.find(Url.class, "_id", l.getUrlId()).get();
+		if (u == null) {
+		    continue;
+		}
+		l.setFast(u.getFast());
+		l.setUrl(u.getUrl());
+		dsSave.save(l);
+		c++;
+	    }
 
+	    writeEventLog("FixLogUrlFast", true, "tot elements fast/url: " + entities.size() + " | tot fixed: " + c, "Fix", (System.currentTimeMillis() - ts));
+	} catch (final Exception e) {
+	    log.fatal(e);
+	    writeEventLog("FixLogUrlFast", false, e.getMessage(), "Fix", (System.currentTimeMillis() - ts));
 	}
+
+    }
 }

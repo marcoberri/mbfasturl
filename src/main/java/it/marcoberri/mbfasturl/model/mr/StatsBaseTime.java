@@ -22,114 +22,114 @@ import org.mongodb.morphia.utils.IndexDirection;
 import com.google.gson.Gson;
 
 /**
- *
+ * 
  * @author Marco Berri <marcoberri@gmail.com>
  */
 
 public class StatsBaseTime {
 
-	/**
+    /**
      *
      */
-	public static class IdObject {
+    public static class IdObject {
 
-		private String time;
-		private String url;
-		private String fast;
-
-		/**
-		 *
-		 * @return
-		 */
-		public String getFast() {
-			return this.fast;
-		}
-
-		/**
-		 *
-		 * @return
-		 */
-		public String getTime() {
-			return this.time;
-		}
-
-		/**
-		 *
-		 * @return
-		 */
-		public String getUrl() {
-			return this.url;
-		}
-
-		/**
-		 *
-		 * @param fast
-		 */
-		public void setFast(String fast) {
-			this.fast = fast;
-		}
-
-		/**
-		 *
-		 * @param time
-		 */
-		public void setTime(String time) {
-			this.time = time;
-		}
-
-		/**
-		 *
-		 * @param url
-		 */
-		public void setUrl(String url) {
-			this.url = url;
-		}
-	}
-
-	@Id
-	@Embedded
-	@Indexed(value = IndexDirection.ASC, unique = true, dropDups = true)
-	private IdObject id;
-
-	private String value;
+	private String time;
+	private String url;
+	private String fast;
 
 	/**
-	 * @return the id
-	 */
-	public IdObject getId() {
-		return id;
-	}
-
-	/**
-	 *
+	 * 
 	 * @return
 	 */
-	public String getValue() {
-		return this.value;
+	public String getFast() {
+	    return this.fast;
 	}
 
 	/**
-	 * @param id
-	 *            the id to set
-	 */
-	public void setId(IdObject id) {
-		this.id = id;
-	}
-
-	/**
-	 *
-	 * @param value
-	 */
-	public void setValue(String value) {
-		this.value = value;
-	}
-
-	/**
-	 *
+	 * 
 	 * @return
 	 */
-	public String toJson() {
-		Gson gson = new Gson();
-		return gson.toJson(this);
+	public String getTime() {
+	    return this.time;
 	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public String getUrl() {
+	    return this.url;
+	}
+
+	/**
+	 * 
+	 * @param fast
+	 */
+	public void setFast(String fast) {
+	    this.fast = fast;
+	}
+
+	/**
+	 * 
+	 * @param time
+	 */
+	public void setTime(String time) {
+	    this.time = time;
+	}
+
+	/**
+	 * 
+	 * @param url
+	 */
+	public void setUrl(String url) {
+	    this.url = url;
+	}
+    }
+
+    @Id
+    @Embedded
+    @Indexed(value = IndexDirection.ASC, unique = true, dropDups = true)
+    private IdObject id;
+
+    private String value;
+
+    /**
+     * @return the id
+     */
+    public IdObject getId() {
+	return id;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public String getValue() {
+	return this.value;
+    }
+
+    /**
+     * @param id
+     *            the id to set
+     */
+    public void setId(IdObject id) {
+	this.id = id;
+    }
+
+    /**
+     * 
+     * @param value
+     */
+    public void setValue(String value) {
+	this.value = value;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public String toJson() {
+	Gson gson = new Gson();
+	return gson.toJson(this);
+    }
 }

@@ -17,23 +17,23 @@ import java.io.IOException;
 import java.net.URL;
 
 /**
- *
+ * 
  * @author Marco Berri marcoberri@gmail.com
  */
 public class HttpUtil {
 
-	/**
-	 *
-	 * @param url
-	 * @param target
-	 */
-	public static synchronized void downloadData(String url, String target) {
+    /**
+     * 
+     * @param url
+     * @param target
+     */
+    public static synchronized void downloadData(String url, String target) {
 
-		try {
-			org.apache.commons.io.FileUtils.copyURLToFile(new URL(url), new File(target));
-		} catch (IOException ex) {
-			System.err.println(ex.getMessage());
-		}
-
+	try {
+	    org.apache.commons.io.FileUtils.copyURLToFile(new URL(url), new File(target));
+	} catch (IOException ex) {
+	    System.err.println(ex.getMessage());
 	}
+
+    }
 }

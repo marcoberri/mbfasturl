@@ -17,7 +17,7 @@ package it.marcoberri.mbfasturl.model;
 import org.mongodb.morphia.annotations.Entity;
 
 /**
- *
+ * 
  * @author Marco Berri <marcoberri@gmail.com>
  */
 @Entity(value = "App.User")

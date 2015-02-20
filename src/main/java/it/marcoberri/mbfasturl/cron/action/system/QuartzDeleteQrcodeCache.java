@@ -29,28 +29,28 @@ import org.quartz.JobExecutionException;
 import com.mongodb.gridfs.GridFS;
 
 /**
- *
+ * 
  * @author Marco Berri <marcoberri@gmail.com>
  */
 public class QuartzDeleteQrcodeCache implements Job {
 
-	/**
+    /**
      *
      */
-	protected static final org.apache.log4j.Logger log = Log4j.getLogger(QuartzDeleteQrcodeCache.class.getSimpleName(), ConfigurationHelper.getProp().getProperty("log.path"), Log4j.ROTATE_DAILY);
-	private static final long LAST_DAY_IN_MS = 1000 * 60 * 60 * 24;
+    protected static final org.apache.log4j.Logger log = Log4j.getLogger(QuartzDeleteQrcodeCache.class.getSimpleName(), ConfigurationHelper.getProp().getProperty("log.path"), Log4j.ROTATE_DAILY);
+    private static final long LAST_DAY_IN_MS = 1000 * 60 * 60 * 24;
 
-	/**
-	 *
-	 * @param jec
-	 * @throws JobExecutionException
-	 */
-	@Override
-	public void execute(JobExecutionContext jec) throws JobExecutionException {
-		final long ts = System.currentTimeMillis();
-		final Datastore ds = MongoConnectionHelper.ds;
-		final Date d = new Date(System.currentTimeMillis() - (LAST_DAY_IN_MS * 10));
-		final GridFS fs = MongoConnectionHelper.getGridFS();
-		writeEventLog("deleteQrcodeCache", true, "TO DO", "System", (System.currentTimeMillis() - ts));
-	}
+    /**
+     * 
+     * @param jec
+     * @throws JobExecutionException
+     */
+    @Override
+    public void execute(JobExecutionContext jec) throws JobExecutionException {
+	final long ts = System.currentTimeMillis();
+	final Datastore ds = MongoConnectionHelper.ds;
+	final Date d = new Date(System.currentTimeMillis() - (LAST_DAY_IN_MS * 10));
+	final GridFS fs = MongoConnectionHelper.getGridFS();
+	writeEventLog("deleteQrcodeCache", true, "TO DO", "System", (System.currentTimeMillis() - ts));
+    }
 }

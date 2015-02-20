@@ -26,27 +26,27 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 /**
- *
+ * 
  * @author Marco Berri <marcoberri@gmail.com>
  */
 public class QuartzDeleteAppCache implements Job {
 
-	/**
+    /**
      *
      */
-	protected static final org.apache.log4j.Logger log = Log4j.getLogger(QuartzDeleteAppCache.class.getSimpleName(), ConfigurationHelper.getProp().getProperty("log.path"), Log4j.ROTATE_DAILY);
+    protected static final org.apache.log4j.Logger log = Log4j.getLogger(QuartzDeleteAppCache.class.getSimpleName(), ConfigurationHelper.getProp().getProperty("log.path"), Log4j.ROTATE_DAILY);
 
-	/**
-	 *
-	 * @param jec
-	 * @throws JobExecutionException
-	 */
-	@Override
-	public void execute(JobExecutionContext jec) throws JobExecutionException {
-		final long ts = System.currentTimeMillis();
-		final Datastore ds = MongoConnectionHelper.ds;
-		ds.delete(AppCache.class);
-		writeEventLog("deleteAppCache", true, "Complete", "System", (System.currentTimeMillis() - ts));
+    /**
+     * 
+     * @param jec
+     * @throws JobExecutionException
+     */
+    @Override
+    public void execute(JobExecutionContext jec) throws JobExecutionException {
+	final long ts = System.currentTimeMillis();
+	final Datastore ds = MongoConnectionHelper.ds;
+	ds.delete(AppCache.class);
+	writeEventLog("deleteAppCache", true, "Complete", "System", (System.currentTimeMillis() - ts));
 
-	}
+    }
 }

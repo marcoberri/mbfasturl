@@ -17,19 +17,19 @@ package it.marcoberri.mbfasturl.model;
 import com.google.gson.Gson;
 
 /**
- *
+ * 
  * @author Marco Berri <marcoberri@gmail.com>
  */
 
 public class LogSave extends Log {
 
-	/**
-	 *
-	 * @return
-	 */
-	@Override
-	public String toJson() {
-		Gson gson = new Gson();
-		return gson.toJson(this);
-	}
+    /**
+     * 
+     * @return
+     */
+    @Override
+    public String toJson() {
+	Gson gson = new Gson();
+	return gson.toJson(this);
+    }
 }

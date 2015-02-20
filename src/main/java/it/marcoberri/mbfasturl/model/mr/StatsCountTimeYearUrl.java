@@ -19,15 +19,15 @@ import org.mongodb.morphia.annotations.Entity;
 import com.google.gson.Gson;
 
 /**
- *
+ * 
  * @author Marco Berri <marcoberri@gmail.com>
  */
 @Entity(value = "Stats.CountTimeYearUrl", noClassnameStored = true)
 public class StatsCountTimeYearUrl extends StatsBaseTime {
 
-	@Override
-	public String toJson() {
-		Gson gson = new Gson();
-		return gson.toJson(this);
-	}
+    @Override
+    public String toJson() {
+	Gson gson = new Gson();
+	return gson.toJson(this);
+    }
 }

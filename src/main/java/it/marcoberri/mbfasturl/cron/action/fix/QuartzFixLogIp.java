@@ -29,69 +29,69 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 /**
- *
+ * 
  * @author Marco Berri <marcoberri@gmail.com>
  */
 public class QuartzFixLogIp implements Job {
 
-	/**
+    /**
      *
      */
-	protected static final org.apache.log4j.Logger log = Log4j.getLogger(QuartzFixLogIp.class.getSimpleName(), ConfigurationHelper.getProp().getProperty("log.path"), Log4j.ROTATE_DAILY);
+    protected static final org.apache.log4j.Logger log = Log4j.getLogger(QuartzFixLogIp.class.getSimpleName(), ConfigurationHelper.getProp().getProperty("log.path"), Log4j.ROTATE_DAILY);
 
-	/**
-	 *
-	 * @param jec
-	 * @throws JobExecutionException
-	 */
-	@Override
-	public void execute(JobExecutionContext jec) throws JobExecutionException {
-		fixData("127.0.0.1");
-		fixData("0:0:0:0:0:0:0:1");
-	}
+    /**
+     * 
+     * @param jec
+     * @throws JobExecutionException
+     */
+    @Override
+    public void execute(JobExecutionContext jec) throws JobExecutionException {
+	fixData("127.0.0.1");
+	fixData("0:0:0:0:0:0:0:1");
+    }
 
-	private void fixData(String ip) {
+    private void fixData(String ip) {
 
-		final Datastore ds = MongoConnectionHelper.ds;
-		final Datastore dsSave = MongoConnectionHelper.ds;
-		final long ts = System.currentTimeMillis();
+	final Datastore ds = MongoConnectionHelper.ds;
+	final Datastore dsSave = MongoConnectionHelper.ds;
+	final long ts = System.currentTimeMillis();
 
-		try {
+	try {
 
-			int c = 0;
+	    int c = 0;
 
-			final Query q = ds.createQuery(Log.class).field("ip").equal(ip);
+	    final Query q = ds.createQuery(Log.class).field("ip").equal(ip);
 
-			final List<Log> entities = q.asList();
+	    final List<Log> entities = q.asList();
 
-			for (Log l : entities) {
+	    for (Log l : entities) {
 
-				if (l.getHeaders() == null || l.getHeaders().isEmpty()) {
-					continue;
-				}
-
-				if (!l.getHeaders().containsKey("x-forwarded-for")) {
-					continue;
-				}
-
-				String ip_header = l.getHeaders().get("x-forwarded-for");
-
-				if (ip_header.indexOf(",") != -1) {
-					final String[] split = ip_header.split(",");
-					ip_header = split[split.length];
-				}
-
-				ip_header = ip_header.trim();
-				l.setIp(ip_header);
-				dsSave.save(l);
-				c++;
-			}
-
-			writeEventLog("FixLogIp", true, "fix ip: " + ip + " tot elements fast/url: " + entities.size() + " | tot fixed: " + c, "Fix", (System.currentTimeMillis() - ts));
-		} catch (final Exception e) {
-			log.fatal(e);
-			writeEventLog("FixLogIp", false, e.getMessage(), "Fix", (System.currentTimeMillis() - ts));
+		if (l.getHeaders() == null || l.getHeaders().isEmpty()) {
+		    continue;
 		}
 
+		if (!l.getHeaders().containsKey("x-forwarded-for")) {
+		    continue;
+		}
+
+		String ip_header = l.getHeaders().get("x-forwarded-for");
+
+		if (ip_header.indexOf(",") != -1) {
+		    final String[] split = ip_header.split(",");
+		    ip_header = split[split.length];
+		}
+
+		ip_header = ip_header.trim();
+		l.setIp(ip_header);
+		dsSave.save(l);
+		c++;
+	    }
+
+	    writeEventLog("FixLogIp", true, "fix ip: " + ip + " tot elements fast/url: " + entities.size() + " | tot fixed: " + c, "Fix", (System.currentTimeMillis() - ts));
+	} catch (final Exception e) {
+	    log.fatal(e);
+	    writeEventLog("FixLogIp", false, e.getMessage(), "Fix", (System.currentTimeMillis() - ts));
 	}
+
+    }
 }

@@ -26,61 +26,61 @@ import com.mongodb.MongoClient;
 import com.mongodb.gridfs.GridFS;
 
 /**
- *
+ * 
  * @author Marco Berri <marcoberri@gmail.com>
  */
 public final class MongoConnectionHelper {
 
-	/**
-	 *
-	 * @return
-	 */
-	public static DBCollection getGridCol() {
-		return ds.getDB().getCollection(GRIDCOLLECTIONNAME);
+    /**
+     * 
+     * @return
+     */
+    public static DBCollection getGridCol() {
+	return ds.getDB().getCollection(GRIDCOLLECTIONNAME);
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public static GridFS getGridFS() {
+	if (gridFS == null) {
+	    gridFS = new GridFS(ds.getDB(), GRIDCOLLECTIONNAME);
 	}
+	return gridFS;
+    }
 
-	/**
-	 *
-	 * @return
-	 */
-	public static GridFS getGridFS() {
-		if (gridFS == null) {
-			gridFS = new GridFS(ds.getDB(), GRIDCOLLECTIONNAME);
-		}
-		return gridFS;
-	}
+    /**
+     * 
+     * @return
+     */
+    public static MongoConnectionHelper instance() {
+	return INSTANCE;
+    }
 
-	/**
-	 *
-	 * @return
-	 */
-	public static MongoConnectionHelper instance() {
-		return INSTANCE;
-	}
+    private static final MongoConnectionHelper INSTANCE = new MongoConnectionHelper();
 
-	private static final MongoConnectionHelper INSTANCE = new MongoConnectionHelper();
-
-	/**
+    /**
      *
      */
-	public static Datastore ds;
+    public static Datastore ds;
 
-	private static GridFS gridFS;
+    private static GridFS gridFS;
 
-	private static final String GRIDCOLLECTIONNAME = "Cache";
+    private static final String GRIDCOLLECTIONNAME = "Cache";
 
-	private MongoConnectionHelper() {
-		if (ds != null) {
-			return;
-		}
-		try {
-			final MongoClient mongoClient = new MongoClient(ConfigurationHelper.getProp().getProperty("mongo.host"));
-			final Morphia morphia = new Morphia();
-			morphia.mapPackage("it.marcoberri.mbfasturl.model", true).mapPackage("it.marcoberri.mbfasturl.model.mr", true).mapPackage("it.marcoberri.mbfasturl.model.system", true);
-			ds = morphia.createDatastore(mongoClient, ConfigurationHelper.getProp().getProperty("mongo.dbname"));
-		} catch (UnknownHostException e) {
-			Commons.log.fatal(e);
-			throw new RuntimeException(e.getMessage(), e);
-		}
+    private MongoConnectionHelper() {
+	if (ds != null) {
+	    return;
 	}
+	try {
+	    final MongoClient mongoClient = new MongoClient(ConfigurationHelper.getProp().getProperty("mongo.host"));
+	    final Morphia morphia = new Morphia();
+	    morphia.mapPackage("it.marcoberri.mbfasturl.model", true).mapPackage("it.marcoberri.mbfasturl.model.mr", true).mapPackage("it.marcoberri.mbfasturl.model.system", true);
+	    ds = morphia.createDatastore(mongoClient, ConfigurationHelper.getProp().getProperty("mongo.dbname"));
+	} catch (UnknownHostException e) {
+	    Commons.log.fatal(e);
+	    throw new RuntimeException(e.getMessage(), e);
+	}
+    }
 }

@@ -25,44 +25,44 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 /**
- *
+ * 
  * @author Marco Berri <marcoberri@gmail.com>
  */
 public class QuartzGeoIpCalculation implements Job {
 
-	/**
+    /**
      *
      */
-	protected static final org.apache.log4j.Logger log = Log4j.getLogger(QuartzGeoIpCalculation.class.getSimpleName(), ConfigurationHelper.getProp().getProperty("log.path"), Log4j.ROTATE_DAILY);
-	/**
+    protected static final org.apache.log4j.Logger log = Log4j.getLogger(QuartzGeoIpCalculation.class.getSimpleName(), ConfigurationHelper.getProp().getProperty("log.path"), Log4j.ROTATE_DAILY);
+    /**
      *
      */
-	// protected final String fileMMDB =
-	// ConfigurationHelper.getProp().getProperty("cron.downloadGeoIp2.path") +
-	// "/" +
-	// ConfigurationHelper.getProp().getProperty("cron.downloadGeoIp2.filename");
+    // protected final String fileMMDB =
+    // ConfigurationHelper.getProp().getProperty("cron.downloadGeoIp2.path") +
+    // "/" +
+    // ConfigurationHelper.getProp().getProperty("cron.downloadGeoIp2.filename");
 
-	protected final String fileMMDB = "/home/marco/mbfasturl/geoip2/" + "GeoLite2-City.mmdb";
+    protected final String fileMMDB = "/home/marco/mbfasturl/geoip2/" + "GeoLite2-City.mmdb";
 
-	/**
-	 *
-	 * @param jec
-	 * @throws JobExecutionException
-	 */
-	@Override
-	public void execute(JobExecutionContext jec) throws JobExecutionException {
+    /**
+     * 
+     * @param jec
+     * @throws JobExecutionException
+     */
+    @Override
+    public void execute(JobExecutionContext jec) throws JobExecutionException {
 
-		final File mmdb = new File(fileMMDB);
-		if (!mmdb.exists()) {
-			final String path = "/home/marco/mbfasturl/geoip2/";// ConfigurationHelper.getProp().getProperty("cron.downloadGeoIp2.path");
-			final String url = "http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz";
-			ConfigurationHelper.getProp().getProperty("cron.downloadGeoIp2.url");
-			Commons.downloadGeoIp2(log, path, url);
-		}
-
-		// Commons.ipCalc(log, mmdb);
-
-		Commons.ipToLog(log);
-
+	final File mmdb = new File(fileMMDB);
+	if (!mmdb.exists()) {
+	    final String path = "/home/marco/mbfasturl/geoip2/";// ConfigurationHelper.getProp().getProperty("cron.downloadGeoIp2.path");
+	    final String url = "http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz";
+	    ConfigurationHelper.getProp().getProperty("cron.downloadGeoIp2.url");
+	    Commons.downloadGeoIp2(log, path, url);
 	}
+
+	// Commons.ipCalc(log, mmdb);
+
+	Commons.ipToLog(log);
+
+    }
 }

@@ -28,197 +28,197 @@ import org.mongodb.morphia.annotations.Property;
 import com.google.gson.Gson;
 
 /**
- *
+ * 
  * @author Marco Berri <marcoberri@gmail.com>
  */
 @Entity("Log.log")
 public class Log {
 
-	@Id
-	private ObjectId id;
-	private HashMap<String, String> headers;
-	private Date created;
-	@Indexed
-	private String ip;
-	@Indexed
-	@Property
-	private ObjectId urlId;
-	private String fast;
-	private String url;
-	@Embedded
-	private IpSpecify ipSpecify;
-	@Embedded
-	private UAgent agent;
+    @Id
+    private ObjectId id;
+    private HashMap<String, String> headers;
+    private Date created;
+    @Indexed
+    private String ip;
+    @Indexed
+    @Property
+    private ObjectId urlId;
+    private String fast;
+    private String url;
+    @Embedded
+    private IpSpecify ipSpecify;
+    @Embedded
+    private UAgent agent;
 
-	/**
-	 *
-	 * @param key
-	 * @param value
-	 */
-	public void addHeader(String key, String value) {
-		if (this.getHeaders() == null) {
-			setHeaders(new HashMap());
-		}
-
-		getHeaders().put(key.toLowerCase(), value);
-
+    /**
+     * 
+     * @param key
+     * @param value
+     */
+    public void addHeader(String key, String value) {
+	if (this.getHeaders() == null) {
+	    setHeaders(new HashMap());
 	}
 
-	/**
-	 * @return the agent
-	 */
-	public UAgent getAgent() {
-		return agent;
-	}
+	getHeaders().put(key.toLowerCase(), value);
 
-	/**
-	 * @return the created
-	 */
-	public Date getCreated() {
-		return created;
-	}
+    }
 
-	/**
-	 *
-	 * @return
-	 */
-	public String getFast() {
-		return fast;
-	}
+    /**
+     * @return the agent
+     */
+    public UAgent getAgent() {
+	return agent;
+    }
 
-	/**
-	 * @return the headers
-	 */
-	public HashMap<String, String> getHeaders() {
-		return headers;
-	}
+    /**
+     * @return the created
+     */
+    public Date getCreated() {
+	return created;
+    }
 
-	/**
-	 * @return the id
-	 */
-	public ObjectId getId() {
-		return id;
-	}
+    /**
+     * 
+     * @return
+     */
+    public String getFast() {
+	return fast;
+    }
 
-	/**
-	 * @return the ip
-	 */
-	public String getIp() {
-		return ip;
-	}
+    /**
+     * @return the headers
+     */
+    public HashMap<String, String> getHeaders() {
+	return headers;
+    }
 
-	/**
-	 * @return the ipSpecify
-	 */
-	public IpSpecify getIpSpecify() {
-		return ipSpecify;
-	}
+    /**
+     * @return the id
+     */
+    public ObjectId getId() {
+	return id;
+    }
 
-	/**
-	 * @return the url
-	 */
-	public String getUrl() {
-		return url;
-	}
+    /**
+     * @return the ip
+     */
+    public String getIp() {
+	return ip;
+    }
 
-	/**
-	 * @return the urlId
-	 */
-	public ObjectId getUrlId() {
-		return urlId;
-	}
+    /**
+     * @return the ipSpecify
+     */
+    public IpSpecify getIpSpecify() {
+	return ipSpecify;
+    }
 
-	@PrePersist
-	void prePersist() {
-		if (getCreated() == null) {
-			setCreated(new Date());
-		}
-	}
+    /**
+     * @return the url
+     */
+    public String getUrl() {
+	return url;
+    }
 
-	/**
-	 * @param agent
-	 *            the agent to set
-	 */
-	public void setAgent(UAgent agent) {
-		this.agent = agent;
-	}
+    /**
+     * @return the urlId
+     */
+    public ObjectId getUrlId() {
+	return urlId;
+    }
 
-	/**
-	 * @param created
-	 *            the created to set
-	 */
-	public void setCreated(Date created) {
-		this.created = created;
+    @PrePersist
+    void prePersist() {
+	if (getCreated() == null) {
+	    setCreated(new Date());
 	}
+    }
 
-	/**
-	 *
-	 * @param fast
-	 */
-	public void setFast(String fast) {
-		this.fast = fast;
-	}
+    /**
+     * @param agent
+     *            the agent to set
+     */
+    public void setAgent(UAgent agent) {
+	this.agent = agent;
+    }
 
-	/**
-	 * @param headers
-	 *            the headers to set
-	 */
-	public void setHeaders(HashMap<String, String> headers) {
-		this.headers = headers;
-	}
+    /**
+     * @param created
+     *            the created to set
+     */
+    public void setCreated(Date created) {
+	this.created = created;
+    }
 
-	/**
-	 * @param id
-	 *            the id to set
-	 */
-	public void setId(ObjectId id) {
-		this.id = id;
-	}
+    /**
+     * 
+     * @param fast
+     */
+    public void setFast(String fast) {
+	this.fast = fast;
+    }
 
-	/**
-	 * @param ip
-	 *            the ip to set
-	 */
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
+    /**
+     * @param headers
+     *            the headers to set
+     */
+    public void setHeaders(HashMap<String, String> headers) {
+	this.headers = headers;
+    }
 
-	/**
-	 * @param ipSpecify
-	 *            the ipSpecify to set
-	 */
-	public void setIpSpecify(IpSpecify ipSpecify) {
-		this.ipSpecify = ipSpecify;
-	}
+    /**
+     * @param id
+     *            the id to set
+     */
+    public void setId(ObjectId id) {
+	this.id = id;
+    }
 
-	/**
-	 * @param url
-	 *            the url to set
-	 */
-	public void setUrl(String url) {
-		this.url = url;
-	}
+    /**
+     * @param ip
+     *            the ip to set
+     */
+    public void setIp(String ip) {
+	this.ip = ip;
+    }
 
-	/**
-	 * @param urlId
-	 *            the urlId to set
-	 */
-	public void setUrlId(ObjectId urlId) {
-		this.urlId = urlId;
-	}
+    /**
+     * @param ipSpecify
+     *            the ipSpecify to set
+     */
+    public void setIpSpecify(IpSpecify ipSpecify) {
+	this.ipSpecify = ipSpecify;
+    }
 
-	/**
-	 *
-	 * @return
-	 */
-	public String toJson() {
-		Gson gson = new Gson();
-		return gson.toJson(this);
-	}
+    /**
+     * @param url
+     *            the url to set
+     */
+    public void setUrl(String url) {
+	this.url = url;
+    }
 
-	@Override
-	public String toString() {
-		return "Log [id=" + id + ", headers=" + headers + ", created=" + created + ", ip=" + ip + ", urlId=" + urlId + ", fast=" + fast + ", url=" + url + ", ipSpecify=" + ipSpecify + ", agent=" + agent + "]";
-	}
+    /**
+     * @param urlId
+     *            the urlId to set
+     */
+    public void setUrlId(ObjectId urlId) {
+	this.urlId = urlId;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public String toJson() {
+	Gson gson = new Gson();
+	return gson.toJson(this);
+    }
+
+    @Override
+    public String toString() {
+	return "Log [id=" + id + ", headers=" + headers + ", created=" + created + ", ip=" + ip + ", urlId=" + urlId + ", fast=" + fast + ", url=" + url + ", ipSpecify=" + ipSpecify + ", agent=" + agent + "]";
+    }
 
 }

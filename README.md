@@ -34,6 +34,7 @@ system
 changelog
 -------
 
+- 20/02/2015 - fix header split, update library version, add 500 error page
 - 21/07/2014 - add map reduce for count all day url click
 
 

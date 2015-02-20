@@ -23,84 +23,84 @@ import org.mongodb.morphia.annotations.Id;
 import com.google.gson.Gson;
 
 /**
- *
+ * 
  * @author Marco Berri <marcoberri@gmail.com>
  */
 @Entity(value = "App.cache", noClassnameStored = true)
 public class AppCache {
 
-	@Id
-	private ObjectId id;
-	private Date time;
-	private String key;
-	private String data;
+    @Id
+    private ObjectId id;
+    private Date time;
+    private String key;
+    private String data;
 
-	/**
-	 * @return the data
-	 */
-	public String getData() {
-		return data;
-	}
+    /**
+     * @return the data
+     */
+    public String getData() {
+	return data;
+    }
 
-	/**
-	 * @return the id
-	 */
-	public ObjectId getId() {
-		return id;
-	}
+    /**
+     * @return the id
+     */
+    public ObjectId getId() {
+	return id;
+    }
 
-	/**
-	 * @return the key
-	 */
-	public String getKey() {
-		return key;
-	}
+    /**
+     * @return the key
+     */
+    public String getKey() {
+	return key;
+    }
 
-	/**
-	 * @return the date
-	 */
-	public Date getTime() {
-		return time;
-	}
+    /**
+     * @return the date
+     */
+    public Date getTime() {
+	return time;
+    }
 
-	/**
-	 * @param data
-	 *            the data to set
-	 */
-	public void setData(String data) {
-		this.data = data;
-	}
+    /**
+     * @param data
+     *            the data to set
+     */
+    public void setData(String data) {
+	this.data = data;
+    }
 
-	/**
-	 * @param id
-	 *            the id to set
-	 */
-	public void setId(ObjectId id) {
-		this.id = id;
-	}
+    /**
+     * @param id
+     *            the id to set
+     */
+    public void setId(ObjectId id) {
+	this.id = id;
+    }
 
-	/**
-	 * @param key
-	 *            the key to set
-	 */
-	public void setKey(String key) {
-		this.key = key;
-	}
+    /**
+     * @param key
+     *            the key to set
+     */
+    public void setKey(String key) {
+	this.key = key;
+    }
 
-	/**
-	 * @param time
-	 */
-	public void setTime(Date time) {
-		this.time = time;
-	}
+    /**
+     * @param time
+     */
+    public void setTime(Date time) {
+	this.time = time;
+    }
 
-	/**
-	 *
-	 * @return
-	 */
-	public String toJson() {
-		Gson gson = new Gson();
-		return gson.toJson(this);
-	}
+    /**
+     * 
+     * @return
+     */
+    public String toJson() {
+	Gson gson = new Gson();
+	return gson.toJson(this);
+    }
 
 }

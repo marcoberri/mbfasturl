@@ -11,58 +11,62 @@ import java.io.FileReader;
 import java.util.Iterator;
 
 /**
- *
+ * 
  * @author marco
  */
 public class BigFile implements Iterable<String> {
-	private class FileIterator implements Iterator<String> {
-		private String _currentLine;
+    private class FileIterator implements Iterator<String> {
+	private String _currentLine;
 
-		public boolean hasNext() {
-			try {
-				_currentLine = _reader.readLine();
-			} catch (Exception ex) {
-				_currentLine = null;
-				ex.printStackTrace();
-			}
+	@Override
+	public boolean hasNext() {
+	    try {
+		_currentLine = _reader.readLine();
+	    } catch (Exception ex) {
+		_currentLine = null;
+		ex.printStackTrace();
+	    }
 
-			return _currentLine != null;
-		}
-
-		public String next() {
-			return _currentLine;
-		}
-
-		public void remove() {
-		}
+	    return _currentLine != null;
 	}
 
-	private BufferedReader _reader;
-
-	/**
-	 *
-	 * @param filePath
-	 * @throws Exception
-	 */
-	public BigFile(String filePath) throws Exception {
-		_reader = new BufferedReader(new FileReader(filePath));
+	@Override
+	public String next() {
+	    return _currentLine;
 	}
 
-	/**
+	@Override
+	public void remove() {
+	}
+    }
+
+    private BufferedReader _reader;
+
+    /**
+     * 
+     * @param filePath
+     * @throws Exception
+     */
+    public BigFile(String filePath) throws Exception {
+	_reader = new BufferedReader(new FileReader(filePath));
+    }
+
+    /**
      *
      */
-	public void Close() {
-		try {
-			_reader.close();
-		} catch (Exception ex) {
-		}
+    public void Close() {
+	try {
+	    _reader.close();
+	} catch (Exception ex) {
 	}
+    }
 
-	/**
-	 *
-	 * @return
-	 */
-	public Iterator<String> iterator() {
-		return new FileIterator();
-	}
+    /**
+     * 
+     * @return
+     */
+    @Override
+    public Iterator<String> iterator() {
+	return new FileIterator();
+    }
 }

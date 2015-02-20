@@ -25,67 +25,67 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * 
  * @author Marco Berri <marcoberri@gmail.com>
  */
 public class Start extends HttpServlet {
 
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = -2639578192062305043L;
+    private static final long serialVersionUID = -2639578192062305043L;
 
-	/**
+    /**
      *
      */
-	@Override
-	public void destroy() {
-		MongoConnectionHelper.ds.getMongo().close();
-	}
+    @Override
+    public void destroy() {
+	MongoConnectionHelper.ds.getMongo().close();
+    }
 
-	/**
-	 *
-	 * @param request
-	 * @param response
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	@Override
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.sendError(HttpServletResponse.SC_FORBIDDEN);
-	}
+    /**
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	response.sendError(HttpServletResponse.SC_FORBIDDEN);
+    }
 
-	/**
-	 *
-	 * @param request
-	 * @param response
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	@Override
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.sendError(HttpServletResponse.SC_FORBIDDEN);
-	}
+    /**
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	response.sendError(HttpServletResponse.SC_FORBIDDEN);
+    }
 
-	/**
-	 * Returns a short description of the servlet.
-	 *
-	 * @return a String containing servlet description
-	 */
-	@Override
-	public String getServletInfo() {
-		return "Start Servlet";
-	}// </editor-fold>
+    /**
+     * Returns a short description of the servlet.
+     * 
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+	return "Start Servlet";
+    }// </editor-fold>
 
-	/**
-	 *
-	 * @param cfg
-	 * @throws javax.servlet.ServletException
-	 */
-	@Override
-	public void init(ServletConfig cfg) throws javax.servlet.ServletException {
-		Commons.log.debug("start : " + this.getClass().getName());
-		super.init(cfg);
+    /**
+     * 
+     * @param cfg
+     * @throws javax.servlet.ServletException
+     */
+    @Override
+    public void init(ServletConfig cfg) throws javax.servlet.ServletException {
+	Commons.log.debug("start : " + this.getClass().getName());
+	super.init(cfg);
 
-	}
+    }
 }

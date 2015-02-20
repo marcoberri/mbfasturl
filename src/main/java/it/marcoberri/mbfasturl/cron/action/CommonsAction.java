@@ -6,7 +6,7 @@
 package it.marcoberri.mbfasturl.cron.action;
 
 /**
- *
+ * 
  * @author berri
  */
 public class CommonsAction {

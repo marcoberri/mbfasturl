@@ -24,234 +24,235 @@ import org.apache.log4j.spi.LoggerFactory;
  */
 public class Log4j extends Logger {
 
-	static class AccessLoggerFactory implements LoggerFactory {
+    static class AccessLoggerFactory implements LoggerFactory {
 
-		public Logger makeNewLoggerInstance(String name) {
-			return makeNewLoggerInstance(name, null);
-		}// makeNewLoggerInstance()
+	@Override
+	public Logger makeNewLoggerInstance(String name) {
+	    return makeNewLoggerInstance(name, null);
+	}// makeNewLoggerInstance()
 
-		public Logger makeNewLoggerInstance(String name, Level level) {
-			Logger logger = new Log4j(name);
+	public Logger makeNewLoggerInstance(String name, Level level) {
+	    Logger logger = new Log4j(name);
 
-			if (level == null)
-				logger.setLevel(Level.DEBUG);
-			else
-				logger.setLevel(level);
-			return logger;
-		}// makeNewLoggerInstance()
+	    if (level == null)
+		logger.setLevel(Level.DEBUG);
+	    else
+		logger.setLevel(level);
+	    return logger;
+	}// makeNewLoggerInstance()
 
-	}// AccessLoggerFactory
+    }// AccessLoggerFactory
 
-	/**
-	 *
-	 * @param name
-	 * @return
-	 */
-	public static Logger getLogger(String name) {
-		return Log4j.getLogger(name, "/var/log/log/", ROTATE_DAILY);
+    /**
+     * 
+     * @param name
+     * @return
+     */
+    public static Logger getLogger(String name) {
+	return Log4j.getLogger(name, "/var/log/log/", ROTATE_DAILY);
+    }
+
+    /**
+     * 
+     * @param name
+     * @param type
+     * @return
+     */
+    public static Logger getLogger(String name, String type) {
+	return getLogger(name, null, null, null, null, type);
+    }// getLogger()
+
+    /**
+     * 
+     * @param name
+     * @param path
+     * @param type
+     * @return
+     */
+    public static Logger getLogger(String name, String path, String type) {
+	return getLogger(name, path, null, null, null, type);
+    }// getLogger()
+
+    /**
+     * Salva il logger
+     * 
+     * @param name
+     *            nome del log
+     * @param path
+     *            la path del log
+     * @param pattern
+     *            la sintassi del log default "%m%n"
+     * @param encoding
+     *            encoding del file di log default "UTF-8"
+     * @param appString
+     *            la stringa di sintassi per log4j vedi default =
+     *            "'.'yyyy-MM-dd" vedi:
+     *            http://logging.apache.org/log4j/docs/api/
+     *            org/apache/log4j/DailyRollingFileAppender.html
+     * @param type
+     * @return
+     */
+    public static Logger getLogger(String name, String path, String pattern, String encoding, String appString, String type) {
+
+	// if (path == null)
+	// path = ""IOUtil.absolutePath("logs");
+
+	if (pattern == null) {
+	    pattern = "[%d] %-5p - %m%n";
 	}
 
-	/**
-	 *
-	 * @param name
-	 * @param type
-	 * @return
-	 */
-	public static Logger getLogger(String name, String type) {
-		return getLogger(name, null, null, null, null, type);
-	}// getLogger()
-
-	/**
-	 *
-	 * @param name
-	 * @param path
-	 * @param type
-	 * @return
-	 */
-	public static Logger getLogger(String name, String path, String type) {
-		return getLogger(name, path, null, null, null, type);
-	}// getLogger()
-
-	/**
-	 * Salva il logger
-	 *
-	 * @param name
-	 *            nome del log
-	 * @param path
-	 *            la path del log
-	 * @param pattern
-	 *            la sintassi del log default "%m%n"
-	 * @param encoding
-	 *            encoding del file di log default "UTF-8"
-	 * @param appString
-	 *            la stringa di sintassi per log4j vedi default =
-	 *            "'.'yyyy-MM-dd" vedi:
-	 *            http://logging.apache.org/log4j/docs/api/
-	 *            org/apache/log4j/DailyRollingFileAppender.html
-	 * @param type
-	 * @return
-	 */
-	public static Logger getLogger(String name, String path, String pattern, String encoding, String appString, String type) {
-
-		// if (path == null)
-		// path = ""IOUtil.absolutePath("logs");
-
-		if (pattern == null) {
-			pattern = "[%d] %-5p - %m%n";
-		}
-
-		if (encoding == null) {
-			encoding = "UTF-8";
-		}
-
-		if (name == null) {
-			return null;
-		}
-
-		final String app_name = name.toLowerCase().replaceAll("[^a-z0-1]+", "_");
-
-		final Logger logger = Logger.getLogger(app_name, factory);
-
-		if (logger == null) {
-			return null;
-		}
-
-		if (logger.getAppender(app_name) == null) {
-			try {
-
-				if (appString == null) {
-					appString = "'.'yyyy-MM-dd";
-				}
-
-				if (type == null || type.equals(ROTATE_ROLLING)) {
-
-					// RollingFileAppender fa = new RollingFileAppender(new
-					// PatternLayout(pattern),
-					// IOUtil.joinPaths(path,name+".log"));
-					final RollingFileAppender fa = new RollingFileAppender(new PatternLayout(pattern), IOUtil.normalizedPath(path + name + ".log"));
-					fa.setMaxFileSize(MAX_FILE_SIZE);
-					fa.setMaxBackupIndex(1000000);
-					fa.setLayout(new PatternLayout(pattern));
-					fa.setName(app_name);
-					fa.setEncoding(encoding);
-					fa.activateOptions();
-					logger.addAppender(fa);
-
-				} else if (type.equals(ROTATE_DAILY)) {
-					final DailyRollingFileAppender fa = new DailyRollingFileAppender(new PatternLayout(pattern), path + name + ".log", appString);
-					fa.setName(app_name);
-					fa.setEncoding(encoding);
-					fa.setLayout(new PatternLayout(pattern));
-					fa.activateOptions();
-					logger.addAppender(fa);
-
-				} else {
-					return null;
-				}// if()
-
-			} catch (final Exception x) {
-				final Logger log = Logger.getLogger(Log4j.class);
-				log.error("", x);
-			}
-		}// if
-		return logger;
-
-	}// getLogger()
-
-	/**
-	 * 
-	 * @param path
-	 * @param clazz
-	 * @return
-	 */
-	public static Logger getLoggerClass(String path, String clazz) {
-		return Log4j.getLoggerClass(path, null, "UTF8", clazz, ROTATE_DAILY);
+	if (encoding == null) {
+	    encoding = "UTF-8";
 	}
 
-	/**
-	 *
-	 * @param path
-	 * @param pattern
-	 * @param encoding
-	 * @param clazz
-	 * @param type
-	 * @return
-	 */
-	public static Logger getLoggerClass(String path, String pattern, String encoding, String clazz, String type) {
+	if (name == null) {
+	    return null;
+	}
 
-		Logger logger = Logger.getLogger(clazz);
+	final String app_name = name.toLowerCase().replaceAll("[^a-z0-1]+", "_");
 
-		if (logger == null) {
-			return null;
+	final Logger logger = Logger.getLogger(app_name, factory);
+
+	if (logger == null) {
+	    return null;
+	}
+
+	if (logger.getAppender(app_name) == null) {
+	    try {
+
+		if (appString == null) {
+		    appString = "'.'yyyy-MM-dd";
 		}
 
-		if (pattern == null) {
-			pattern = "[%d] %-5p - %m%n";
-		}
+		if (type == null || type.equals(ROTATE_ROLLING)) {
 
-		if (logger.getAppender(clazz) == null) {
-			try {
+		    // RollingFileAppender fa = new RollingFileAppender(new
+		    // PatternLayout(pattern),
+		    // IOUtil.joinPaths(path,name+".log"));
+		    final RollingFileAppender fa = new RollingFileAppender(new PatternLayout(pattern), IOUtil.normalizedPath(path + name + ".log"));
+		    fa.setMaxFileSize(MAX_FILE_SIZE);
+		    fa.setMaxBackupIndex(1000000);
+		    fa.setLayout(new PatternLayout(pattern));
+		    fa.setName(app_name);
+		    fa.setEncoding(encoding);
+		    fa.activateOptions();
+		    logger.addAppender(fa);
 
-				if (type == null || type.equals(ROTATE_ROLLING)) {
+		} else if (type.equals(ROTATE_DAILY)) {
+		    final DailyRollingFileAppender fa = new DailyRollingFileAppender(new PatternLayout(pattern), path + name + ".log", appString);
+		    fa.setName(app_name);
+		    fa.setEncoding(encoding);
+		    fa.setLayout(new PatternLayout(pattern));
+		    fa.activateOptions();
+		    logger.addAppender(fa);
 
-					// RollingFileAppender fa = new RollingFileAppender(new
-					// PatternLayout(pattern),
-					// IOUtil.joinPaths(path,name+".log"));
-					final RollingFileAppender fa = new RollingFileAppender(new PatternLayout(pattern), IOUtil.normalizedPath(path));
-					fa.setMaxFileSize(MAX_FILE_SIZE);
-					fa.setMaxBackupIndex(1000000);
-					fa.setLayout(new PatternLayout(pattern));
-					fa.setName(clazz);
-					fa.setEncoding(encoding);
-					fa.activateOptions();
-					logger.addAppender(fa);
+		} else {
+		    return null;
+		}// if()
 
-				} else if (type.equals(ROTATE_DAILY)) {
-					final DailyRollingFileAppender fa = new DailyRollingFileAppender(new PatternLayout(pattern), path, "'.'yyyy-MM-dd");
-					fa.setName(clazz);
-					fa.setEncoding(encoding);
-					fa.setLayout(new PatternLayout(pattern));
-					fa.activateOptions();
-					logger.addAppender(fa);
-				} else {
-					return null;
-				}// if()
+	    } catch (final Exception x) {
+		final Logger log = Logger.getLogger(Log4j.class);
+		log.error("", x);
+	    }
+	}// if
+	return logger;
 
-			} catch (final Exception x) {
-				Logger log = Logger.getLogger(Log4j.class);
-				log.error("", x);
-			}
-		}// if
-		return logger;
+    }// getLogger()
 
-	}// getLogger()
+    /**
+     * 
+     * @param path
+     * @param clazz
+     * @return
+     */
+    public static Logger getLoggerClass(String path, String clazz) {
+	return Log4j.getLoggerClass(path, null, "UTF8", clazz, ROTATE_DAILY);
+    }
 
-	/**
+    /**
+     * 
+     * @param path
+     * @param pattern
+     * @param encoding
+     * @param clazz
+     * @param type
+     * @return
+     */
+    public static Logger getLoggerClass(String path, String pattern, String encoding, String clazz, String type) {
+
+	Logger logger = Logger.getLogger(clazz);
+
+	if (logger == null) {
+	    return null;
+	}
+
+	if (pattern == null) {
+	    pattern = "[%d] %-5p - %m%n";
+	}
+
+	if (logger.getAppender(clazz) == null) {
+	    try {
+
+		if (type == null || type.equals(ROTATE_ROLLING)) {
+
+		    // RollingFileAppender fa = new RollingFileAppender(new
+		    // PatternLayout(pattern),
+		    // IOUtil.joinPaths(path,name+".log"));
+		    final RollingFileAppender fa = new RollingFileAppender(new PatternLayout(pattern), IOUtil.normalizedPath(path));
+		    fa.setMaxFileSize(MAX_FILE_SIZE);
+		    fa.setMaxBackupIndex(1000000);
+		    fa.setLayout(new PatternLayout(pattern));
+		    fa.setName(clazz);
+		    fa.setEncoding(encoding);
+		    fa.activateOptions();
+		    logger.addAppender(fa);
+
+		} else if (type.equals(ROTATE_DAILY)) {
+		    final DailyRollingFileAppender fa = new DailyRollingFileAppender(new PatternLayout(pattern), path, "'.'yyyy-MM-dd");
+		    fa.setName(clazz);
+		    fa.setEncoding(encoding);
+		    fa.setLayout(new PatternLayout(pattern));
+		    fa.activateOptions();
+		    logger.addAppender(fa);
+		} else {
+		    return null;
+		}// if()
+
+	    } catch (final Exception x) {
+		Logger log = Logger.getLogger(Log4j.class);
+		log.error("", x);
+	    }
+	}// if
+	return logger;
+
+    }// getLogger()
+
+    /**
      *
      */
-	public static final String ROTATE_DAILY = "daily";
+    public static final String ROTATE_DAILY = "daily";
 
-	/**
+    /**
      *
      */
-	public static final String ROTATE_ROLLING = "rolling";
+    public static final String ROTATE_ROLLING = "rolling";
 
-	/**
+    /**
      *
      */
-	public static final String MAX_FILE_SIZE = "20MB";
+    public static final String MAX_FILE_SIZE = "20MB";
 
-	/**
+    /**
      *
      */
-	protected static AccessLoggerFactory factory = new AccessLoggerFactory();
+    protected static AccessLoggerFactory factory = new AccessLoggerFactory();
 
-	/**
-	 *
-	 * @param name
-	 */
-	protected Log4j(String name) {
-		super(name);
-	}// AccessLogger()
+    /**
+     * 
+     * @param name
+     */
+    protected Log4j(String name) {
+	super(name);
+    }// AccessLogger()
 }// Log4j
 

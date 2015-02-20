@@ -36,102 +36,102 @@ import org.mongodb.morphia.Datastore;
 import com.google.gson.Gson;
 
 /**
- *
+ * 
  * @author Marco Berri <marcoberri@gmail.com>
  */
 @WebServlet(name = "ViewData", urlPatterns = { "/json/ViewData" })
 public class ViewData extends HttpServlet {
 
-	/**
+    /**
      *
      */
-	protected String charset = ConfigurationHelper.getProp().getProperty("app.charset", "UTF8");
-	/**
+    protected String charset = ConfigurationHelper.getProp().getProperty("app.charset", "UTF8");
+    /**
      *
      */
-	protected String proxy = ConfigurationHelper.getProp().getProperty("url.proxy.domain", "http://mbfu.it/");
-	/**
+    protected String proxy = ConfigurationHelper.getProp().getProperty("url.proxy.domain", "http://mbfu.it/");
+    /**
      *
      */
-	protected final Datastore ds = MongoConnectionHelper.ds;
+    protected final Datastore ds = MongoConnectionHelper.ds;
 
-	// <editor-fold defaultstate="collapsed"
-	// desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-	/**
-	 * Handles the HTTP <code>GET</code> method.
-	 *
-	 * @param request
-	 *            servlet request
-	 * @param response
-	 *            servlet response
-	 * @throws ServletException
-	 *             if a servlet-specific error occurs
-	 * @throws IOException
-	 *             if an I/O error occurs
-	 */
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		processRequest(request, response);
-	}
+    // <editor-fold defaultstate="collapsed"
+    // desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     * 
+     * @param request
+     *            servlet request
+     * @param response
+     *            servlet response
+     * @throws ServletException
+     *             if a servlet-specific error occurs
+     * @throws IOException
+     *             if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	processRequest(request, response);
+    }
 
-	/**
-	 * Handles the HTTP <code>POST</code> method.
-	 *
-	 * @param request
-	 *            servlet request
-	 * @param response
-	 *            servlet response
-	 * @throws ServletException
-	 *             if a servlet-specific error occurs
-	 * @throws IOException
-	 *             if an I/O error occurs
-	 */
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		processRequest(request, response);
-	}
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     * 
+     * @param request
+     *            servlet request
+     * @param response
+     *            servlet response
+     * @throws ServletException
+     *             if a servlet-specific error occurs
+     * @throws IOException
+     *             if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	processRequest(request, response);
+    }
 
-	/**
-	 * Returns a short description of the servlet.
-	 *
-	 * @return a String containing servlet description
-	 */
-	@Override
-	public String getServletInfo() {
-		return "Response Data";
-	}// </editor-fold>
+    /**
+     * Returns a short description of the servlet.
+     * 
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+	return "Response Data";
+    }// </editor-fold>
 
-	/**
-	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-	 * methods.
-	 *
-	 * @param request
-	 *            servlet request
-	 * @param response
-	 *            servlet response
-	 * @throws ServletException
-	 *             if a servlet-specific error occurs
-	 * @throws IOException
-	 *             if an I/O error occurs
-	 */
-	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     * 
+     * @param request
+     *            servlet request
+     * @param response
+     *            servlet response
+     * @throws ServletException
+     *             if a servlet-specific error occurs
+     * @throws IOException
+     *             if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		Commons.log.debug("start : " + this.getClass().getName());
-		final Integer limit = Default.toInteger(request.getParameter("limit"));
-		final Integer start = Default.toInteger(request.getParameter("start"));
-		final List<LogView> result = ds.find(LogView.class).offset(start).limit(limit).order("-created").asList();
+	Commons.log.debug("start : " + this.getClass().getName());
+	final Integer limit = Default.toInteger(request.getParameter("limit"));
+	final Integer start = Default.toInteger(request.getParameter("start"));
+	final List<LogView> result = ds.find(LogView.class).offset(start).limit(limit).order("-created").asList();
 
-		long count = ds.find(LogView.class).countAll();
+	long count = ds.find(LogView.class).countAll();
 
-		final HashMap m = new HashMap();
-		m.put("items", result);
-		m.put("success", true);
-		m.put("totalCount", count);
+	final HashMap m = new HashMap();
+	m.put("items", result);
+	m.put("success", true);
+	m.put("totalCount", count);
 
-		final Gson gson = new Gson();
-		PrintWriter out = response.getWriter();
-		response.setContentType("application/json;charset=" + this.charset);
-		out.println(gson.toJson(m));
-		out.close();
-	}
+	final Gson gson = new Gson();
+	PrintWriter out = response.getWriter();
+	response.setContentType("application/json;charset=" + this.charset);
+	out.println(gson.toJson(m));
+	out.close();
+    }
 }

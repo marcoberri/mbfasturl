@@ -34,93 +34,93 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 /**
- *
+ * 
  * @author Marco Berri <marcoberri@gmail.com>
  */
 public class QuartzUACalculation implements Job {
 
-	/**
+    /**
      *
      */
-	protected static final org.apache.log4j.Logger log = Log4j.getLogger(QuartzUACalculation.class.getSimpleName(), ConfigurationHelper.getProp().getProperty("log.path"), Log4j.ROTATE_DAILY);
+    protected static final org.apache.log4j.Logger log = Log4j.getLogger(QuartzUACalculation.class.getSimpleName(), ConfigurationHelper.getProp().getProperty("log.path"), Log4j.ROTATE_DAILY);
 
-	/**
-	 *
-	 * @param jec
-	 * @throws JobExecutionException
-	 */
-	@Override
-	public void execute(JobExecutionContext jec) throws JobExecutionException {
-		final Datastore ds = MongoConnectionHelper.ds;
-		final Datastore dsSave = MongoConnectionHelper.ds;
-		final long ts = System.currentTimeMillis();
+    /**
+     * 
+     * @param jec
+     * @throws JobExecutionException
+     */
+    @Override
+    public void execute(JobExecutionContext jec) throws JobExecutionException {
+	final Datastore ds = MongoConnectionHelper.ds;
+	final Datastore dsSave = MongoConnectionHelper.ds;
+	final long ts = System.currentTimeMillis();
 
-		final HashMap<String, ReadableUserAgent> cache = new HashMap<String, ReadableUserAgent>();
-		try {
-			int c = 0;
-			int tot = 0;
-			for (Log l : ds.createQuery(Log.class).field("headers.user-agent").exists().field("agent").doesNotExist().asList()) {
-				tot++;
-				if (l.getAgent() != null) {
-					continue;
-				}
-
-				final String ua = Default.toString(l.getHeaders().get("user-agent"));
-
-				ReadableUserAgent agent = null;
-
-				if (cache.get(ua) != null) {
-					agent = cache.get(ua);
-				} else {
-
-					try {
-						final UserAgentStringParser parser = UADetectorServiceFactory.getResourceModuleParser();
-						agent = parser.parse(ua);
-
-						if (agent == null) {
-							continue;
-						}
-
-						cache.put(ua, agent);
-
-					} catch (final Exception e) {
-						log.fatal(e.getMessage(), e);
-					}
-
-					if (agent == null) {
-						continue;
-					}
-
-					final UAgent uagent = new UAgent();
-					uagent.setIcon(agent.getIcon());
-					uagent.setName(agent.getName());
-					uagent.setProducer(agent.getProducer());
-					uagent.setProducerUrl(agent.getProducerUrl());
-					uagent.setTypeName(agent.getTypeName());
-					uagent.setUrl(agent.getUrl());
-
-					uagent.getOperatingSystem().setFamilyName(agent.getOperatingSystem().getFamilyName());
-					uagent.getOperatingSystem().setIcon(agent.getOperatingSystem().getIcon());
-					uagent.getOperatingSystem().setProducer(agent.getOperatingSystem().getProducer());
-					uagent.getOperatingSystem().setProducerUrl(agent.getOperatingSystem().getProducerUrl());
-					uagent.getOperatingSystem().setUrl(agent.getOperatingSystem().getUrl());
-					uagent.getOperatingSystem().getVersionNumber().setExtension(agent.getOperatingSystem().getVersionNumber().getExtension());
-					uagent.getOperatingSystem().getVersionNumber().setGroups(agent.getOperatingSystem().getVersionNumber().getGroups());
-					uagent.getOperatingSystem().getVersionNumber().setMajor(agent.getOperatingSystem().getVersionNumber().getMajor());
-					uagent.getOperatingSystem().getVersionNumber().setMinor(agent.getOperatingSystem().getVersionNumber().getMinor());
-
-					l.setAgent(uagent);
-					dsSave.save(l);
-					c++;
-
-				}
-			}
-
-			writeEventLog("UserAgentCalc", true, "tot elements: " + tot + " | tot save: " + c, "Manipulate", (System.currentTimeMillis() - ts));
-		} catch (final Exception e) {
-			log.fatal(e.getMessage(), e);
-			writeEventLog("UserAgentCalc", false, e.getMessage(), "Manipulate", (System.currentTimeMillis() - ts));
+	final HashMap<String, ReadableUserAgent> cache = new HashMap<String, ReadableUserAgent>();
+	try {
+	    int c = 0;
+	    int tot = 0;
+	    for (Log l : ds.createQuery(Log.class).field("headers.user-agent").exists().field("agent").doesNotExist().asList()) {
+		tot++;
+		if (l.getAgent() != null) {
+		    continue;
 		}
 
+		final String ua = Default.toString(l.getHeaders().get("user-agent"));
+
+		ReadableUserAgent agent = null;
+
+		if (cache.get(ua) != null) {
+		    agent = cache.get(ua);
+		} else {
+
+		    try {
+			final UserAgentStringParser parser = UADetectorServiceFactory.getResourceModuleParser();
+			agent = parser.parse(ua);
+
+			if (agent == null) {
+			    continue;
+			}
+
+			cache.put(ua, agent);
+
+		    } catch (final Exception e) {
+			log.fatal(e.getMessage(), e);
+		    }
+
+		    if (agent == null) {
+			continue;
+		    }
+
+		    final UAgent uagent = new UAgent();
+		    uagent.setIcon(agent.getIcon());
+		    uagent.setName(agent.getName());
+		    uagent.setProducer(agent.getProducer());
+		    uagent.setProducerUrl(agent.getProducerUrl());
+		    uagent.setTypeName(agent.getTypeName());
+		    uagent.setUrl(agent.getUrl());
+
+		    uagent.getOperatingSystem().setFamilyName(agent.getOperatingSystem().getFamilyName());
+		    uagent.getOperatingSystem().setIcon(agent.getOperatingSystem().getIcon());
+		    uagent.getOperatingSystem().setProducer(agent.getOperatingSystem().getProducer());
+		    uagent.getOperatingSystem().setProducerUrl(agent.getOperatingSystem().getProducerUrl());
+		    uagent.getOperatingSystem().setUrl(agent.getOperatingSystem().getUrl());
+		    uagent.getOperatingSystem().getVersionNumber().setExtension(agent.getOperatingSystem().getVersionNumber().getExtension());
+		    uagent.getOperatingSystem().getVersionNumber().setGroups(agent.getOperatingSystem().getVersionNumber().getGroups());
+		    uagent.getOperatingSystem().getVersionNumber().setMajor(agent.getOperatingSystem().getVersionNumber().getMajor());
+		    uagent.getOperatingSystem().getVersionNumber().setMinor(agent.getOperatingSystem().getVersionNumber().getMinor());
+
+		    l.setAgent(uagent);
+		    dsSave.save(l);
+		    c++;
+
+		}
+	    }
+
+	    writeEventLog("UserAgentCalc", true, "tot elements: " + tot + " | tot save: " + c, "Manipulate", (System.currentTimeMillis() - ts));
+	} catch (final Exception e) {
+	    log.fatal(e.getMessage(), e);
+	    writeEventLog("UserAgentCalc", false, e.getMessage(), "Manipulate", (System.currentTimeMillis() - ts));
 	}
+
+    }
 }

@@ -19,73 +19,73 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Id;
 
 /**
- *
+ * 
  * @author Marco Berri <marcoberri@gmail.com>
  */
 
 public class User {
 
-	@Id
-	private ObjectId id;
-	private String username;
-	private String password;
+    @Id
+    private ObjectId id;
+    private String username;
+    private String password;
 
-	/**
-	 * @return the id
-	 */
-	public ObjectId getId() {
-		return id;
-	}
+    /**
+     * @return the id
+     */
+    public ObjectId getId() {
+	return id;
+    }
 
-	/**
-	 * @return the password
-	 */
-	public String getPassword() {
-		return password;
-	}
+    /**
+     * @return the password
+     */
+    public String getPassword() {
+	return password;
+    }
 
-	/**
-	 * @return the username
-	 */
-	public String getUsername() {
-		return username;
-	}
+    /**
+     * @return the username
+     */
+    public String getUsername() {
+	return username;
+    }
 
-	/**
-	 * @param id
-	 *            the id to set
-	 */
-	public void setId(ObjectId id) {
-		this.id = id;
-	}
+    /**
+     * @param id
+     *            the id to set
+     */
+    public void setId(ObjectId id) {
+	this.id = id;
+    }
 
-	/**
-	 * @param password
-	 *            the password to set
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    /**
+     * @param password
+     *            the password to set
+     */
+    public void setPassword(String password) {
+	this.password = password;
+    }
 
-	/**
-	 *
-	 * @param password
-	 */
-	public void setPasswordPlain(String password) {
-		this.password = DigestUtils.sha256Hex(password);
-	}
+    /**
+     * 
+     * @param password
+     */
+    public void setPasswordPlain(String password) {
+	this.password = DigestUtils.sha256Hex(password);
+    }
 
-	/**
-	 * @param username
-	 *            the username to set
-	 */
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    /**
+     * @param username
+     *            the username to set
+     */
+    public void setUsername(String username) {
+	this.username = username;
+    }
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + "]";
-	}
+    @Override
+    public String toString() {
+	return "User [id=" + id + ", username=" + username + ", password=" + password + "]";
+    }
 
 }

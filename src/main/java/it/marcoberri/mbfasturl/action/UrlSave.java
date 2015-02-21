@@ -47,284 +47,297 @@ import com.google.zxing.WriterException;
 @WebServlet("/s")
 public class UrlSave extends HttpServlet {
 
-    class objResult {
+	class objResult {
 
-	private String url;
-	private String urlComplete;
-	private String fast;
+		private String url;
+		private String urlComplete;
+		private String fast;
 
-	/**
-	 * @return the fast
-	 */
-	public String getFast() {
-	    return fast;
-	}
-
-	/**
-	 * @return the url
-	 */
-	public String getUrl() {
-	    return url;
-	}
-
-	/**
-	 * @return the completedUrl
-	 */
-	public String getUrlComplete() {
-	    return urlComplete;
-	}
-
-	/**
-	 * @param fast
-	 *            the fast to set
-	 */
-	public void setFast(String fast) {
-	    this.fast = fast;
-	}
-
-	/**
-	 * @param url
-	 *            the url to set
-	 */
-	public void setUrl(String url) {
-	    this.url = url;
-	}
-
-	/**
-	 * @param completedUrl
-	 *            the completedUrl to set
-	 */
-	public void setUrlComplete(String urlComplete) {
-	    this.urlComplete = urlComplete;
-	}
-
-	public String toJson() {
-	    Gson gson = new Gson();
-	    return gson.toJson(this);
-	}
-    }
-
-    /**
-     * 
-     * @param length
-     * @return
-     */
-    protected static String randomString(int length) {
-	Random rnd = new Random();
-	char[] arr = new char[length];
-
-	for (int i = 0; i < length; i++) {
-	    int n = rnd.nextInt(36);
-	    arr[i] = (char) (n < 10 ? '0' + n : 'a' + n - 10);
-	}
-
-	return new String(arr);
-    }
-
-    /**
-	 * 
-	 */
-    private static final long serialVersionUID = -843612060253887364L;
-
-    /**
-     *
-     */
-    protected String charset = ConfigurationHelper.getProp().getProperty("app.charset", "UTF8");
-
-    /**
-     *
-     */
-    protected String proxy = ConfigurationHelper.getProp().getProperty("url.proxy.domain", "http://mbfu.it/");
-
-    /**
-     *
-     */
-    protected final Datastore ds = MongoConnectionHelper.ds;
-
-    // <editor-fold defaultstate="collapsed"
-    // desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     * 
-     * @param request
-     *            servlet request
-     * @param response
-     *            servlet response
-     * @throws ServletException
-     *             if a servlet-specific error occurs
-     * @throws IOException
-     *             if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	processRequest(request, response);
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     * 
-     * @param request
-     *            servlet request
-     * @param response
-     *            servlet response
-     * @throws ServletException
-     *             if a servlet-specific error occurs
-     * @throws IOException
-     *             if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	processRequest(request, response);
-    }
-
-    /**
-     * 
-     * @param request
-     * @return
-     */
-    protected LogSave getHeader(HttpServletRequest request) {
-
-	final LogSave logSave = new LogSave();
-
-	Enumeration headerNames = request.getHeaderNames();
-	String X_Forwarded_For = null;
-	while (headerNames.hasMoreElements()) {
-	    final String headerName = (String) headerNames.nextElement();
-
-	    if (headerName.equals("X-Forwarded-For") || headerName.equals("x-forwarded-for")) {
-		X_Forwarded_For = request.getHeader(headerName);
-	    }
-
-	    logSave.addHeader(headerName.toLowerCase(), request.getHeader(headerName));
-
-	}
-
-	logSave.addHeader("request_remote_addr", request.getRemoteAddr());
-	logSave.addHeader("request_remote_host", request.getRemoteHost());
-	logSave.addHeader("request_remote_user", request.getRemoteUser());
-	logSave.addHeader("request_remote_remote_port", "" + request.getRemotePort());
-	logSave.addHeader("request_remote_url", "" + request.getRemotePort());
-
-	// questo è da capire se ha senso
-	String ip = request.getRemoteAddr();
-
-	if ((ip.equals("127.0.0.1") || ip.equals("0:0:0:0:0:0:0:1")) && logSave.getHeaders().containsKey("x-forwarded-for")) {
-
-	    logSave.addHeader("MBURL_request_getRemoteAddr", ip);
-	    ip = logSave.getHeaders().get("x-forwarded-for");
-	}
-
-	// fix per "ip" : "192.168.132.114, 79.174.225.43"
-	if (ip.indexOf(",") != -1) {
-	    final String[] split = ip.split(",");
-	    if (split != null && split.length > 0)
-		ip = split[split.length];
-	}
-
-	ip = ip.trim();
-	logSave.setIp(ip);
-	return logSave;
-
-    }
-
-    /**
-     * Returns a short description of the servlet.
-     * 
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-	return "Short description";
-    }// </editor-fold>
-
-    /**
-     * 
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-	final String urlParam = request.getParameter("url");
-
-	Commons.log.error("debug :" + UrlSave.class.getName());
-
-	if (StringUtil.isNullOrEmpty(urlParam)) {
-	    Commons.log.error("params not found");
-	    return;
-	}
-
-	Commons.log.error("debug :" + urlParam);
-
-	final Date bestBefore = DateTimeUtil.getDate("yyyy-MM-dd HH:mm:ss", Default.toString(request.getParameter("bestBefore"), DateTimeUtil.getNowWithOffsetAndFormat(ConfigurationHelper.getProp().getProperty("url.bestbefore", "12M"), "yyyy-MM-dd HH:mm:ss")));
-	final URL utlToAnalyze = new URL(urlParam);
-
-	String urltoSave = utlToAnalyze.getHost() + (utlToAnalyze.getPort() != -1 ? (":" + utlToAnalyze.getPort()) : "") + ((utlToAnalyze.getPath() != null && !utlToAnalyze.getPath().equals("")) ? ("/" + utlToAnalyze.getPath()) : "");
-
-	Commons.log.error("debug :urltoSave 1: " + urltoSave);
-
-	if (utlToAnalyze.getQuery() != null) {
-	    urltoSave += "?" + utlToAnalyze.getQuery();
-	}
-	Commons.log.error("debug :urltoSave 2: " + urltoSave);
-
-	Url u = ds.find(Url.class, "url", urltoSave).get();
-
-	Commons.log.error("debug :find 1: " + u);
-
-	if (u == null) {
-
-	    u = new Url();
-
-	    int let = 1;
-	    int check = 0;
-	    String fast;
-
-	    do {
-		fast = randomString(let);
-		check++;
-
-		// incremento le lettere dopo 10 tentativi
-		if (check == 10) {
-		    check = 0;
-		    let++;
+		/**
+		 * @return the fast
+		 */
+		public String getFast() {
+			return fast;
 		}
 
-	    } while (ds.find(Url.class, "fast", fast).get() != null);
+		/**
+		 * @return the url
+		 */
+		public String getUrl() {
+			return url;
+		}
 
-	    u.setFast(fast);
-	    u.setUrl(urltoSave);
-	    u.setProtocol(utlToAnalyze.getProtocol());
-	    u.setPort((utlToAnalyze.getPort() <= 0 ? 80 : utlToAnalyze.getPort()));
-	    u.setUrlComplete(proxy);
-	    u.setEnding(bestBefore);
-	    ds.save(u);
+		/**
+		 * @return the completedUrl
+		 */
+		public String getUrlComplete() {
+			return urlComplete;
+		}
 
-	    Commons.log.error("debug :urltoSave 5: " + u);
+		/**
+		 * @param fast
+		 *            the fast to set
+		 */
+		public void setFast(String fast) {
+			this.fast = fast;
+		}
 
-	    try {
-		final Url qrcode = Commons.generateQrcodes(u);
-		ds.save(qrcode);
-	    } catch (WriterException ex) {
-		Commons.log.error(ex.getMessage(), ex);
-	    }
+		/**
+		 * @param url
+		 *            the url to set
+		 */
+		public void setUrl(String url) {
+			this.url = url;
+		}
 
-	    final LogSave logSave = getHeader(request);
-	    logSave.setUrlId(u.getId());
-	    ds.save(logSave);
+		/**
+		 * @param completedUrl
+		 *            the completedUrl to set
+		 */
+		public void setUrlComplete(String urlComplete) {
+			this.urlComplete = urlComplete;
+		}
+
+		public String toJson() {
+			Gson gson = new Gson();
+			return gson.toJson(this);
+		}
+	}
+
+	/**
+	 * 
+	 * @param length
+	 * @return
+	 */
+	protected static String randomString(int length) {
+		Random rnd = new Random();
+		char[] arr = new char[length];
+
+		for (int i = 0; i < length; i++) {
+			int n = rnd.nextInt(36);
+			arr[i] = (char) (n < 10 ? '0' + n : 'a' + n - 10);
+		}
+
+		return new String(arr);
+	}
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -843612060253887364L;
+
+	/**
+     *
+     */
+	protected String charset = ConfigurationHelper.getProp().getProperty(
+			"app.charset", "UTF8");
+
+	/**
+     *
+     */
+	protected String proxy = ConfigurationHelper.getProp().getProperty(
+			"url.proxy.domain", "http://mbfu.it/");
+
+	/**
+     *
+     */
+	protected final Datastore ds = MongoConnectionHelper.ds;
+
+	// <editor-fold defaultstate="collapsed"
+	// desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+	/**
+	 * Handles the HTTP <code>GET</code> method.
+	 * 
+	 * @param request
+	 *            servlet request
+	 * @param response
+	 *            servlet response
+	 * @throws ServletException
+	 *             if a servlet-specific error occurs
+	 * @throws IOException
+	 *             if an I/O error occurs
+	 */
+	@Override
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		processRequest(request, response);
+	}
+
+	/**
+	 * Handles the HTTP <code>POST</code> method.
+	 * 
+	 * @param request
+	 *            servlet request
+	 * @param response
+	 *            servlet response
+	 * @throws ServletException
+	 *             if a servlet-specific error occurs
+	 * @throws IOException
+	 *             if an I/O error occurs
+	 */
+	@Override
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		processRequest(request, response);
+	}
+
+	/**
+	 * 
+	 * @param request
+	 * @return
+	 */
+	protected LogSave getHeader(HttpServletRequest request) {
+
+		final LogSave logSave = new LogSave();
+
+		final Enumeration<String> headerNames = request.getHeaderNames();
+		while (headerNames.hasMoreElements()) {
+			final String headerName = headerNames.nextElement();
+
+			logSave.addHeader(headerName.toLowerCase(),
+					request.getHeader(headerName));
+
+		}
+
+		logSave.addHeader("request_remote_addr", request.getRemoteAddr());
+		logSave.addHeader("request_remote_host", request.getRemoteHost());
+		logSave.addHeader("request_remote_user", request.getRemoteUser());
+		logSave.addHeader("request_remote_remote_port",
+				"" + request.getRemotePort());
+		logSave.addHeader("request_remote_url", "" + request.getRemotePort());
+
+		// questo è da capire se ha senso
+		String ip = request.getRemoteAddr();
+
+		if ((ip.equals("127.0.0.1") || ip.equals("0:0:0:0:0:0:0:1"))
+				&& logSave.getHeaders().containsKey("x-forwarded-for")) {
+
+			logSave.addHeader("MBURL_request_getRemoteAddr", ip);
+			ip = logSave.getHeaders().get("x-forwarded-for");
+		}
+
+		// fix per "ip" : "192.168.132.114, 79.174.225.43"
+		if (ip.indexOf(",") != -1) {
+			final String[] split = ip.split(",");
+			if (split != null && split.length > 0)
+				ip = split[split.length];
+		}
+
+		ip = ip.trim();
+		logSave.setIp(ip);
+		return logSave;
 
 	}
 
-	final objResult result = new objResult();
-	result.setFast(u.getFast());
-	result.setUrl(u.getUrl());
-	result.setUrlComplete(proxy + "/" + u.getFast());
+	/**
+	 * Returns a short description of the servlet.
+	 * 
+	 * @return a String containing servlet description
+	 */
+	@Override
+	public String getServletInfo() {
+		return "Short description";
+	}// </editor-fold>
 
-	final PrintWriter out = response.getWriter();
-	response.setContentType("application/json;charset=" + this.charset);
-	out.println(result.toJson());
-	out.close();
+	/**
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	protected void processRequest(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 
-    }
+		final String urlParam = request.getParameter("url");
+
+		Commons.log.error("debug :" + UrlSave.class.getName());
+
+		if (StringUtil.isNullOrEmpty(urlParam)) {
+			Commons.log.error("params not found");
+			return;
+		}
+
+		Commons.log.error("debug :" + urlParam);
+
+		final Date bestBefore = DateTimeUtil.getDate("yyyy-MM-dd HH:mm:ss",
+				Default.toString(request.getParameter("bestBefore"),
+						DateTimeUtil.getNowWithOffsetAndFormat(
+								ConfigurationHelper.getProp().getProperty(
+										"url.bestbefore", "12M"),
+								"yyyy-MM-dd HH:mm:ss")));
+		final URL utlToAnalyze = new URL(urlParam);
+
+		String urltoSave = utlToAnalyze.getHost()
+				+ (utlToAnalyze.getPort() != -1 ? (":" + utlToAnalyze.getPort())
+						: "")
+				+ ((utlToAnalyze.getPath() != null && !utlToAnalyze.getPath()
+						.equals("")) ? ("/" + utlToAnalyze.getPath()) : "");
+
+		Commons.log.error("debug :urltoSave 1: " + urltoSave);
+
+		if (utlToAnalyze.getQuery() != null) {
+			urltoSave += "?" + utlToAnalyze.getQuery();
+		}
+		Commons.log.error("debug :urltoSave 2: " + urltoSave);
+
+		Url u = ds.find(Url.class, "url", urltoSave).get();
+
+		Commons.log.error("debug :find 1: " + u);
+
+		if (u == null) {
+
+			u = new Url();
+
+			int let = 1;
+			int check = 0;
+			String fast;
+
+			do {
+				fast = randomString(let);
+				check++;
+
+				// incremento le lettere dopo 10 tentativi
+				if (check == 10) {
+					check = 0;
+					let++;
+				}
+
+			} while (ds.find(Url.class, "fast", fast).get() != null);
+
+			u.setFast(fast);
+			u.setUrl(urltoSave);
+			u.setProtocol(utlToAnalyze.getProtocol());
+			u.setPort((utlToAnalyze.getPort() <= 0 ? 80 : utlToAnalyze
+					.getPort()));
+			u.setUrlComplete(proxy);
+			u.setEnding(bestBefore);
+			ds.save(u);
+
+			Commons.log.error("debug :urltoSave 5: " + u);
+
+			try {
+				final Url qrcode = Commons.generateQrcodes(u);
+				ds.save(qrcode);
+			} catch (WriterException ex) {
+				Commons.log.error(ex.getMessage(), ex);
+			}
+
+			final LogSave logSave = getHeader(request);
+			logSave.setUrlId(u.getId());
+			ds.save(logSave);
+
+		}
+
+		final objResult result = new objResult();
+		result.setFast(u.getFast());
+		result.setUrl(u.getUrl());
+		result.setUrlComplete(proxy + "/" + u.getFast());
+
+		final PrintWriter out = response.getWriter();
+		response.setContentType("application/json;charset=" + this.charset);
+		out.println(result.toJson());
+		out.close();
+
+	}
 }

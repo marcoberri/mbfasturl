@@ -114,10 +114,10 @@ public class QrCode extends HttpServlet {
 
 	final LogQrcode logQrcode = new LogQrcode();
 
-	final Enumeration headerNames = request.getHeaderNames();
+	final Enumeration<String> headerNames = request.getHeaderNames();
 
 	while (headerNames.hasMoreElements()) {
-	    final String headerName = (String) headerNames.nextElement();
+	    final String headerName =  headerNames.nextElement();
 
 	    logQrcode.addHeader(headerName.toLowerCase(), request.getHeader(headerName));
 

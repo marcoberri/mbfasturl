@@ -159,7 +159,7 @@
                 <version>2.1.1</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <warName>MBFastUrl2</warName>
+                    <warName>MBFastUrl</warName>
                 </configuration>
             </plugin>
             

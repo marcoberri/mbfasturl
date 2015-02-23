@@ -242,7 +242,7 @@ public class Commons {
 
 	    if (ip.indexOf(",") != -1) {
 		final String[] split = ip.split(",");
-		ip = split[split.length];
+		ip = split[split.length-1];
 	    }
 
 	    if (StringUtil.isNullOrEmpty(ip)) {

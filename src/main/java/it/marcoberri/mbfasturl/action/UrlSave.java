@@ -220,7 +220,7 @@ public class UrlSave extends HttpServlet {
 		if (ip.indexOf(",") != -1) {
 			final String[] split = ip.split(",");
 			if (split != null && split.length > 0)
-				ip = split[split.length];
+				ip = split[split.length-1];
 		}
 
 		ip = ip.trim();

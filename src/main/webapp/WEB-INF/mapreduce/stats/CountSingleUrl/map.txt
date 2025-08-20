@@ -1,9 +1,0 @@
-function(){ 
-
-if(this.url != null && this.fast != null){
-     var k = {'url':this.url,'fast':this.fast};
-     emit(k, 1);
-}
-    
-};
-

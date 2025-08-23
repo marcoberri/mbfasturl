@@ -2,10 +2,14 @@
 
 # Local
 
+docker kill $(docker ps -q)
+docker rm $(docker ps -a -q)
+docker volume prune -f
+
 docker run --name mongodb -p 27017:27017 -d mongodb/mongodb-community-server:latest
 docker run -p 27017:27017 -d e36314d1dbf7
 
-cd home/marco/backup/mongo/
+cd /mnt/c/dev/github/home/marco/backup/mongo/
 mongorestore --db FastUrl ./FastUrl
 
 

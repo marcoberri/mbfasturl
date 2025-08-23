@@ -1,10 +1,7 @@
 package it.marcoberri.fasturl.data.entity;
 
-import io.quarkus.mongodb.panache.PanacheMongoEntity;
 import io.quarkus.mongodb.panache.common.MongoEntity;
 import io.quarkus.mongodb.panache.reactive.ReactivePanacheMongoEntity;
-import org.bson.codecs.pojo.annotations.BsonId;
-import org.bson.types.ObjectId;
 
 @MongoEntity(collection = "Url.url")
 public class UrlEntity extends ReactivePanacheMongoEntity {

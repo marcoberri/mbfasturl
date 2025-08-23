@@ -12,10 +12,7 @@ public class UrlService {
     @Inject
     UrlRepository urlRepository;
 
-    public String politeHello(String name){
-        return "Hello Mr/Mrs " + name;
-    }
-    public Uni<UrlEntity> getUrl(String fast){
+    public Uni<UrlEntity> getUrl(String fast) {
         return urlRepository.findByFast(fast);
     }
 }

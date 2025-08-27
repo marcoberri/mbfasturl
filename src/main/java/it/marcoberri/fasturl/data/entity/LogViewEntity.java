@@ -18,7 +18,7 @@ public class LogViewEntity extends ReactivePanacheMongoEntity {
     public String fast;
     public String url;
     public IpSpecify ipSpecify;
-    public UAgent agent;
+    public HashMap<String, String> agentYauaa;
 
     public void addHeader(String key, String value) {
         if (this.headers == null)

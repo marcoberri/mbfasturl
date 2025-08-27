@@ -1,4 +1,24 @@
-# mbfasturl
+# MBFastUrl
+
+# Datamodel
+
+```mermaid
+classDiagram
+    class Url {
+       - fast: string
+       - url: string
+       - create: date
+       - ending: date
+       - protocol: string
+       - port: int    
+    }
+    
+    class LogView {
+        - fast: string
+    }   
+    LogView "*" --> "1" Url
+```
+
 
 # Local
 
@@ -13,6 +33,8 @@ cd /mnt/c/dev/github/home/marco/backup/mongo/
 mongorestore --db FastUrl ./FastUrl
 
 
+
+# Default
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.

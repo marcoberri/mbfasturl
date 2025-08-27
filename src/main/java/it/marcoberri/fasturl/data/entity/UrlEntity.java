@@ -3,14 +3,15 @@ package it.marcoberri.fasturl.data.entity;
 import io.quarkus.mongodb.panache.common.MongoEntity;
 import io.quarkus.mongodb.panache.reactive.ReactivePanacheMongoEntity;
 
+import java.util.Date;
+
 @MongoEntity(collection = "Url.url")
 public class UrlEntity extends ReactivePanacheMongoEntity {
 
     public String fast;
-    //        @Indexed(value = IndexDirection.ASC, name = "url", unique = true, dropDups = true)
     public String url;
-    //        private Date created;
-//        private Date ending;
+    public Date created;
+    public Date ending;
     public String protocol = "http";
     public int port = 80;
 //        private ObjectId qrcodeSmall;

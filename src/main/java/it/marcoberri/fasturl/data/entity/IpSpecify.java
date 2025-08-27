@@ -14,6 +14,6 @@ public class IpSpecify {
     public String division;
     public String divisionIso;
     //    @Indexed(IndexDirection.GEO2D)
-    //   private double[] loc;
+    public double[] loc;
     public Date created = new Date();
 }

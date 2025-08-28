@@ -7,8 +7,9 @@ import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Uni;
 import io.vertx.core.MultiMap;
 import io.vertx.core.http.HttpServerRequest;
-import it.marcoberri.fasturl.data.entity.LogViewEntity;
-import it.marcoberri.fasturl.data.repository.LogViewRepository;
+import it.marcoberri.fasturl.data.entity.LogEntity;
+import it.marcoberri.fasturl.data.enumerated.ActionEnum;
+import it.marcoberri.fasturl.data.repository.LogRepository;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -25,7 +26,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class LogService {
 
     @Inject
-    LogViewRepository logViewRepository;
+    LogRepository logRepository;
 
     @Inject
     GeolocatorService geolocatorService;
@@ -45,32 +46,33 @@ public class LogService {
     }
 
 
-    public Uni<Void> saveLogView(MultiMap headers, ObjectId id, String fast, String url, HttpServerRequest request) {
+    public Uni<Void> saveLogEntity(MultiMap headers, ObjectId id, String fast, String url, HttpServerRequest request, ActionEnum action) {
 
-        LogViewEntity logViewEntity = new LogViewEntity();
-        logViewEntity.urlId = id;
+        LogEntity logEntity = new LogEntity();
+        logEntity.urlId = id;
+        logEntity.action = action;
 
         HashMap<String, String> m = new HashMap<>();
         headers.entries().forEach(entry -> m.put(entry.getKey(), entry.getValue()));
-        logViewEntity.headers = m;
+        logEntity.headers = m;
 
-        logViewEntity.created = new Date();
+        logEntity.created = new Date();
 
-        logViewEntity.fast = fast;
-        logViewEntity.url = url;
+        logEntity.fast = fast;
+        logEntity.url = url;
 
-        logViewEntity.addHeader("request_remote_addr", request.remoteAddress().hostAddress());
-        logViewEntity.addHeader("request_remote_host", request.remoteAddress().host());
-        //logViewEntity.addHeader("request_remote_user", request.remoteAddress());
-        logViewEntity.addHeader("request_remote_remote_port", "" + request.remoteAddress().port());
-        logViewEntity.addHeader("request_remote_url", request.remoteAddress().path());
+        logEntity.addHeader("request_remote_addr", request.remoteAddress().hostAddress());
+        logEntity.addHeader("request_remote_host", request.remoteAddress().host());
+        //logEntity.addHeader("request_remote_user", request.remoteAddress());
+        logEntity.addHeader("request_remote_remote_port", "" + request.remoteAddress().port());
+        logEntity.addHeader("request_remote_url", request.remoteAddress().path());
 
         // questo è da capire se ha senso
         String ip = request.remoteAddress().hostAddress();
 
-        if ((ip.equals("127.0.0.1") || ip.equals("0:0:0:0:0:0:0:1")) && logViewEntity.headers.containsKey("x-forwarded-for")) {
-            logViewEntity.addHeader("MBURL_request_getRemoteAddr", ip);
-            ip = logViewEntity.headers.get("x-forwarded-for");
+        if ((ip.equals("127.0.0.1") || ip.equals("0:0:0:0:0:0:0:1")) && logEntity.headers.containsKey("x-forwarded-for")) {
+            logEntity.addHeader("MBURL_request_getRemoteAddr", ip);
+            ip = logEntity.headers.get("x-forwarded-for");
         }
 
         // fix per "ip" : "192.168.132.114, 79.174.225.43"
@@ -82,7 +84,7 @@ public class LogService {
 
         ip = ip.trim();
 
-        logViewEntity.ip = ip;
+        logEntity.ip = ip;
 
 
         AtomicReference<String> ua = new AtomicReference<>(headers.get("user-agent"));
@@ -100,22 +102,20 @@ public class LogService {
         UserAgent userAgent = uaa.parse(ua.get());
         Log.infof("User Agent parsed: %s", userAgent);
 
-        logViewEntity.agentYauaa = new HashMap<>();
-        userAgent.getAvailableFieldNamesSorted().forEach(f -> logViewEntity.agentYauaa.put(f, userAgent.getValue(f)));
+        logEntity.agentYauaa = new HashMap<>();
+        userAgent.getAvailableFieldNamesSorted().forEach(f -> logEntity.agentYauaa.put(f, userAgent.getValue(f)));
 
 
         try {
             CityResponse result = geolocatorService.getCityResponse(ip);
             Log.infof("City Response: %s", result);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (GeoIp2Exception e) {
-            throw new RuntimeException(e);
+        } catch (IOException | GeoIp2Exception e) {
+            Log.errorf("Problem get GeoIp from ip: %s", ip);
         }
 
         // persist() restituisce un Uni. Dobbiamo sottoscriverlo per eseguire l'operazione.
         // Restituendo l'Uni, permettiamo al chiamante di concatenare l'operazione.
         // Usiamo .replaceWithVoid() per segnalare il completamento senza restituire l'entità.
-        return logViewRepository.persist(logViewEntity).replaceWithVoid();
+        return logRepository.persist(logEntity).replaceWithVoid();
     }
 }

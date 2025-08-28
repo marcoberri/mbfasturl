@@ -6,6 +6,7 @@ import io.quarkus.vertx.web.Route;
 import io.quarkus.vertx.web.RoutingExchange;
 import io.smallrye.mutiny.Uni;
 import it.marcoberri.fasturl.data.entity.UrlEntity;
+import it.marcoberri.fasturl.data.enumerated.ActionEnum;
 import it.marcoberri.fasturl.service.LogService;
 import it.marcoberri.fasturl.service.UrlService;
 import jakarta.inject.Inject;
@@ -61,7 +62,7 @@ public class UrlResource {
                                 //    Aggiungiamo un subscribe con gestione dell'errore per il solo logging,
                                 //    in modo che un fallimento qui non impatti l'utente.
                                 Log.infof("Scheduling log persistence for fast key: %s", fast);
-                                logService.saveLogView(ex.request().headers(), item.id, item.fast, item.url, ex.request())
+                                logService.saveLogEntity(ex.request().headers(), item.id, item.fast, item.url, ex.request(), ActionEnum.VIEW)
                                         .subscribe().with(v -> {
                                         }, throwable -> Log.errorf(throwable, "Failed to save log view for key %s", fast));
 
